@@ -42,7 +42,7 @@ export interface HealthReportWithoutId {
   [HealthReportField.RunnyNose]: number;
 }
 
-const initialState = {
+const initialState: HealthDataState = {
   currentReport: {
     fever: 37,
     isFeaver: false,
@@ -55,19 +55,37 @@ const initialState = {
     nausea: 0,
     runnyNose: 0,
   },
-  reports: [],
+  reports: [
+    {
+      clientId: 'dev_id',
+      timestamp: new Date(),
+      report: {
+        id: 'asdasdsa',
+        [HealthReportField.Fever]: 37,
+        [HealthReportField.IsFever]: false,
+        [HealthReportField.Tiredness]: 0,
+        [HealthReportField.DryCough]: 0,
+        [HealthReportField.ShortnessOfBreath]: 0,
+        [HealthReportField.AchesAndPains]: 0,
+        [HealthReportField.SoreThroat]: 0,
+        [HealthReportField.Diarrhoea]: 0,
+        [HealthReportField.Nausea]: 0,
+        [HealthReportField.RunnyNose]: 0,
+      },
+    },
+  ],
 };
 
 export const healthDataReducer = (
   state: HealthDataState = initialState,
   action: any,
-) => {
+): HealthDataState => {
   switch (action.type) {
     case SUBMIT_HEALTHDATA_REPORT: {
       const a: SubmitHealthDataEntryAction = action;
       return {
         ...state,
-        reports: [...state.reports, a.report],
+        reports: [...state.reports, a],
         currentReport: initialState.currentReport,
       };
     }

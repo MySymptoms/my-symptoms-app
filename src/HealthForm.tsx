@@ -13,7 +13,6 @@ import {selectCurrentHealthReport} from './reducers/rootReducer';
 import {v4 as uuid} from 'uuid';
 
 export const HealthForm = () => {
-  const [healthReport, setHealthReport] = useState<HealthReport>();
   const dispatch = useDispatch();
   const currentHealthReport = useSelector(selectCurrentHealthReport);
   const updateFormData = (key: string, value: number | boolean) => {
@@ -22,7 +21,7 @@ export const HealthForm = () => {
 
   return (
     <View>
-      <Text>Health Form</Text>
+      <Text style={{fontSize: 28}}>Health Form</Text>
       <SliderInput
         title="Temperature"
         min={35}
