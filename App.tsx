@@ -13,32 +13,42 @@ import {
   SafeAreaView,
   StyleSheet,
   ScrollView,
-  View,
   Text,
   StatusBar,
 } from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {SliderInput} from './src/SliderInput';
+import {createStore, compose} from 'redux';
+import rootReducer from './src/reducers/rootReducer';
+import {Provider} from 'react-redux';
+import {HealthForm} from './src/HealthForm';
 
-// declare var global: {HermesInternal: null | {}};
+// TS declaration for making redux devtools extension stop complaining in createStore below.
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION__?: typeof compose;
+  }
+}
+
+const store = createStore(
+  rootReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+);
 
 const App = () => {
   return (
     <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <SliderInput
-            title="Temperature"
-            min={35}
-            max={43}
-            onValueUpdated={() => {}}
-          />
-        </ScrollView>
-      </SafeAreaView>
+      <Provider store={store}>
+        <StatusBar barStyle="dark-content" />
+        <SafeAreaView>
+          <Text>Hello</Text>
+          <ScrollView
+            contentInsetAdjustmentBehavior="automatic"
+            style={styles.scrollView}>
+            <HealthForm />
+          </ScrollView>
+        </SafeAreaView>
+      </Provider>
     </>
   );
 };
