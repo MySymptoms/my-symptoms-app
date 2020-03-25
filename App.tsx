@@ -26,6 +26,7 @@ import {HealthForm} from './src/HealthForm';
 import {HealthReportComponent} from './src/HealthReportComponent';
 import {NavigationContainer} from '@react-navigation/native';
 import {ReportList} from './src/ReportList';
+import {OverviewScreen} from './src/OverviewScreen';
 
 // TS declaration for making redux devtools extension stop complaining in createStore below.
 declare global {
@@ -54,6 +55,16 @@ const App = () => {
               inactiveTintColor: 'grey',
               labelPosition: 'below-icon',
             }}>
+            <Tab.Screen
+              name="Overview"
+              component={OverviewScreen}
+              options={{
+                tabBarLabel: 'Form',
+                // tabBarIcon: ({color, focused, size}) => (
+                //   <ControllerIcon fill={color} size={size} />
+                // ),
+              }}
+            />
             <Tab.Screen
               name="Form"
               component={HealthForm}
