@@ -1,5 +1,4 @@
 import React from 'react';
-import {Text, StyleSheet, View} from 'react-native';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {CircleButton} from './CircleButton';
