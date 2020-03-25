@@ -15,6 +15,7 @@ import {
   ScrollView,
   Text,
   StatusBar,
+  View,
 } from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
@@ -44,7 +45,7 @@ const Tab = createBottomTabNavigator();
 
 const App = () => {
   return (
-    <>
+    <SafeAreaView style={{ flex: 1 }}>
       <Provider store={store}>
         <StatusBar barStyle="dark-content" />
         <NavigationContainer>
@@ -88,7 +89,7 @@ const App = () => {
           </Tab.Navigator>
         </NavigationContainer>
       </Provider>
-    </>
+    </SafeAreaView>
   );
 };
 

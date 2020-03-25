@@ -1,23 +1,83 @@
 import React from 'react';
 import {Text, StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {CircleButton} from './CircleButton';
 import styled from 'styled-components/native';
+import Hedgehog from '../assets/hedgehog.png';
+import {Button, Space} from './components/Block';
 
 export const OverviewScreen = () => {
   return (
     <LinearGradient
-      colors={['#000000', '#rgba(37,37,37,0)', '#2E2E2E']}
+      colors={['#000', 'rgba(37,37,37,0)']}
+      locations={[0, 0.1502]}
       style={styles.linearGradient}>
-      <HeaderRow>
-        <View style={{flex: 1}}></View>
-        <CenterTitleText>TRACK MY SYMPTOMS</CenterTitleText>
-        <View style={{flex: 1, alignItems: 'flex-end'}}>
-          <CircleButton onPress={() => {}}>
-            <UserEmojiContainer>🦔</UserEmojiContainer>
-          </CircleButton>
+      <View>
+        <HeaderRow>
+          <View style={{flex: 1}}></View>
+          <CenterTitleText>TRACK MY SYMPTOMS</CenterTitleText>
+          <View style={{flex: 1, alignItems: 'flex-end'}}>
+            <CircleButton onPress={() => {}}>
+              <UserEmojiContainer>🦔</UserEmojiContainer>
+            </CircleButton>
+          </View>
+        </HeaderRow>
+
+        <Text style={{color: 'white'}}>TRACK MY COVID</Text>
+      </View>
+      <View style={{alignItems: 'center', justifyContent: 'center'}}>
+        <View style={{flexDirection: 'row'}}>
+          <Button>
+            <Text style={styles.buttonEmoji}>🤒</Text>
+            <Text style={styles.emojiButtonText}>Fever</Text>
+          </Button>
+          <Space />
+          <Button>
+            <Text style={styles.buttonEmoji}>😷</Text>
+            <Text style={styles.emojiButtonText}>Dry Cough</Text>
+          </Button>
+          <Space />
+          <Button>
+            <Text style={styles.buttonEmoji}>🛌</Text>
+            <Text style={styles.emojiButtonText}>Tiredness</Text>
+          </Button>
         </View>
-      </HeaderRow>
+        <Space />
+        <View style={{flexDirection: 'row'}}>
+          <Button>
+            <Text style={styles.buttonEmoji}>🥱</Text>
+            <Text style={styles.emojiButtonText}>Shortness of breath</Text>
+          </Button>
+          <Space />
+          <Button>
+            <Text style={styles.buttonEmoji}>😓</Text>
+            <Text style={styles.emojiButtonText}>Aches & Pains</Text>
+          </Button>
+          <Space />
+          <Button>
+            <Text style={styles.buttonEmoji}>😩</Text>
+            <Text style={styles.emojiButtonText}>Sore Throat</Text>
+          </Button>
+        </View>
+        <Space />
+        <View style={{flexDirection: 'row'}}>
+          <Button>
+            <Text style={styles.buttonEmoji}>🚽</Text>
+            <Text style={styles.emojiButtonText}>Diarrhoea</Text>
+          </Button>
+          <Space />
+          <Button>
+            <Text style={styles.buttonEmoji}>🤢</Text>
+            <Text style={styles.emojiButtonText}>Nausea</Text>
+          </Button>
+          <Space />
+          <Button>
+            <Text style={styles.buttonEmoji}>🤧</Text>
+            <Text style={styles.emojiButtonText}>Runny Nose</Text>
+          </Button>
+        </View>
+      </View>
     </LinearGradient>
   );
 };
@@ -43,7 +103,16 @@ const HeaderRow = styled.View`
 `;
 
 const styles = StyleSheet.create({
+  buttonEmoji: {
+    fontSize: 30,
+  },
+  emojiButtonText: {
+    fontSize: 13,
+    color: '#fff',
+    textAlign: 'center',
+  },
   linearGradient: {
+    backgroundColor: '#2E2E2E',
     flex: 1,
     paddingLeft: 15,
     paddingRight: 15,
