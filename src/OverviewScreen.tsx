@@ -7,6 +7,7 @@ import Hedgehog from '../assets/hedgehog.png';
 import PaperSheet from '../assets/paper_sheet.png';
 import {Button, Space} from './components/Block';
 import {fontName} from './lib/vars';
+import {HorizontalStatusCalendar} from './HorizontalStatusCalendar';
 
 export const OverviewScreen = () => {
   return (
@@ -30,7 +31,7 @@ export const OverviewScreen = () => {
             </CircleButton>
           </View>
         </HeaderRow>
-
+        <HorizontalStatusCalendar />
         <Text style={{color: 'white'}}>TRACK MY COVID</Text>
       </View>
       <View style={{alignItems: 'center', justifyContent: 'center'}}>
