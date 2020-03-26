@@ -4,6 +4,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {CircleButton} from './CircleButton';
 import styled from 'styled-components/native';
 import Hedgehog from '../assets/hedgehog.png';
+import PaperSheet from '../assets/paper_sheet.png';
 import {Button, Space} from './components/Block';
 import {fontName} from './lib/vars';
 
@@ -17,9 +18,13 @@ export const OverviewScreen = () => {
       style={styles.linearGradient}>
       <View>
         <HeaderRow>
-          <View style={{flex: 1}} />
+          <View>
+            <CircleButton onPress={() => {}}>
+              <Image source={PaperSheet} />
+            </CircleButton>
+          </View>
           <CenterTitleText>TRACK MY SYMPTOMS</CenterTitleText>
-          <View style={{flex: 1, alignItems: 'flex-end'}}>
+          <View>
             <CircleButton onPress={() => {}}>
               <UserEmojiContainer>🦔</UserEmojiContainer>
             </CircleButton>
@@ -85,7 +90,6 @@ export const OverviewScreen = () => {
 };
 
 const CenterTitleText = styled.Text`
-  flex: 2;
   font-family: ${fontName};
   color: #c1c1c1;
 `;
