@@ -83,7 +83,7 @@ export const OverviewScreen = () => {
 
 const CenterTitleText = styled.Text`
   flex: 2;
-  font-family: Dosis;
+  font-family: 'Dosis';
   color: #c1c1c1;
 `;
 
@@ -106,9 +106,10 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   emojiButtonText: {
-    fontSize: 13,
+    fontSize: 15,
     color: '#fff',
     textAlign: 'center',
+    fontFamily: 'Dosis'
   },
   linearGradient: {
     backgroundColor: '#2E2E2E',
