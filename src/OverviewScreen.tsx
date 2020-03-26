@@ -31,7 +31,7 @@ export const OverviewScreen = () => {
             </CircleButton>
           </View>
         </HeaderRow>
-        <HorizontalStatusCalendar />
+        <HorizontalStatusCalendar style={{marginBottom: 30}} />
       </View>
       <View style={{alignItems: 'center', justifyContent: 'center'}}>
         <View style={{flexDirection: 'row'}}>

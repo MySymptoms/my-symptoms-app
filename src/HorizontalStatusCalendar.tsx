@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, FC} from 'react';
 import styled from 'styled-components/native';
 import {fontName} from './lib/vars';
 import SmoothPicker from 'react-native-smooth-picker';
@@ -39,13 +39,17 @@ const monthNames = [
   'December',
 ];
 
-export const HorizontalStatusCalendar = () => {
+interface Props {
+  style?: CssProps;
+}
+
+export const HorizontalStatusCalendar: FC<Props> = ({style}) => {
   const [selectedDateIndex, setSelectedDateIndex] = useState<number>(
     data.findIndex(d => isToday(d.date)),
   );
 
   return (
-    <HorizontalView>
+    <HorizontalView {...style}>
       <MonthText>
         {monthNames[data[selectedDateIndex].date.getMonth()]}
       </MonthText>
@@ -100,7 +104,7 @@ const DateText = styled.Text`
 const FutureDateText = styled(DateText)`
   font-style: normal;
   font-weight: normal;
-  color: ${Colors.deactivatedText}
+  color: ${Colors.deactivatedText};
   font-family: ${fontName};
 `;
 
