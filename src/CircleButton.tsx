@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import {TouchableOpacity} from 'react-native';
 
 interface Props {
-  onPress: () => {};
+  onPress: () => void;
 }
 
 export const CircleButton: FC<Props> = ({onPress, children}) => {
