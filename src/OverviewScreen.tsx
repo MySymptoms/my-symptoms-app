@@ -5,6 +5,7 @@ import {CircleButton} from './CircleButton';
 import styled from 'styled-components/native';
 import Hedgehog from '../assets/hedgehog.png';
 import {Button, Space} from './components/Block';
+import {fontName} from './lib/vars';
 
 export const OverviewScreen = () => {
   return (
@@ -85,7 +86,7 @@ export const OverviewScreen = () => {
 
 const CenterTitleText = styled.Text`
   flex: 2;
-  font-family: 'Dosis';
+  font-family: ${fontName};
   color: #c1c1c1;
 `;
 
@@ -111,7 +112,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: '#fff',
     textAlign: 'center',
-    fontFamily: 'Dosis',
+    fontFamily: fontName,
   },
   linearGradient: {
     backgroundColor: '#2E2E2E',
