@@ -9,12 +9,14 @@ import {Button, Space} from './components/Block';
 export const OverviewScreen = () => {
   return (
     <LinearGradient
+      start={{x: 0.5, y: 1}}
+      end={{x: 0.5, y: 0}}
       colors={['#000', 'rgba(37,37,37,0)']}
       locations={[0, 0.1502]}
       style={styles.linearGradient}>
       <View>
         <HeaderRow>
-          <View style={{flex: 1}}></View>
+          <View style={{flex: 1}} />
           <CenterTitleText>TRACK MY SYMPTOMS</CenterTitleText>
           <View style={{flex: 1, alignItems: 'flex-end'}}>
             <CircleButton onPress={() => {}}>
@@ -109,7 +111,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: '#fff',
     textAlign: 'center',
-    fontFamily: 'Dosis'
+    fontFamily: 'Dosis',
   },
   linearGradient: {
     backgroundColor: '#2E2E2E',
