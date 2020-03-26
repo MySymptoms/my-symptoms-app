@@ -12,6 +12,7 @@
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		1518756FCED8B23AC1F9767A /* libPods-MyCorona-MyCoronaTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B306E295B97FE3FBA20200F3 /* libPods-MyCorona-MyCoronaTests.a */; };
 		2BE9AEAE62110B2FC97D3609 /* libPods-MyCorona-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9A6AEFCAF73C3B4F1AEADC6 /* libPods-MyCorona-tvOSTests.a */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -19,7 +20,6 @@
 		2DCD954D1E0B4F2C00145EB5 /* MyCoronaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* MyCoronaTests.m */; };
 		5A3CC6DE39293A4846CE3688 /* libPods-MyCorona-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE9AE505B7C16F8461AD98BA /* libPods-MyCorona-tvOS.a */; };
 		6F44BB763586EBBBC89BC7A5 /* libPods-MyCorona.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3787F8DEE11243E919B92C0A /* libPods-MyCorona.a */; };
-		D019B82B9FF317043BC00079 /* libPods-MyCoronaTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B877770B0F9CC6D99FF30ECE /* libPods-MyCoronaTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,13 +56,15 @@
 		3787F8DEE11243E919B92C0A /* libPods-MyCorona.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyCorona.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		471828A24F866C80CCA60813 /* Pods-MyCorona-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyCorona-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-MyCorona-tvOS/Pods-MyCorona-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		7386C7502D57ADF5B21F8F34 /* Pods-MyCorona.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyCorona.debug.xcconfig"; path = "Target Support Files/Pods-MyCorona/Pods-MyCorona.debug.xcconfig"; sourceTree = "<group>"; };
+		79D93CB1BB7E6FB683917260 /* Pods-MyCorona-MyCoronaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyCorona-MyCoronaTests.release.xcconfig"; path = "Target Support Files/Pods-MyCorona-MyCoronaTests/Pods-MyCorona-MyCoronaTests.release.xcconfig"; sourceTree = "<group>"; };
 		8632A5C2B29573E619C860BF /* Pods-MyCoronaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyCoronaTests.release.xcconfig"; path = "Target Support Files/Pods-MyCoronaTests/Pods-MyCoronaTests.release.xcconfig"; sourceTree = "<group>"; };
 		916568CEF8243B2F066A8870 /* Pods-MyCoronaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyCoronaTests.debug.xcconfig"; path = "Target Support Files/Pods-MyCoronaTests/Pods-MyCoronaTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A56BBFBA682D70BDA1796724 /* Pods-MyCorona.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyCorona.release.xcconfig"; path = "Target Support Files/Pods-MyCorona/Pods-MyCorona.release.xcconfig"; sourceTree = "<group>"; };
 		A9A6AEFCAF73C3B4F1AEADC6 /* libPods-MyCorona-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyCorona-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B877770B0F9CC6D99FF30ECE /* libPods-MyCoronaTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyCoronaTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B306E295B97FE3FBA20200F3 /* libPods-MyCorona-MyCoronaTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyCorona-MyCoronaTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9E40B48A2A2D896B14E0EDE /* Pods-MyCorona-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyCorona-tvOS.release.xcconfig"; path = "Target Support Files/Pods-MyCorona-tvOS/Pods-MyCorona-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		C3F8D1E68E207C426CEE2B0F /* Pods-MyCorona-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyCorona-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-MyCorona-tvOSTests/Pods-MyCorona-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		CD95DD7DF345E788D57A0432 /* Pods-MyCorona-MyCoronaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyCorona-MyCoronaTests.debug.xcconfig"; path = "Target Support Files/Pods-MyCorona-MyCoronaTests/Pods-MyCorona-MyCoronaTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D9487B785752BF2D8459E549 /* Pods-MyCorona-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyCorona-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-MyCorona-tvOSTests/Pods-MyCorona-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -74,7 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D019B82B9FF317043BC00079 /* libPods-MyCoronaTests.a in Frameworks */,
+				1518756FCED8B23AC1F9767A /* libPods-MyCorona-MyCoronaTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,7 +146,7 @@
 				3787F8DEE11243E919B92C0A /* libPods-MyCorona.a */,
 				EE9AE505B7C16F8461AD98BA /* libPods-MyCorona-tvOS.a */,
 				A9A6AEFCAF73C3B4F1AEADC6 /* libPods-MyCorona-tvOSTests.a */,
-				B877770B0F9CC6D99FF30ECE /* libPods-MyCoronaTests.a */,
+				B306E295B97FE3FBA20200F3 /* libPods-MyCorona-MyCoronaTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -160,6 +162,8 @@
 				C3F8D1E68E207C426CEE2B0F /* Pods-MyCorona-tvOSTests.release.xcconfig */,
 				916568CEF8243B2F066A8870 /* Pods-MyCoronaTests.debug.xcconfig */,
 				8632A5C2B29573E619C860BF /* Pods-MyCoronaTests.release.xcconfig */,
+				CD95DD7DF345E788D57A0432 /* Pods-MyCorona-MyCoronaTests.debug.xcconfig */,
+				79D93CB1BB7E6FB683917260 /* Pods-MyCorona-MyCoronaTests.release.xcconfig */,
 			);
 			name = Pods;
 			path = Pods;
@@ -424,7 +428,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MyCoronaTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-MyCorona-MyCoronaTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -580,7 +584,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 916568CEF8243B2F066A8870 /* Pods-MyCoronaTests.debug.xcconfig */;
+			baseConfigurationReference = CD95DD7DF345E788D57A0432 /* Pods-MyCorona-MyCoronaTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -603,7 +607,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8632A5C2B29573E619C860BF /* Pods-MyCoronaTests.release.xcconfig */;
+			baseConfigurationReference = 79D93CB1BB7E6FB683917260 /* Pods-MyCorona-MyCoronaTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
