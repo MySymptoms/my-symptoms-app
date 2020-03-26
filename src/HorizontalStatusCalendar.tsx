@@ -3,11 +3,13 @@ import styled from 'styled-components/native';
 import {fontName} from './lib/vars';
 import SmoothPicker from 'react-native-smooth-picker';
 import {Colors} from './lib/colors';
-import {eachDayOfInterval, addDays, isFuture, getDaysInMonth} from 'date-fns';
+import {eachDayOfInterval, addDays, isPast, isToday, isFuture} from 'date-fns';
+
+const padEndDays = 10;
 
 const dates = eachDayOfInterval({
-  start: new Date(2020, 2, 25),
-  end: addDays(new Date(), 10),
+  start: new Date(2020, 1, 25),
+  end: addDays(new Date(), padEndDays),
 });
 
 const data: DayEntry[] = dates.map(date => {
@@ -22,29 +24,54 @@ interface DayEntry {
   hasData: boolean;
 }
 
+const monthNames = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+
 export const HorizontalStatusCalendar = () => {
-  const [selectedDateIndex, setSelectedDateIndex] = useState<number>(5);
+  const [selectedDateIndex, setSelectedDateIndex] = useState<number>(
+    data.findIndex(d => isToday(d.date)),
+  );
 
   return (
     <HorizontalView>
-      <MonthText>Mars</MonthText>
+      <MonthText>
+        {monthNames[data[selectedDateIndex].date.getMonth()]}
+      </MonthText>
       <SmoothPicker
         magnet
         horizontal
         scrollAnimation
+        initialScrollToIndex={dates.length - padEndDays}
         data={data}
         onSelected={({_item, index}: any) => setSelectedDateIndex(index)}
         renderItem={({item, index}: {item: DayEntry; index: number}) => {
-          const DateTextComp =
-            selectedDateIndex === index ? SelectedDateText : DateText;
+          let DateTextComp = DateText;
+          if (selectedDateIndex === index) {
+            DateTextComp = SelectedDateText;
+          } else if (isFuture(item.date) && !isToday(item.date)) {
+            DateTextComp = FutureDateText;
+          }
           return (
             <VeritalCenterAlignedView key={index}>
-              <DateTextComp>{getDaysInMonth(item.date)}</DateTextComp>
-              {isFuture(item.date) && (
+              <DateTextComp>{item.date.getDate()}</DateTextComp>
+              {isPast(item.date) && !isToday(item.date) && (
                 <StatusDot
                   color={item.hasData ? Colors.statusOn : Colors.statusOff}
                 />
               )}
+              {isToday(item.date) && <UnderScore />}
             </VeritalCenterAlignedView>
           );
         }}
@@ -57,11 +84,23 @@ interface StatusDotProps {
   color: string;
 }
 
+const UnderScore = styled.View`
+  border: 2px solid white;
+  width: 42px;
+`;
+
 const DateText = styled.Text`
   color: white;
   font-size: 18px;
   line-height: 26px;
   padding-bottom: 5px;
+  font-family: ${fontName};
+`;
+
+const FutureDateText = styled(DateText)`
+  font-style: normal;
+  font-weight: normal;
+  color: ${Colors.deactivatedText}
   font-family: ${fontName};
 `;
 

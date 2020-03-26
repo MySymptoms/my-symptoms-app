@@ -8,4 +8,5 @@ export const Colors = {
   title: titleGrey,
   statusOn: statusGreen,
   statusOff: statusGrey,
+  deactivatedText: deactivatedGrey,
 };
