@@ -2,7 +2,10 @@ import React, {ReactNode, useState} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import {Space} from './components/Block';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
+import SmoothPicker from 'react-native-smooth-picker';
 import LinearGradient from 'react-native-linear-gradient';
+import _ from 'lodash';
+import {fontName} from './lib/vars';
 
 interface RowProps {
   left: string;
@@ -83,26 +86,49 @@ const YesNoSegmentedControl = ({
   />
 );
 
+const yearOptions = _.range(1980, 2020);
 export const StartScreen = () => {
   const [state1, setState1] = useState(0);
   const [state2, setState2] = useState(1);
+  const [year, setYear] = useState(1984);
   return (
     <View style={{flex: 1, backgroundColor: '#2e2e2e', paddingHorizontal: 7}}>
       <InputFieldRow
         left="👶"
         center="What year were you born?"
         right={
-          <Text
-            style={{
-              color: '#fff',
-              fontFamily: 'Dosis',
-              fontWeight: '500',
-              fontSize: 25,
-              textShadowRadius: 4,
-              textShadowColor: '#8CEF80',
-            }}>
-            1984
-          </Text>
+          <SmoothPicker
+            magnet
+            scrollAnimation
+            keyExtractor={item => item}
+            data={yearOptions}
+            initialScrollToIndex={yearOptions.indexOf(1984)}
+            onSelected={({item}) => setYear(item)}
+            renderItem={({item}) => (
+              <View style={{height: 30}}>
+                <Text
+                  style={
+                    item === year
+                      ? {
+                          fontFamily: fontName,
+                          fontWeight: '500',
+                          color: '#fff',
+                          fontSize: 26,
+                          textShadowRadius: 4,
+                          textShadowColor: '#8CEF80',
+                        }
+                      : {
+                          fontFamily: fontName,
+                          fontWeight: '500',
+                          color: '#000',
+                          fontSize: 20,
+                        }
+                  }>
+                  {item}
+                </Text>
+              </View>
+            )}
+          />
         }
       />
       <Space />
