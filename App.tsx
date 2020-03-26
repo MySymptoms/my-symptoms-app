@@ -9,25 +9,16 @@
  */
 
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  Text,
-  StatusBar,
-  View,
-} from 'react-native';
+import {SafeAreaView, StatusBar} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {createStore, compose} from 'redux';
+import {compose, createStore} from 'redux';
 import rootReducer from './src/reducers/rootReducer';
 import {Provider} from 'react-redux';
 import {HealthForm} from './src/HealthForm';
 import {HealthReportComponent} from './src/HealthReportComponent';
 import {NavigationContainer} from '@react-navigation/native';
-import {ReportList} from './src/ReportList';
-import {OverviewScreen} from './src/OverviewScreen';
+import {StartScreen} from './src/StartScreen';
+import { OverviewScreen } from "./src/OverviewScreen";
 
 // TS declaration for making redux devtools extension stop complaining in createStore below.
 declare global {
@@ -45,7 +36,7 @@ const Tab = createBottomTabNavigator();
 
 const App = () => {
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#2E2E2E' }}>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#2E2E2E'}}>
       <Provider store={store}>
         <StatusBar barStyle="light-content" />
         <NavigationContainer>

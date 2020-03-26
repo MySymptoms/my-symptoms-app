@@ -32,7 +32,6 @@ export const OverviewScreen = () => {
           </View>
         </HeaderRow>
         <HorizontalStatusCalendar />
-        <Text style={{color: 'white'}}>TRACK MY COVID</Text>
       </View>
       <View style={{alignItems: 'center', justifyContent: 'center'}}>
         <View style={{flexDirection: 'row'}}>
