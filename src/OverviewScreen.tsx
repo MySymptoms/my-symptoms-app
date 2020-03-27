@@ -8,6 +8,7 @@ import PaperSheet from '../assets/paper_sheet.png';
 import {Button, Space} from './components/Block';
 import {fontName} from './lib/vars';
 import {HorizontalStatusCalendar} from './HorizontalStatusCalendar';
+import {Icon, Icons} from './lib/icons';
 
 export const OverviewScreen = () => {
   return (
@@ -36,53 +37,70 @@ export const OverviewScreen = () => {
       <View style={{alignItems: 'center', justifyContent: 'center'}}>
         <View style={{flexDirection: 'row'}}>
           <Button>
-            <Text style={styles.buttonEmoji}>🤒</Text>
+            <Icon source={Icons.FaceWithThermometer} />
             <Text style={styles.emojiButtonText}>Fever</Text>
           </Button>
           <Space />
           <Button>
-            <Text style={styles.buttonEmoji}>😷</Text>
+            <Icon source={Icons.Mask} />
             <Text style={styles.emojiButtonText}>Dry Cough</Text>
           </Button>
           <Space />
           <Button>
-            <Text style={styles.buttonEmoji}>🛌</Text>
+            <Icon source={Icons.Bed} />
             <Text style={styles.emojiButtonText}>Tiredness</Text>
           </Button>
         </View>
         <Space />
         <View style={{flexDirection: 'row'}}>
           <Button>
-            <Text style={styles.buttonEmoji}>🥱</Text>
+            <Icon source={Icons.Yawn} />
             <Text style={styles.emojiButtonText}>Shortness of breath</Text>
           </Button>
           <Space />
           <Button>
-            <Text style={styles.buttonEmoji}>😓</Text>
+            <Icon source={Icons.Sweat} />
             <Text style={styles.emojiButtonText}>Aches & Pains</Text>
           </Button>
           <Space />
           <Button>
-            <Text style={styles.buttonEmoji}>😩</Text>
+            <Icon source={Icons.Weary} />
             <Text style={styles.emojiButtonText}>Sore Throat</Text>
           </Button>
         </View>
         <Space />
         <View style={{flexDirection: 'row'}}>
           <Button>
-            <Text style={styles.buttonEmoji}>🚽</Text>
+            <Icon source={Icons.Toilet} />
             <Text style={styles.emojiButtonText}>Diarrhoea</Text>
           </Button>
           <Space />
           <Button>
-            <Text style={styles.buttonEmoji}>🤢</Text>
+            <Icon source={Icons.Nauseated} />
             <Text style={styles.emojiButtonText}>Nausea</Text>
           </Button>
           <Space />
           <Button>
-            <Text style={styles.buttonEmoji}>🤧</Text>
+            <Icon source={Icons.Sneezing} />
             <Text style={styles.emojiButtonText}>Runny Nose</Text>
           </Button>
+        </View>
+        <Space />
+        <View
+          style={{
+            flexDirection: 'row',
+          }}>
+          <Button>
+            <Icon source={Icons.Food} />
+            <Text style={styles.emojiButtonText}>Sense of taste</Text>
+          </Button>
+          <Space />
+          <Button>
+            <Icon source={Icons.Nose} />
+            <Text style={styles.emojiButtonText}>Sense of smell</Text>
+          </Button>
+          <Space />
+          <View style={{width: 100, height: 100}} />
         </View>
       </View>
     </LinearGradient>
