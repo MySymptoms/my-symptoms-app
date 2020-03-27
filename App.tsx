@@ -10,15 +10,12 @@
 
 import React from 'react';
 import {SafeAreaView, StatusBar} from 'react-native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {compose, createStore} from 'redux';
 import rootReducer from './src/reducers/rootReducer';
 import {Provider} from 'react-redux';
-import {HealthForm} from './src/HealthForm';
-import {HealthReportComponent} from './src/HealthReportComponent';
 import {NavigationContainer} from '@react-navigation/native';
-import {StartScreen} from './src/StartScreen';
-import { OverviewScreen } from "./src/OverviewScreen";
+import {OverviewScreen} from './src/OverviewScreen';
+import {createStackNavigator} from '@react-navigation/stack';
 
 // TS declaration for making redux devtools extension stop complaining in createStore below.
 declare global {
@@ -32,7 +29,11 @@ const store = createStore(
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
 );
 
-const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
+
+export const Routes = {
+  Overview: 'Overview',
+};
 
 const App = () => {
   return (
@@ -40,44 +41,9 @@ const App = () => {
       <Provider store={store}>
         <StatusBar barStyle="light-content" />
         <NavigationContainer>
-          <Tab.Navigator
-            tabBarOptions={{
-              activeBackgroundColor: 'white',
-              inactiveBackgroundColor: 'white',
-              inactiveTintColor: 'grey',
-              labelPosition: 'below-icon',
-            }}>
-            <Tab.Screen
-              name="Overview"
-              component={OverviewScreen}
-              options={{
-                tabBarLabel: 'Form',
-                // tabBarIcon: ({color, focused, size}) => (
-                //   <ControllerIcon fill={color} size={size} />
-                // ),
-              }}
-            />
-            <Tab.Screen
-              name="Form"
-              component={HealthForm}
-              options={{
-                tabBarLabel: 'Form',
-                // tabBarIcon: ({color, focused, size}) => (
-                //   <ControllerIcon fill={color} size={size} />
-                // ),
-              }}
-            />
-            <Tab.Screen
-              name="Reportp"
-              component={HealthReportComponent}
-              options={{
-                tabBarLabel: 'Reports',
-                // tabBarIcon: ({color, focused, size}) => (
-                //   <ControllerIcon fill={color} size={size} />
-                // ),
-              }}
-            />
-          </Tab.Navigator>
+          <Stack.Navigator headerMode="none">
+            <Stack.Screen name={Routes.Overview} component={OverviewScreen} />
+          </Stack.Navigator>
         </NavigationContainer>
       </Provider>
     </SafeAreaView>
