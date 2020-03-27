@@ -10,6 +10,7 @@ import {HorizontalStatusCalendar} from './HorizontalStatusCalendar';
 import {FancyGradientChart} from './FancyGradientChart';
 import {Icon, Icons} from './lib/icons';
 import {Colors} from './lib/colors';
+import { getRandomEmoji } from "./lib/emoji";
 
 export const OverviewScreen = () => {
   return (
@@ -29,7 +30,7 @@ export const OverviewScreen = () => {
           <CenterTitleText>TRACK MY SYMPTOMS</CenterTitleText>
           <View>
             <CircleButton onPress={() => {}}>
-              <UserEmojiContainer>🦔</UserEmojiContainer>
+              <UserEmojiContainer>{getRandomEmoji()}</UserEmojiContainer>
             </CircleButton>
           </View>
         </HeaderRow>
