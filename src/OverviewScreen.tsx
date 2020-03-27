@@ -10,7 +10,7 @@ import {HorizontalStatusCalendar} from './HorizontalStatusCalendar';
 import {FancyGradientChart} from './FancyGradientChart';
 import {Icon, Icons} from './lib/icons';
 import {Colors} from './lib/colors';
-import { getRandomEmoji } from "./lib/emoji";
+import {getRandomEmoji} from './lib/emoji';
 
 export const OverviewScreen = () => {
   return (

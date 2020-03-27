@@ -1,9 +1,10 @@
-import React, {useState, FC} from 'react';
+import React, {FC, useState} from 'react';
 import styled from 'styled-components/native';
 import {fontName} from './lib/vars';
 import SmoothPicker from 'react-native-smooth-picker';
 import {Colors} from './lib/colors';
-import {eachDayOfInterval, addDays, isPast, isToday, isFuture} from 'date-fns';
+import {addDays, eachDayOfInterval, isFuture, isPast, isToday} from 'date-fns';
+import {ViewStyle} from 'react-native';
 
 const padEndDays = 10;
 
@@ -40,7 +41,7 @@ const monthNames = [
 ];
 
 interface Props {
-  style?: CssProps;
+  style?: ViewStyle;
 }
 
 export const HorizontalStatusCalendar: FC<Props> = ({style}) => {
