@@ -1,6 +1,6 @@
 import React from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
-import {CircleButton} from './CircleButton';
+import {CircleButton} from './components/CircleButton';
 import styled from 'styled-components/native';
 import PaperSheet from '../assets/paper_sheet.png';
 import {Button, Space} from './components/Block';
