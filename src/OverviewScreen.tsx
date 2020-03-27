@@ -1,18 +1,24 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import {CircleButton} from './components/CircleButton';
 import styled from 'styled-components/native';
 import PaperSheet from '../assets/paper_sheet.png';
-import {Button, Space} from './components/Block';
+import {Button, Space, CenterTitleText, HeaderRow} from './components/Block';
 import {fontName} from './lib/vars';
 import {HorizontalStatusCalendar} from './HorizontalStatusCalendar';
 import {FancyGradientChart} from './FancyGradientChart';
 import {Icon, Icons} from './lib/icons';
 import {Colors} from './lib/colors';
 import {getRandomEmoji} from './lib/emoji';
+import {Routes} from '../App';
 import {Background} from './components/Background';
+import {StackNavigationProp} from '@react-navigation/stack';
 
-export const OverviewScreen = () => {
+type Props = {
+  navigation: StackNavigationProp<{}>;
+};
+
+export const OverviewScreen: FC<Props> = ({navigation}) => {
   return (
     <Background>
       <View>
@@ -34,7 +40,7 @@ export const OverviewScreen = () => {
       <FancyGradientChart />
       <View style={{alignItems: 'center', justifyContent: 'center'}}>
         <View style={{flexDirection: 'row'}}>
-          <Button>
+          <Button onPress={() => navigation.navigate(Routes.Fever)}>
             <Icon source={Icons.FaceWithThermometer} />
             <Text style={styles.emojiButtonText}>Fever</Text>
           </Button>
@@ -123,23 +129,11 @@ const NoSymtoms = styled.View`
   elevation: 100;
 `;
 
-const CenterTitleText = styled.Text`
-  font-family: ${fontName};
-  color: #c1c1c1;
-`;
-
 const UserEmojiContainer = styled.Text`
   justify-content: center;
   align-items: center;
   line-height: 24px;
   font-size: 24px;
-`;
-
-const HeaderRow = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 10px;
 `;
 
 const styles = StyleSheet.create({

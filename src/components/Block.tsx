@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import {View} from 'react-native';
+import {fontName} from '../lib/vars';
 
 export const Button = styled.TouchableOpacity`
   padding-top: 12px;
@@ -18,4 +18,16 @@ export const Button = styled.TouchableOpacity`
 export const Space = styled.View`
   width: 20px;
   height: 20px;
+`;
+
+export const CenterTitleText = styled.Text`
+  font-family: ${fontName};
+  color: #c1c1c1;
+`;
+
+export const HeaderRow = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 10px;
 `;

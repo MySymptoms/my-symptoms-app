@@ -1,8 +1,9 @@
 import React, {FC} from 'react';
-import {Image, ImageSourcePropType} from 'react-native';
+import {Image, ImageSourcePropType, ViewProps} from 'react-native';
 import {StyleSheet} from 'react-native';
 
 import Baby from '../../assets/baby.png';
+import BackArrow from '../../assets/back_arrow.png';
 import BandAid from '../../assets/band_aid.png';
 import Bed from '../../assets/bed.png';
 import Corona from '../../assets/corona.png';
@@ -29,6 +30,7 @@ import Yawn from '../../assets/yawn.png';
 
 export const Icons = {
   Baby,
+  BackArrow,
   BandAid,
   Bed,
   Corona,
@@ -56,10 +58,11 @@ export const Icons = {
 
 interface IconProps {
   source: ImageSourcePropType;
+  style?: ViewProps;
 }
 
-export const Icon: FC<IconProps> = ({source}) => {
-  return <Image style={styles.iconStyle} source={source} />;
+export const Icon: FC<IconProps> = ({source, style}) => {
+  return <Image {...style} style={styles.iconStyle} source={source} />;
 };
 
 const styles = StyleSheet.create({
