@@ -57,6 +57,7 @@ export const HorizontalStatusCalendar: FC<Props> = ({style}) => {
         magnet
         horizontal
         scrollAnimation
+        keyExtractor={(dayEntry: DayEntry) => String(dayEntry.date)}
         initialScrollToIndex={dates.length - padEndDays}
         data={data}
         onSelected={({_item, index}: any) => setSelectedDateIndex(index)}
