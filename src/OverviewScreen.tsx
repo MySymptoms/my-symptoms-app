@@ -3,12 +3,12 @@ import {Image, StyleSheet, Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {CircleButton} from './CircleButton';
 import styled from 'styled-components/native';
-import Hedgehog from '../assets/hedgehog.png';
 import PaperSheet from '../assets/paper_sheet.png';
 import {Button, Space} from './components/Block';
 import {fontName} from './lib/vars';
 import {HorizontalStatusCalendar} from './HorizontalStatusCalendar';
 import {Icon, Icons} from './lib/icons';
+import {Colors} from './lib/colors';
 
 export const OverviewScreen = () => {
   return (
@@ -102,10 +102,28 @@ export const OverviewScreen = () => {
           <Space />
           <View style={{width: 100, height: 100}} />
         </View>
+        <Space />
+        <NoSymtoms>
+          <Icon source={Icons.Flex} />
+          <Text style={styles.emojiButtonText}>No symptoms today</Text>
+        </NoSymtoms>
       </View>
     </LinearGradient>
   );
 };
+
+const NoSymtoms = styled.View`
+  width: 110px;
+  height: 110px;
+  border: 2px solid black;
+  justify-content: center;
+  align-items: center;
+  border-radius: 55px;
+  background-color: ${Colors.buttonBackground};
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  border: 3px rgba(0, 0, 0, 0.6);
+  elevation: 100;
+`;
 
 const CenterTitleText = styled.Text`
   font-family: ${fontName};
