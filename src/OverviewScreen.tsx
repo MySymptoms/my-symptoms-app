@@ -10,12 +10,12 @@ import {FancyGradientChart} from './FancyGradientChart';
 import {Icon, Icons} from './lib/icons';
 import {Colors} from './lib/colors';
 import {getRandomEmoji} from './lib/emoji';
-import {Routes} from '../App';
+import {RootStackParamList} from '../App';
 import {Background} from './components/Background';
 import {StackNavigationProp} from '@react-navigation/stack';
 
 type Props = {
-  navigation: StackNavigationProp<{}>;
+  navigation: StackNavigationProp<RootStackParamList>;
 };
 
 export const OverviewScreen: FC<Props> = ({navigation}) => {
@@ -40,12 +40,12 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
       <FancyGradientChart />
       <View style={{alignItems: 'center', justifyContent: 'center'}}>
         <View style={{flexDirection: 'row'}}>
-          <Button onPress={() => navigation.navigate(Routes.Fever)}>
+          <Button onPress={() => navigation.navigate('Fever')}>
             <Icon source={Icons.FaceWithThermometer} />
             <Text style={styles.emojiButtonText}>Fever</Text>
           </Button>
           <Space />
-          <Button>
+          <Button onPress={() => navigation.navigate('DryCough')}>
             <Icon source={Icons.Mask} />
             <Text style={styles.emojiButtonText}>Dry Cough</Text>
           </Button>

@@ -17,6 +17,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {OverviewScreen} from './src/OverviewScreen';
 import {createStackNavigator} from '@react-navigation/stack';
 import {FeverInputScreen} from './src/FeverInputScreen';
+import {DryCoughInputScreen} from './src/DryCoughInputScreen';
 
 // TS declaration for making redux devtools extension stop complaining in createStore below.
 declare global {
@@ -32,9 +33,10 @@ const store = createStore(
 
 const Stack = createStackNavigator();
 
-export const Routes = {
-  Overview: 'Overview',
-  Fever: 'Fever',
+export type RootStackParamList = {
+  Overview: undefined;
+  Fever: undefined;
+  DryCough: undefined;
 };
 
 const App = () => {
@@ -44,8 +46,9 @@ const App = () => {
         <StatusBar barStyle="light-content" />
         <NavigationContainer>
           <Stack.Navigator headerMode="none">
-            <Stack.Screen name={Routes.Overview} component={OverviewScreen} />
-            <Stack.Screen name={Routes.Fever} component={FeverInputScreen} />
+            <Stack.Screen name={'Overview'} component={OverviewScreen} />
+            <Stack.Screen name={'Fever'} component={FeverInputScreen} />
+            <Stack.Screen name={'DryCough'} component={DryCoughInputScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>
