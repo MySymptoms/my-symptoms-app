@@ -35,10 +35,12 @@
     "react-native-screens": "^2.4.0",
     "react-native-segmented-control-tab": "^3.4.1",
     "react-native-smooth-picker": "^0.2.4",
+    "react-native-svg": "^12.0.3",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
     "styled-components": "^5.0.1",
-    "uuid": "^7.0.2"
+    "uuid": "^7.0.2",
+    "victory-native": "^34.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
@@ -47,6 +49,7 @@
     "@types/jest": "^24.0.24",
     "@types/react-native": "^0.60.25",
     "@types/react-test-renderer": "16.9.1",
+    "@types/victory": "^33.1.4",
     "@typescript-eslint/eslint-plugin": "^2.12.0",
     "@typescript-eslint/parser": "^2.12.0",
     "babel-jest": "^24.9.0",

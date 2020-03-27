@@ -7,6 +7,7 @@ import PaperSheet from '../assets/paper_sheet.png';
 import {Button, Space} from './components/Block';
 import {fontName} from './lib/vars';
 import {HorizontalStatusCalendar} from './HorizontalStatusCalendar';
+import {FancyGradientChart} from './FancyGradientChart';
 import {Icon, Icons} from './lib/icons';
 import {Colors} from './lib/colors';
 
@@ -34,6 +35,7 @@ export const OverviewScreen = () => {
         </HeaderRow>
         <HorizontalStatusCalendar style={{marginBottom: 30}} />
       </View>
+      <FancyGradientChart />
       <View style={{alignItems: 'center', justifyContent: 'center'}}>
         <View style={{flexDirection: 'row'}}>
           <Button>
