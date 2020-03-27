@@ -23,3 +23,7 @@ const Container = styled.View`
   justify-content: center;
   align-items: center;
 `;
+
+export const CircleButtonPlaceHolder = styled(Container)`
+  opacity: 0;
+`;
