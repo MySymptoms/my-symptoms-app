@@ -1,6 +1,5 @@
 import React from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import {CircleButton} from './CircleButton';
 import styled from 'styled-components/native';
 import PaperSheet from '../assets/paper_sheet.png';
@@ -11,15 +10,11 @@ import {FancyGradientChart} from './FancyGradientChart';
 import {Icon, Icons} from './lib/icons';
 import {Colors} from './lib/colors';
 import {getRandomEmoji} from './lib/emoji';
+import {Background} from './components/Background';
 
 export const OverviewScreen = () => {
   return (
-    <LinearGradient
-      start={{x: 0.5, y: 1}}
-      end={{x: 0.5, y: 0}}
-      colors={['#000', 'rgba(37,37,37,0)']}
-      locations={[0, 0.1502]}
-      style={styles.linearGradient}>
+    <Background>
       <View>
         <HeaderRow>
           <View>
@@ -111,7 +106,7 @@ export const OverviewScreen = () => {
           <Text style={styles.emojiButtonText}>No symptoms today</Text>
         </NoSymtoms>
       </View>
-    </LinearGradient>
+    </Background>
   );
 };
 
