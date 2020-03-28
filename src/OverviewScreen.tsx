@@ -1,9 +1,8 @@
 import React, {FC} from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
-import {CircleButton} from './components/CircleButton';
+import {StyleSheet, Text, View, Image} from 'react-native';
 import styled from 'styled-components/native';
+import {Button, Space} from './components/Block';
 import PaperSheet from '../assets/paper_sheet.png';
-import {Button, CenterTitleText, HeaderRow, Space} from './components/Block';
 import {fontName} from './lib/vars';
 import {HorizontalStatusCalendar} from './HorizontalStatusCalendar';
 import {Icon, Icons} from './lib/icons';
@@ -12,6 +11,8 @@ import {getRandomEmoji} from './lib/emoji';
 import {RootStackParamList} from '../App';
 import {Background} from './components/Background';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {NavigationHeader} from './NavigationHeader';
+import { SummaryViewIcon } from "./components/SummaryViewIcon";
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -21,19 +22,12 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
   return (
     <Background>
       <View>
-        <HeaderRow>
-          <View>
-            <CircleButton onPress={() => {}}>
-              <Image source={PaperSheet} />
-            </CircleButton>
-          </View>
-          <CenterTitleText>TRACK MY SYMPTOMS</CenterTitleText>
-          <View>
-            <CircleButton onPress={() => {}}>
-              <UserEmojiContainer>{getRandomEmoji()}</UserEmojiContainer>
-            </CircleButton>
-          </View>
-        </HeaderRow>
+        <NavigationHeader
+          left={<SummaryViewIcon/>}
+          onPressLeft={() => navigation.navigate('Summary')}
+          title={'TRACK MY SYMPTOMS'}
+          right={<UserEmojiContainer>{getRandomEmoji()}</UserEmojiContainer>}
+        />
         <HorizontalStatusCalendar style={{marginBottom: 30}} />
       </View>
       <View style={{alignItems: 'center', justifyContent: 'center'}}>

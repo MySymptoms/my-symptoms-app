@@ -1,14 +1,13 @@
-import React, {FC, useState} from 'react';
+import React, {FC} from 'react';
 import {Background} from './components/Background';
-import {CircleButton, CircleButtonPlaceHolder} from './components/CircleButton';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {Icon, Icons} from './lib/icons';
-import {CenterTitleText, HeaderRow} from './components/Block';
 import {FancyGradientChart} from './FancyGradientChart';
-import {View, StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {Colors} from './lib/colors';
 import {fontName} from './lib/vars';
 import {DoneButton} from './components/DoneButton';
+import {NavigationHeader} from './NavigationHeader';
 
 type Props = {
   navigation: StackNavigationProp<{}>;
@@ -17,13 +16,7 @@ type Props = {
 export const DryCoughInputScreen: FC<Props> = ({navigation}) => {
   return (
     <Background>
-      <HeaderRow>
-        <CircleButton onPress={() => navigation.goBack()}>
-          <Icon source={Icons.BackArrow} />
-        </CircleButton>
-        <CenterTitleText>TRACKING DRY COUGH</CenterTitleText>
-        <CircleButtonPlaceHolder />
-      </HeaderRow>
+      <NavigationHeader title={'TRACKING DRY COUGH'} showBackButton />
       <View style={{flexDirection: 'row'}}>
         <Icon style={styles.emojiStyle} source={Icons.Mask} />
         <FancyGradientChart />

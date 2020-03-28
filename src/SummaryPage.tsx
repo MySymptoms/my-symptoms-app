@@ -1,10 +1,15 @@
 import React, {ReactNode} from 'react';
-import {View} from 'react-native';
+import {Image, View} from 'react-native';
 import styled from 'styled-components/native';
 import {fontName} from './lib/vars';
 import {HalfSpace, Space} from './components/Block';
 import {CheckIcon} from './components/CheckIcon';
 import {Background} from './components/Background';
+import {NavigationHeader} from './NavigationHeader';
+import PaperSheet from '../assets/paper_sheet.png';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '../App';
 
 const Row = styled.View`
   flex-direction: row;
@@ -62,8 +67,15 @@ const SummaryViewColumn: React.FC = ({children}) => (
 );
 
 export const SummaryPage = () => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   return (
     <Background style={{paddingHorizontal: 15}}>
+      <NavigationHeader
+        showBackButton
+        title={'TRACK MY SYMPTOMS'}
+        right={<Image source={PaperSheet} />}
+        onPressRight={() => navigation.navigate('ReportList')}
+      />
       <Space />
       <Row>
         <SummaryViewColumn>

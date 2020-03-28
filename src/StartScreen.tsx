@@ -87,6 +87,7 @@ const YesNoSegmentedControl = ({
 );
 
 const yearOptions = _.range(1980, 2020);
+
 export const StartScreen = () => {
   const [state1, setState1] = useState(0);
   const [state2, setState2] = useState(1);

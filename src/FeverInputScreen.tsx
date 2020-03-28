@@ -6,13 +6,13 @@ import {Icon, Icons} from './lib/icons';
 import {CenterTitleText, HeaderRow} from './components/Block';
 import {FancyGradientChart} from './FancyGradientChart';
 import {TextInput} from 'react-native-gesture-handler';
-import {View, StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {Colors} from './lib/colors';
 import {fontName} from './lib/vars';
 import {DoneButton} from './components/DoneButton';
-import {SwitchInput} from './SwitchInput';
 import {SegmentedControl} from './components/SegmentedControl';
 import RadialGradient from 'react-native-radial-gradient';
+import {BackIcon} from './components/BackIcon';
 
 type Props = {
   navigation: StackNavigationProp<{}>;
@@ -25,7 +25,7 @@ export const FeverInputScreen: FC<Props> = ({navigation}) => {
     <Background>
       <HeaderRow>
         <CircleButton onPress={() => navigation.goBack()}>
-          <Icon source={Icons.BackArrow} />
+          <BackIcon />
         </CircleButton>
         <CenterTitleText>TRACKING FEVER</CenterTitleText>
         <CircleButtonPlaceHolder />
