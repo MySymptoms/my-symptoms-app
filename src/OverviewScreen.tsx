@@ -13,6 +13,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {NavigationHeader} from './NavigationHeader';
 import {SummaryViewIcon} from './components/SummaryViewIcon';
 import {formatDate} from './lib/util';
+import {OverviewSymptomButton} from './components/OverviewSymptomButton';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -38,109 +39,120 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
       </View>
       <View style={{alignItems: 'center', justifyContent: 'center'}}>
         <View style={{flexDirection: 'row'}}>
-          <Button
+          <OverviewSymptomButton
+            color={'green'}
             onPress={() =>
               navigation.navigate('Fever', {currentReportDate: currentDate})
-            }>
-            <Icon source={Icons.FaceWithThermometer} />
-            <Text style={styles.emojiButtonText}>Fever</Text>
-          </Button>
+            }
+            text={'Fever'}
+            icon={Icons.FaceWithThermometer}
+          />
           <Space />
-          <Button
+          <OverviewSymptomButton
+            color={'red'}
             onPress={() =>
               navigation.navigate('DryCough', {currentReportDate: currentDate})
-            }>
-            <Icon source={Icons.Mask} />
-            <Text style={styles.emojiButtonText}>Dry Cough</Text>
-          </Button>
+            }
+            text={'Dry Cough'}
+            icon={Icons.Mask}
+          />
           <Space />
-          <Button
+          <OverviewSymptomButton
+            color={null}
             onPress={() =>
               navigation.navigate('Tiredness', {currentReportDate: currentDate})
-            }>
-            <Icon source={Icons.Bed} />
-            <Text style={styles.emojiButtonText}>Tiredness</Text>
-          </Button>
+            }
+            text={'Tiredness'}
+            icon={Icons.Bed}
+          />
         </View>
         <Space />
         <View style={{flexDirection: 'row'}}>
-          <Button
+          <OverviewSymptomButton
+            color={'orange'}
             onPress={() =>
               navigation.navigate('ShortnessOfBreath', {
                 currentReportDate: currentDate,
               })
-            }>
-            <Icon source={Icons.Yawn} />
-            <Text style={styles.emojiButtonText}>Shortness of breath</Text>
-          </Button>
+            }
+            text={'Shortness of breath'}
+            icon={Icons.Yawn}
+          />
           <Space />
-          <Button
+          <OverviewSymptomButton
+            color={null}
             onPress={() =>
               navigation.navigate('AchesAndPain', {
                 currentReportDate: currentDate,
               })
-            }>
-            <Icon source={Icons.Sweat} />
-            <Text style={styles.emojiButtonText}>Aches & Pains</Text>
-          </Button>
+            }
+            text={'Aches & Pains'}
+            icon={Icons.Sweat}
+          />
           <Space />
-          <Button
+          <OverviewSymptomButton
+            color={null}
             onPress={() =>
               navigation.navigate('SoreThroat', {
                 currentReportDate: currentDate,
               })
-            }>
-            <Icon source={Icons.Weary} />
-            <Text style={styles.emojiButtonText}>Sore Throat</Text>
-          </Button>
+            }
+            text={'Sore Throat'}
+            icon={Icons.Weary}
+          />
         </View>
         <Space />
         <View style={{flexDirection: 'row'}}>
-          <Button
+          <OverviewSymptomButton
+            color={null}
             onPress={() =>
               navigation.navigate('Diarrhoea', {currentReportDate: currentDate})
-            }>
-            <Icon source={Icons.Toilet} />
-            <Text style={styles.emojiButtonText}>Diarrhoea</Text>
-          </Button>
+            }
+            text={'Diarrhoea'}
+            icon={Icons.Toilet}
+          />
           <Space />
-          <Button
+          <OverviewSymptomButton
+            color={null}
             onPress={() =>
               navigation.navigate('Nausea', {currentReportDate: currentDate})
-            }>
-            <Icon source={Icons.Nauseated} />
-            <Text style={styles.emojiButtonText}>Nausea</Text>
-          </Button>
+            }
+            text={'Nausea'}
+            icon={Icons.Nauseated}
+          />
           <Space />
-          <Button
+          <OverviewSymptomButton
+            color={null}
             onPress={() =>
               navigation.navigate('RunnyNose', {currentReportDate: currentDate})
-            }>
-            <Icon source={Icons.Sneezing} />
-            <Text style={styles.emojiButtonText}>Runny Nose</Text>
-          </Button>
+            }
+            text={'Runny Nose'}
+            icon={Icons.Sneezing}
+          />
         </View>
         <Space />
         <View style={{flexDirection: 'row'}}>
-          <Button
+          <OverviewSymptomButton
+            color={null}
             onPress={() =>
               navigation.navigate('SenseOfTaste', {
                 currentReportDate: currentDate,
               })
-            }>
-            <Icon source={Icons.Food} />
-            <Text style={styles.emojiButtonText}>Sense of taste</Text>
-          </Button>
+            }
+            text={'Sense of taste'}
+            icon={Icons.Food}
+          />
           <Space />
-          <Button
+          <OverviewSymptomButton
+            color={null}
             onPress={() =>
               navigation.navigate('SenseOfSmell', {
                 currentReportDate: currentDate,
               })
-            }>
-            <Icon source={Icons.Nose} />
-            <Text style={styles.emojiButtonText}>Sense of smell</Text>
-          </Button>
+            }
+            text={'Sense of smell'}
+            icon={Icons.Nose}
+          />
           <Space />
           <View style={{width: 100, height: 100}} />
         </View>

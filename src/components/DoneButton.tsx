@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import styled from 'styled-components/native';
 import RadialGradient from 'react-native-radial-gradient';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {ViewProps} from 'react-native';
+import {ViewProps, StyleSheet} from 'react-native';
 import {fontName} from '../lib/vars';
 
 interface Props {
@@ -12,10 +12,12 @@ interface Props {
 
 export const DoneButton: FC<Props> = ({style, onPress}) => {
   return (
-    <TouchableOpacity style={style} onPress={onPress}>
+    <TouchableOpacity
+      style={[styles.touchableOpacity, style]}
+      onPress={onPress}>
       <Container
         colors={['#00DCC2', 'rgba(0, 220, 180, 0)']}
-        stops={[0.1, 0.4, 0.3, 0.75]}
+        stops={[0, 1]}
         center={[100, 100]}
         radius={200}>
         <TitleText>done</TitleText>
@@ -24,6 +26,14 @@ export const DoneButton: FC<Props> = ({style, onPress}) => {
     </TouchableOpacity>
   );
 };
+
+const styles = StyleSheet.create({
+  touchableOpacity: {
+    borderWidth: 3,
+    borderColor: 'rgba(0,220,194, 0.4)',
+    borderRadius: 100,
+  },
+});
 
 const TitleText = styled.Text`
   font-family: ${fontName};
@@ -51,7 +61,5 @@ const Container = styled(RadialGradient)`
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  border-width: 3px;
   border-radius: 100px;
-  border-color: rgba(0, 220, 194, 0.3);
 `;

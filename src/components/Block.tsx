@@ -20,7 +20,6 @@ export const Space = styled.View`
   height: 20px;
 `;
 
-
 export const HalfSpace = styled.View`
   width: 10px;
   height: 10px;

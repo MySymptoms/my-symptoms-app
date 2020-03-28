@@ -48,7 +48,7 @@ export const SoreThroatInputScreen: FC<Props> = ({navigation}) => {
         options={[{title: 'not inflamed'}, {title: 'inflamed & red'}]}
       />
       <View style={styles.center}>
-        <DoneButton style={{paddingTop: 50}} />
+        <DoneButton style={{marginTop: 50}} />
       </View>
     </Background>
   );

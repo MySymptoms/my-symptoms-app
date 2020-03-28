@@ -78,7 +78,7 @@ export const SenseOfTasteInputScreen: FC<Props> = ({route}) => {
       />
 
       <View style={styles.center}>
-        <DoneButton style={{paddingTop: 50}} onPress={() => onSave(values)} />
+        <DoneButton style={{marginTop: 50}} onPress={() => onSave(values)} />
       </View>
     </Background>
   );
