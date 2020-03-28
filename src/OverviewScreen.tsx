@@ -23,7 +23,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
     <Background>
       <View>
         <NavigationHeader
-          left={<SummaryViewIcon/>}
+          left={<SummaryViewIcon />}
           onPressLeft={() => navigation.navigate('Summary')}
           title={'TRACK MY SYMPTOMS'}
           right={<UserEmojiContainer>{getRandomEmoji()}</UserEmojiContainer>}
@@ -98,6 +98,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
         <Space />
         <NoSymtoms>
           <Icon source={Icons.Flex} />
+          <Space />
           <Text style={styles.emojiButtonText}>No symptoms today</Text>
         </NoSymtoms>
       </View>
@@ -106,8 +107,9 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
 };
 
 const NoSymtoms = styled.View`
-  width: 110px;
-  height: 110px;
+  flex-direction: row;
+  width: 245px;
+  height: 62px;
   border: 2px solid black;
   justify-content: center;
   align-items: center;
