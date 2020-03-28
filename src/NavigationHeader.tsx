@@ -3,7 +3,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../App';
 import {CenterTitleText, HeaderRow} from './components/Block';
 import {View} from 'react-native';
-import {CircleButton} from './components/CircleButton';
+import {CircleButton, CircleButtonPlaceHolder} from './components/CircleButton';
 import {BackIcon} from './components/BackIcon';
 import React, {ReactNode} from 'react';
 
@@ -42,7 +42,9 @@ export const NavigationHeader: React.FC<Props> = ({
       <View>
         {right ? (
           <CircleButton onPress={onPressRight}>{right}</CircleButton>
-        ) : null}
+        ) : (
+          <CircleButtonPlaceHolder />
+        )}
       </View>
     </HeaderRow>
   );
