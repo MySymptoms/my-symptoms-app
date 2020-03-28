@@ -1,4 +1,4 @@
-package com.mycorona;
+package app.mysymptoms;
 
 import com.facebook.react.ReactActivity;
 

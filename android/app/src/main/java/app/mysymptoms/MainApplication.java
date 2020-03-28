@@ -1,4 +1,4 @@
-package com.mycorona;
+package app.mysymptoms;;
 
 import android.app.Application;
 import android.content.Context;
