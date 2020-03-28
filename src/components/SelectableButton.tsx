@@ -4,6 +4,7 @@ import RadialGradient from 'react-native-radial-gradient';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {ViewProps, View, StyleSheet, ViewStyle} from 'react-native';
 import {fontName} from '../lib/vars';
+import {Colors} from '../lib/colors';
 
 interface Props {
   style?: ViewProps;
@@ -20,10 +21,9 @@ export const SelectableButton: FC<Props> = ({
   title,
   lineColor,
 }) => {
-  const Container = View; //selected ? GradientContainer : View;
   return (
     <TouchableOpacity style={style} onPress={onPress}>
-      <Container style={[styles.containerStyle]}>
+      <Container selected={selected}>
         <TitleText selected={selected}>{title}</TitleText>
         {lineColor && <Line color={lineColor} selected={selected} />}
       </Container>
@@ -78,16 +78,21 @@ const GradientContainer: FC<GradientContainerProps> = ({children, style}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  containerStyle: {
-    height: 54,
-    justifyContent: 'center',
-    alignItems: 'center',
-    overflow: 'hidden',
-    borderWidth: 3,
-    borderRadius: 100,
-    borderColor: 'black',
-    paddingLeft: 10,
-    paddingRight: 10,
-  },
-});
+interface ContainerProps {
+  selected: boolean;
+}
+
+const Container = styled.View<ContainerProps>`
+  min-width: 100px;
+  height: 54px;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-width: 3px;
+  border-radius: 100px;
+  border-color: black;
+  padding-left: 10px;
+  padding-right: 10px;
+  background: ${props =>
+    props.selected ? Colors.buttonBackgroundActive : Colors.buttonBackground};
+`;
