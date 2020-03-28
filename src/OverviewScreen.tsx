@@ -66,7 +66,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
         </View>
         <Space />
         <View style={{flexDirection: 'row'}}>
-          <Button>
+          <Button onPress={() => navigation.navigate('Diarrhoea')}>
             <Icon source={Icons.Toilet} />
             <Text style={styles.emojiButtonText}>Diarrhoea</Text>
           </Button>
