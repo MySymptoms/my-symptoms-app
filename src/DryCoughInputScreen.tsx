@@ -23,30 +23,30 @@ export const DryCoughInputScreen: FC<Props> = ({navigation}) => {
         {/* <FancyGradientChart /> */}
       </View>
       <SelectionGroup
-        title="Describe the feeling"
+        title="cough frequency"
         onOptionSelected={() => {}}
         options={[
-          {title: 'breathe normally', color: '#8cf081'},
-          {title: 'Short of breath', color: '#FFBC5C'},
-          {title: 'tightness in my chest', color: '#FF7A7A'},
-          {title: 'cannot get enough air', color: '#FF7A7A'},
+          {title: 'every minute'},
+          {title: 'few times an hour'},
+          {title: 'few times a day'},
         ]}
       />
       <Divider />
       <SelectionGroup
-        title="do you also feel"
-        onOptionSelected={() => {}}
-        options={[{title: 'fainting'}]}
-      />
-      <Divider />
-      <SelectionGroup
-        title="frequency"
+        title="intensity"
         onOptionSelected={() => {}}
         options={[
-          {title: 'comes suddenly'},
-          {title: 'is persistent'},
-          {title: 'interferes with daily activity'},
+          {title: 'bearable', color: '#8cf081'},
+          {title: 'harsh', color: '#FFBC5C'},
+          {title: 'physical discomfort', color: '#FF7A7A'},
         ]}
+      />
+      <Divider />
+
+      <SelectionGroup
+        title="disruption"
+        onOptionSelected={() => {}}
+        options={[{title: 'daytime'}, {title: 'nighttime'}]}
       />
       <View style={styles.center}>
         <DoneButton style={{paddingTop: 50}} />

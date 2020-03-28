@@ -47,10 +47,6 @@ const TitleText = styled.Text<TitleTextProps>`
   text-transform: uppercase;
 `;
 
-const SelectedTitleText = styled(TitleText)`
-  color: white;
-`;
-
 interface LineProps {
   selected: boolean;
   color: string;
