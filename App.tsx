@@ -21,7 +21,8 @@ import {DryCoughInputScreen} from './src/DryCoughInputScreen';
 import {SafeAreaProvider, useSafeArea} from 'react-native-safe-area-context';
 import {SummaryPage} from './src/SummaryPage';
 import {ReportList} from './src/ReportList';
-import {ShortnessOfBreathScreen} from './src/ShortnessOfBreathInputScreen';
+import {ShortnessOfBreathInputScreen} from './src/ShortnessOfBreathInputScreen';
+import {AchesAndPainInputScreen} from './src/AchesAndPainsInputScreen';
 
 // TS declaration for making redux devtools extension stop complaining in createStore below.
 declare global {
@@ -42,6 +43,7 @@ export type RootStackParamList = {
   Fever: undefined;
   DryCough: undefined;
   ShortnessOfBreath: undefined;
+  AchesAndPain: undefined;
   ReportList: undefined;
   Summary: undefined;
 };
@@ -66,7 +68,11 @@ const App = () => {
             <Stack.Screen name={'DryCough'} component={DryCoughInputScreen} />
             <Stack.Screen
               name={'ShortnessOfBreath'}
-              component={ShortnessOfBreathScreen}
+              component={ShortnessOfBreathInputScreen}
+            />
+            <Stack.Screen
+              name={'AchesAndPain'}
+              component={AchesAndPainInputScreen}
             />
             <Stack.Screen name={'Summary'} component={SummaryPage} />
             <Stack.Screen name={'ReportList'} component={ReportList} />

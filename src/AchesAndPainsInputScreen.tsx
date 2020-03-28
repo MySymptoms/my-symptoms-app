@@ -17,44 +17,36 @@ type Props = {
   navigation: StackNavigationProp<{}>;
 };
 
-export const ShortnessOfBreathInputScreen: FC<Props> = ({navigation}) => {
+export const AchesAndPainInputScreen: FC<Props> = ({navigation}) => {
   return (
     <Background>
       <HeaderRow>
         <CircleButton onPress={() => navigation.goBack()}>
           <BackIcon />
         </CircleButton>
-        <CenterTitleText>TRACKING SHORTNESS OF BREATH</CenterTitleText>
+        <CenterTitleText>TRACKING ACHES & PAIN</CenterTitleText>
         <CircleButtonPlaceHolder />
       </HeaderRow>
       <View style={{flexDirection: 'row'}}>
-        <Icon style={styles.emojiStyle} source={Icons.Yawn} />
+        <Icon style={styles.emojiStyle} source={Icons.Sweat} />
         <FancyGradientChart />
       </View>
       <SelectionGroup
-        title="Describe the feeling"
+        title="Do you have body ache?"
         onOptionSelected={() => {}}
         options={[
-          {title: 'breathe normally', color: '#8cf081'},
-          {title: 'Short of breath', color: '#FFBC5C'},
-          {title: 'tightness in my chest', color: '#FF7A7A'},
-          {title: 'cannot get enough air', color: '#FF7A7A'},
+          {title: 'yes', color: '#FF7A7A'},
+          {title: 'no', color: '#8cf081'},
         ]}
-      />
-      <Divider />
-      <SelectionGroup
-        title="do you also feel"
-        onOptionSelected={() => {}}
-        options={[{title: 'fainting'}]}
       />
       <Divider />
       <SelectionGroup
         title="frequency"
         onOptionSelected={() => {}}
         options={[
-          {title: 'comes suddenly'},
-          {title: 'is persistent'},
-          {title: 'interferes with daily activity'},
+          {title: 'not often'},
+          {title: 'on-going'},
+          {title: 'persistent'},
         ]}
       />
       <View style={styles.center}>

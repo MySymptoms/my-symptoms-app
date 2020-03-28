@@ -54,7 +54,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
             <Text style={styles.emojiButtonText}>Shortness of breath</Text>
           </Button>
           <Space />
-          <Button>
+          <Button onPress={() => navigation.navigate('AchesAndPain')}>
             <Icon source={Icons.Sweat} />
             <Text style={styles.emojiButtonText}>Aches & Pains</Text>
           </Button>
