@@ -82,11 +82,8 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
           </Button>
         </View>
         <Space />
-        <View
-          style={{
-            flexDirection: 'row',
-          }}>
-          <Button>
+        <View style={{flexDirection: 'row'}}>
+          <Button onPress={() => navigation.navigate('SenseOfTaste')}>
             <Icon source={Icons.Food} />
             <Text style={styles.emojiButtonText}>Sense of taste</Text>
           </Button>
