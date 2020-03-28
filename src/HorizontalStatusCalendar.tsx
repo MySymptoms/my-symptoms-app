@@ -3,8 +3,17 @@ import styled from 'styled-components/native';
 import {fontName} from './lib/vars';
 import SmoothPicker from 'react-native-smooth-picker';
 import {Colors} from './lib/colors';
-import {addDays, eachDayOfInterval, isFuture, isPast, isToday} from 'date-fns';
+import {
+  addDays,
+  eachDayOfInterval,
+  isFuture,
+  isPast,
+  isToday,
+  parseISO,
+} from 'date-fns';
 import {ViewStyle} from 'react-native';
+import {format} from 'date-fns/esm';
+import {formatDate} from './lib/util';
 
 const padEndDays = 10;
 
@@ -25,35 +34,20 @@ interface DayEntry {
   hasData: boolean;
 }
 
-const monthNames = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
-
 interface Props {
   style?: ViewStyle;
+  onChange: (date: string) => void;
+  value: string;
 }
 
-export const HorizontalStatusCalendar: FC<Props> = ({style}) => {
-  const [selectedDateIndex, setSelectedDateIndex] = useState<number>(
-    data.findIndex(d => isToday(d.date)),
-  );
-
+export const HorizontalStatusCalendar: FC<Props> = ({
+  style,
+  value,
+  onChange,
+}) => {
   return (
     <HorizontalView {...style}>
-      <MonthText>
-        {monthNames[data[selectedDateIndex].date.getMonth()]}
-      </MonthText>
+      <MonthText>{format(parseISO(value), 'MMMM')}</MonthText>
       <SmoothPicker
         magnet
         horizontal
@@ -61,10 +55,12 @@ export const HorizontalStatusCalendar: FC<Props> = ({style}) => {
         keyExtractor={(dayEntry: DayEntry) => String(dayEntry.date)}
         initialScrollToIndex={dates.length - padEndDays}
         data={data}
-        onSelected={({_item, index}: any) => setSelectedDateIndex(index)}
+        onSelected={({item}: {item: DayEntry}) =>
+          onChange(formatDate(item.date))
+        }
         renderItem={({item, index}: {item: DayEntry; index: number}) => {
           let DateTextComp = DateText;
-          if (selectedDateIndex === index) {
+          if (formatDate(parseISO(value)) === formatDate(item.date)) {
             DateTextComp = SelectedDateText;
           } else if (isFuture(item.date) && !isToday(item.date)) {
             DateTextComp = FutureDateText;

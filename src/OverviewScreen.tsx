@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import styled from 'styled-components/native';
 import {Button, Space} from './components/Block';
@@ -13,12 +13,15 @@ import {Background} from './components/Background';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {NavigationHeader} from './NavigationHeader';
 import {SummaryViewIcon} from './components/SummaryViewIcon';
+import {formatDate} from './lib/util';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList>;
 };
 
 export const OverviewScreen: FC<Props> = ({navigation}) => {
+  const [currentDate, setCurrentDate] = useState(formatDate(new Date()));
+
   return (
     <Background>
       <View>
@@ -28,7 +31,11 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
           title={'TRACK MY SYMPTOMS'}
           right={<UserEmojiContainer>{getRandomEmoji()}</UserEmojiContainer>}
         />
-        <HorizontalStatusCalendar style={{marginBottom: 30}} />
+        <HorizontalStatusCalendar
+          style={{marginBottom: 30}}
+          onChange={setCurrentDate}
+          value={currentDate}
+        />
       </View>
       <View style={{alignItems: 'center', justifyContent: 'center'}}>
         <View style={{flexDirection: 'row'}}>
