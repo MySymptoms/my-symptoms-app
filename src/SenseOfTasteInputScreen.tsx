@@ -60,8 +60,6 @@ export const SenseOfTasteInputScreen: FC<Props> = ({route}) => {
       .filter(isDefined),
   );
 
-  console.log(data);
-
   const [values, setValues] = useState<Symptom>({
     symptom: 'senseOfTaste',
     values: {},

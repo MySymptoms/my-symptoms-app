@@ -24,6 +24,16 @@ type Props = {
 export const OverviewScreen: FC<Props> = ({navigation}) => {
   const [currentDate, setCurrentDate] = useState(formatDate(new Date()));
   const emoji = useSelector((state: RootState) => state.user.user_emoji);
+  const report = useSelector((state: RootState) => {
+    const reportId = state.dateToReportId[currentDate];
+    if (reportId) {
+      return state.reports[reportId];
+    } else {
+      return null;
+    }
+  });
+
+  console.log(report);
 
   return (
     <Background>
@@ -43,7 +53,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
       <View style={{alignItems: 'center', justifyContent: 'center'}}>
         <View style={{flexDirection: 'row'}}>
           <OverviewSymptomButton
-            color={'green'}
+            color={null}
             onPress={() =>
               navigation.navigate('Fever', {currentReportDate: currentDate})
             }
@@ -52,7 +62,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
           />
           <Space />
           <OverviewSymptomButton
-            color={'red'}
+            color={null}
             onPress={() =>
               navigation.navigate('DryCough', {currentReportDate: currentDate})
             }
@@ -72,7 +82,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
         <Space />
         <View style={{flexDirection: 'row'}}>
           <OverviewSymptomButton
-            color={'orange'}
+            color={null}
             onPress={() =>
               navigation.navigate('ShortnessOfBreath', {
                 currentReportDate: currentDate,
@@ -136,7 +146,14 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
         <Space />
         <View style={{flexDirection: 'row'}}>
           <OverviewSymptomButton
-            color={null}
+            color={
+              !report || !report.symptoms.senseOfTaste
+                ? null
+                : report.symptoms.senseOfTaste.values
+                    .have_you_lost_your_sense_of_taste
+                ? 'red'
+                : 'green'
+            }
             onPress={() =>
               navigation.navigate('SenseOfTaste', {
                 currentReportDate: currentDate,
