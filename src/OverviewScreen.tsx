@@ -12,7 +12,7 @@ import {RootStackParamList} from '../App';
 import {Background} from './components/Background';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {NavigationHeader} from './NavigationHeader';
-import { SummaryViewIcon } from "./components/SummaryViewIcon";
+import {SummaryViewIcon} from './components/SummaryViewIcon';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -49,7 +49,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
         </View>
         <Space />
         <View style={{flexDirection: 'row'}}>
-          <Button>
+          <Button onPress={() => navigation.navigate('ShortnessOfBreath')}>
             <Icon source={Icons.Yawn} />
             <Text style={styles.emojiButtonText}>Shortness of breath</Text>
           </Button>

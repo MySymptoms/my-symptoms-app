@@ -19,8 +19,9 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {FeverInputScreen} from './src/FeverInputScreen';
 import {DryCoughInputScreen} from './src/DryCoughInputScreen';
 import {SafeAreaProvider, useSafeArea} from 'react-native-safe-area-context';
-import { SummaryPage } from "./src/SummaryPage";
-import { ReportList } from "./src/ReportList";
+import {SummaryPage} from './src/SummaryPage';
+import {ReportList} from './src/ReportList';
+import {ShortnessOfBreathScreen} from './src/ShortnessOfBreathInputScreen';
 
 // TS declaration for making redux devtools extension stop complaining in createStore below.
 declare global {
@@ -40,6 +41,7 @@ export type RootStackParamList = {
   Overview: undefined;
   Fever: undefined;
   DryCough: undefined;
+  ShortnessOfBreath: undefined;
   ReportList: undefined;
   Summary: undefined;
 };
@@ -62,6 +64,10 @@ const App = () => {
             <Stack.Screen name={'Overview'} component={OverviewScreen} />
             <Stack.Screen name={'Fever'} component={FeverInputScreen} />
             <Stack.Screen name={'DryCough'} component={DryCoughInputScreen} />
+            <Stack.Screen
+              name={'ShortnessOfBreath'}
+              component={ShortnessOfBreathScreen}
+            />
             <Stack.Screen name={'Summary'} component={SummaryPage} />
             <Stack.Screen name={'ReportList'} component={ReportList} />
           </Stack.Navigator>
