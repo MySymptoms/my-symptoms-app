@@ -1,6 +1,6 @@
 import {sample} from 'lodash';
 
-export const getRandomEmoji = () => sample(emojis);
+export const getRandomEmoji = () => sample(emojis)!;
 
 const emojis = [
   '😄',

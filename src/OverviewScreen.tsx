@@ -1,12 +1,12 @@
 import React, {FC, useState} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import styled from 'styled-components/native';
-import {Button, Space} from './components/Block';
+import {Space} from './components/Block';
 import {fontName} from './lib/vars';
 import {HorizontalStatusCalendar} from './HorizontalStatusCalendar';
 import {Icon, Icons} from './lib/icons';
 import {Colors} from './lib/colors';
-import {getRandomEmoji} from './lib/emoji';
+import {useSelector} from 'react-redux';
 import {RootStackParamList} from '../App';
 import {Background} from './components/Background';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -14,6 +14,7 @@ import {NavigationHeader} from './NavigationHeader';
 import {SummaryViewIcon} from './components/SummaryViewIcon';
 import {formatDate} from './lib/util';
 import {OverviewSymptomButton} from './components/OverviewSymptomButton';
+import {RootState} from './reducers/rootReducer';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -21,6 +22,7 @@ type Props = {
 
 export const OverviewScreen: FC<Props> = ({navigation}) => {
   const [currentDate, setCurrentDate] = useState(formatDate(new Date()));
+  const emoji = useSelector((state: RootState) => state.user.user_emoji);
 
   return (
     <Background>
@@ -29,7 +31,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
           left={<SummaryViewIcon />}
           onPressLeft={() => navigation.navigate('Summary')}
           title={'TRACK MY SYMPTOMS'}
-          right={<UserEmojiContainer>{getRandomEmoji()}</UserEmojiContainer>}
+          right={<UserEmojiContainer>{emoji}</UserEmojiContainer>}
         />
         <HorizontalStatusCalendar
           style={{marginBottom: 30}}

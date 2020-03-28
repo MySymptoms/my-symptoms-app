@@ -45,7 +45,6 @@ export const FeverInputScreen: FC<Props> = ({navigation}) => {
           }}
         />
       </View>
-      {/* radial-gradient(50% 50% at 50% 50%, rgba(21, 21, 21, 0) 45.83%, rgba(32, 32, 32, 0.77) 100%); */}
       <View style={styles.center}>
         <RadialGradient
           style={styles.tempInputContainer}
@@ -55,7 +54,7 @@ export const FeverInputScreen: FC<Props> = ({navigation}) => {
           radius={200}>
           <TextInput style={styles.tempInputText} value="37.6" />
         </RadialGradient>
-        <DoneButton style={{paddingTop: 50}} />
+        <DoneButton style={{marginTop: 50}} />
       </View>
     </Background>
   );

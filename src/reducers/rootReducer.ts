@@ -1,21 +1,23 @@
 import {combineReducers} from 'redux';
 import {
-  HealthDataState,
-  healthDataReducer,
   HealthDataEntry,
+  healthDataReducer,
+  HealthDataState,
 } from './healthDataReducer';
 
 import _ from 'lodash';
-import {ReportsReducerState, reportsReducer} from './reportsReducer';
+import {reportsReducer, ReportsReducerState} from './reportsReducer';
 import {
-  DateToReportIdReducerState,
   dateToReportIdReducer,
+  DateToReportIdReducerState,
 } from './dateToReportIdReducer';
+import {userReducer, UserReducerState} from './userReducer';
 
-const rootReducer = combineReducers({
+const rootReducer = combineReducers<RootState>({
   healthData: healthDataReducer,
   reports: reportsReducer,
   dateToReportId: dateToReportIdReducer,
+  user: userReducer,
 });
 export default rootReducer;
 
@@ -23,6 +25,7 @@ export interface RootState {
   healthData: HealthDataState;
   reports: ReportsReducerState;
   dateToReportId: DateToReportIdReducerState;
+  user: UserReducerState;
 }
 
 export const selectCurrentHealthReport = (state: RootState) =>
