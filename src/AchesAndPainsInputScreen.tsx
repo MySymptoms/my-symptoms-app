@@ -1,17 +1,16 @@
 import React, {FC} from 'react';
 import {Background} from './components/Background';
-import {CircleButton, CircleButtonPlaceHolder} from './components/CircleButton';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {Icon, Icons} from './lib/icons';
-import {CenterTitleText, HeaderRow} from './components/Block';
 import {FancyGradientChart} from './FancyGradientChart';
 import {StyleSheet, View} from 'react-native';
 import {Colors} from './lib/colors';
 import {fontName} from './lib/vars';
 import {DoneButton} from './components/DoneButton';
-import {BackIcon} from './components/BackIcon';
 import {SelectionGroup} from './components/SelectionGroup';
 import styled from 'styled-components/native';
+import {NavigationHeader} from './NavigationHeader';
+import { createDataPoint, getGraphDate } from "./DetailedReportScreen";
 
 type Props = {
   navigation: StackNavigationProp<{}>;
@@ -20,16 +19,18 @@ type Props = {
 export const AchesAndPainInputScreen: FC<Props> = ({navigation}) => {
   return (
     <Background>
-      <HeaderRow>
-        <CircleButton onPress={() => navigation.goBack()}>
-          <BackIcon />
-        </CircleButton>
-        <CenterTitleText>TRACKING ACHES & PAIN</CenterTitleText>
-        <CircleButtonPlaceHolder />
-      </HeaderRow>
+      <NavigationHeader title={'TRACKING ACHES AND PAINS'} showBackButton />
       <View style={{flexDirection: 'row'}}>
         <Icon style={styles.emojiStyle} source={Icons.Sweat} />
-        <FancyGradientChart />
+        <FancyGradientChart
+          data={[
+            createDataPoint(getGraphDate(24), 1),
+            createDataPoint(getGraphDate(25), 1),
+            createDataPoint(getGraphDate(26), 2),
+            createDataPoint(getGraphDate(27), 2),
+            createDataPoint(getGraphDate(28), 3),
+          ]}
+        />
       </View>
       <SelectionGroup
         title="Do you have body ache?"
