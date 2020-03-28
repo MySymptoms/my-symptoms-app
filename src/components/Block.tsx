@@ -20,6 +20,12 @@ export const Space = styled.View`
   height: 20px;
 `;
 
+
+export const HalfSpace = styled.View`
+  width: 10px;
+  height: 10px;
+`;
+
 export const CenterTitleText = styled.Text`
   font-family: ${fontName};
   color: #c1c1c1;
