@@ -2,12 +2,13 @@ import React, {FC} from 'react';
 import {Background} from './components/Background';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {Icon, Icons} from './lib/icons';
-import {FancyGradientChart} from './FancyGradientChart';
-import {StyleSheet, View} from 'react-native';
+import {NavigationHeader} from './NavigationHeader';
+import {View, StyleSheet} from 'react-native';
 import {Colors} from './lib/colors';
 import {fontName} from './lib/vars';
 import {DoneButton} from './components/DoneButton';
-import {NavigationHeader} from './NavigationHeader';
+import {SelectionGroup} from './components/SelectionGroup';
+import styled from 'styled-components/native';
 
 type Props = {
   navigation: StackNavigationProp<{}>;
@@ -19,8 +20,34 @@ export const DryCoughInputScreen: FC<Props> = ({navigation}) => {
       <NavigationHeader title={'TRACKING DRY COUGH'} showBackButton />
       <View style={{flexDirection: 'row'}}>
         <Icon style={styles.emojiStyle} source={Icons.Mask} />
-        <FancyGradientChart />
+        {/* <FancyGradientChart /> */}
       </View>
+      <SelectionGroup
+        title="Describe the feeling"
+        onOptionSelected={() => {}}
+        options={[
+          {title: 'breathe normally', color: '#8cf081'},
+          {title: 'Short of breath', color: '#FFBC5C'},
+          {title: 'tightness in my chest', color: '#FF7A7A'},
+          {title: 'cannot get enough air', color: '#FF7A7A'},
+        ]}
+      />
+      <Divider />
+      <SelectionGroup
+        title="do you also feel"
+        onOptionSelected={() => {}}
+        options={[{title: 'fainting'}]}
+      />
+      <Divider />
+      <SelectionGroup
+        title="frequency"
+        onOptionSelected={() => {}}
+        options={[
+          {title: 'comes suddenly'},
+          {title: 'is persistent'},
+          {title: 'interferes with daily activity'},
+        ]}
+      />
       <View style={styles.center}>
         <DoneButton style={{paddingTop: 50}} />
       </View>
@@ -55,3 +82,9 @@ const styles = StyleSheet.create({
     bottom: '30%',
   },
 });
+
+const Divider = styled.View`
+  border-top-width: 1px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+`;

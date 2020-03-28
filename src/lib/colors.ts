@@ -13,4 +13,5 @@ export const Colors = {
   deactivatedText: deactivatedGrey,
   buttonBackground: buttonBackground,
   buttonBorder: buttonBorder,
+  sectionHeader: activeGrey,
 };
