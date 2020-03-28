@@ -39,26 +39,23 @@ declare global {
   }
 }
 
-const store = createStore(
-  rootReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-);
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 const Stack = createStackNavigator();
 
 export type RootStackParamList = {
   Overview: undefined;
-  Fever: undefined;
-  DryCough: undefined;
-  Tiredness: undefined;
-  ShortnessOfBreath: undefined;
-  AchesAndPain: undefined;
-  SoreThroat: undefined;
-  Diarrhoea: undefined;
-  Nausea: undefined;
-  RunnyNose: undefined;
-  SenseOfTaste: undefined;
-  SenseOfSmell: undefined;
+  Fever: {currentReportDate: string};
+  DryCough: {currentReportDate: string};
+  Tiredness: {currentReportDate: string};
+  ShortnessOfBreath: {currentReportDate: string};
+  AchesAndPain: {currentReportDate: string};
+  SoreThroat: {currentReportDate: string};
+  Diarrhoea: {currentReportDate: string};
+  Nausea: {currentReportDate: string};
+  RunnyNose: {currentReportDate: string};
+  SenseOfTaste: {currentReportDate: string};
+  SenseOfSmell: {currentReportDate: string};
   ReportList: undefined;
   Summary: undefined;
   DetailedReport: undefined;

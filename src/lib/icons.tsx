@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {Image, ImageSourcePropType, ViewProps} from 'react-native';
+import {Image, ImageSourcePropType, ImageStyle} from 'react-native';
 import {StyleSheet} from 'react-native';
 
 import Baby from '../../assets/baby.png';
@@ -58,11 +58,11 @@ export const Icons = {
 
 interface IconProps {
   source: ImageSourcePropType;
-  style?: ViewProps;
+  style?: ImageStyle;
 }
 
 export const Icon: FC<IconProps> = ({source, style}) => {
-  return <Image {...style} style={styles.iconStyle} source={source} />;
+  return <Image style={[styles.iconStyle, style]} source={source} />;
 };
 
 const styles = StyleSheet.create({

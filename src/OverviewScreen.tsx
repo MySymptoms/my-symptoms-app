@@ -2,7 +2,6 @@ import React, {FC, useState} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import styled from 'styled-components/native';
 import {Button, Space} from './components/Block';
-import PaperSheet from '../assets/paper_sheet.png';
 import {fontName} from './lib/vars';
 import {HorizontalStatusCalendar} from './HorizontalStatusCalendar';
 import {Icon, Icons} from './lib/icons';
@@ -39,63 +38,106 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
       </View>
       <View style={{alignItems: 'center', justifyContent: 'center'}}>
         <View style={{flexDirection: 'row'}}>
-          <Button onPress={() => navigation.navigate('Fever')}>
+          <Button
+            onPress={() =>
+              navigation.navigate('Fever', {currentReportDate: currentDate})
+            }>
             <Icon source={Icons.FaceWithThermometer} />
             <Text style={styles.emojiButtonText}>Fever</Text>
           </Button>
           <Space />
-          <Button onPress={() => navigation.navigate('DryCough')}>
+          <Button
+            onPress={() =>
+              navigation.navigate('DryCough', {currentReportDate: currentDate})
+            }>
             <Icon source={Icons.Mask} />
             <Text style={styles.emojiButtonText}>Dry Cough</Text>
           </Button>
           <Space />
-          <Button onPress={() => navigation.navigate('Tiredness')}>
+          <Button
+            onPress={() =>
+              navigation.navigate('Tiredness', {currentReportDate: currentDate})
+            }>
             <Icon source={Icons.Bed} />
             <Text style={styles.emojiButtonText}>Tiredness</Text>
           </Button>
         </View>
         <Space />
         <View style={{flexDirection: 'row'}}>
-          <Button onPress={() => navigation.navigate('ShortnessOfBreath')}>
+          <Button
+            onPress={() =>
+              navigation.navigate('ShortnessOfBreath', {
+                currentReportDate: currentDate,
+              })
+            }>
             <Icon source={Icons.Yawn} />
             <Text style={styles.emojiButtonText}>Shortness of breath</Text>
           </Button>
           <Space />
-          <Button onPress={() => navigation.navigate('AchesAndPain')}>
+          <Button
+            onPress={() =>
+              navigation.navigate('AchesAndPain', {
+                currentReportDate: currentDate,
+              })
+            }>
             <Icon source={Icons.Sweat} />
             <Text style={styles.emojiButtonText}>Aches & Pains</Text>
           </Button>
           <Space />
-          <Button onPress={() => navigation.navigate('SoreThroat')}>
+          <Button
+            onPress={() =>
+              navigation.navigate('SoreThroat', {
+                currentReportDate: currentDate,
+              })
+            }>
             <Icon source={Icons.Weary} />
             <Text style={styles.emojiButtonText}>Sore Throat</Text>
           </Button>
         </View>
         <Space />
         <View style={{flexDirection: 'row'}}>
-          <Button onPress={() => navigation.navigate('Diarrhoea')}>
+          <Button
+            onPress={() =>
+              navigation.navigate('Diarrhoea', {currentReportDate: currentDate})
+            }>
             <Icon source={Icons.Toilet} />
             <Text style={styles.emojiButtonText}>Diarrhoea</Text>
           </Button>
           <Space />
-          <Button onPress={() => navigation.navigate('Nausea')}>
+          <Button
+            onPress={() =>
+              navigation.navigate('Nausea', {currentReportDate: currentDate})
+            }>
             <Icon source={Icons.Nauseated} />
             <Text style={styles.emojiButtonText}>Nausea</Text>
           </Button>
           <Space />
-          <Button onPress={() => navigation.navigate('RunnyNose')}>
+          <Button
+            onPress={() =>
+              navigation.navigate('RunnyNose', {currentReportDate: currentDate})
+            }>
             <Icon source={Icons.Sneezing} />
             <Text style={styles.emojiButtonText}>Runny Nose</Text>
           </Button>
         </View>
         <Space />
         <View style={{flexDirection: 'row'}}>
-          <Button onPress={() => navigation.navigate('SenseOfTaste')}>
+          <Button
+            onPress={() =>
+              navigation.navigate('SenseOfTaste', {
+                currentReportDate: currentDate,
+              })
+            }>
             <Icon source={Icons.Food} />
             <Text style={styles.emojiButtonText}>Sense of taste</Text>
           </Button>
           <Space />
-          <Button onPress={() => navigation.navigate('SenseOfSmell')}>
+          <Button
+            onPress={() =>
+              navigation.navigate('SenseOfSmell', {
+                currentReportDate: currentDate,
+              })
+            }>
             <Icon source={Icons.Nose} />
             <Text style={styles.emojiButtonText}>Sense of smell</Text>
           </Button>
