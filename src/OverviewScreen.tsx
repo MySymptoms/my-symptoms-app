@@ -188,7 +188,6 @@ const NoSymtoms = styled.View`
 const UserEmojiContainer = styled.Text`
   justify-content: center;
   align-items: center;
-  line-height: 24px;
   font-size: 24px;
 `;
 

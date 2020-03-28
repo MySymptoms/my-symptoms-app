@@ -10,7 +10,7 @@
 
 import React from 'react';
 import {StatusBar, View} from 'react-native';
-import {compose, createStore, applyMiddleware} from 'redux';
+import {applyMiddleware, compose, createStore} from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from './src/reducers/rootReducer';
 import {Provider} from 'react-redux';
@@ -32,6 +32,8 @@ import {RunnyNoseInputScreen} from './src/RunnyNoseInputScreen';
 import {SenseOfTasteInputScreen} from './src/SenseOfTasteInputScreen';
 import {SenseOfSmellInputScreen} from './src/SenseOfSmellInputScreen';
 import {TirednessInputScreen} from './src/TirednessInputScreen';
+import AsyncStorage from '@react-native-community/async-storage';
+import {PersistConfig, persistReducer, persistStore} from 'redux-persist';
 
 // TS declaration for making redux devtools extension stop complaining in createStore below.
 declare global {
@@ -47,10 +49,17 @@ const composeEnhancers =
       })
     : compose;
 
+const persistConfig: PersistConfig<any> = {
+  key: 'my-symptoms',
+  storage: AsyncStorage,
+};
+
 const store = createStore(
-  rootReducer,
+  persistReducer(persistConfig, rootReducer),
   composeEnhancers(applyMiddleware(thunk)),
 );
+
+const persistor = persistStore(store);
 
 const Stack = createStackNavigator();
 

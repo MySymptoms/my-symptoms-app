@@ -57,7 +57,7 @@ export const SenseOfTasteInputScreen: FC<Props> = ({route}) => {
 
   return (
     <Background>
-      <NavigationHeader title={'TRACKING NAUSEA'} showBackButton />
+      <NavigationHeader title={'TRACKING SENSE OF TASTE'} showBackButton />
       <View style={{flexDirection: 'row'}}>
         <Icon style={styles.emojiStyle} source={Icons.Food} />
         <FancyGradientChart
