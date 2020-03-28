@@ -4,7 +4,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {Icon, Icons} from './lib/icons';
 import {FancyGradientChart} from './FancyGradientChart';
 import {NavigationHeader} from './NavigationHeader';
-import {View, StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {Colors} from './lib/colors';
 import {fontName} from './lib/vars';
 import {DoneButton} from './components/DoneButton';
@@ -46,9 +46,9 @@ export const DryCoughInputScreen: FC<Props> = ({navigation}) => {
         title="intensity"
         onOptionSelected={() => {}}
         options={[
-          {title: 'bearable', color: '#8cf081'},
-          {title: 'harsh', color: '#FFBC5C'},
-          {title: 'physical discomfort', color: '#FF7A7A'},
+          {title: 'bearable', color: Colors.lowStopColor},
+          {title: 'harsh', color: Colors.mediumStopColor},
+          {title: 'physical discomfort', color: Colors.highStopColor},
         ]}
       />
       <Divider />
