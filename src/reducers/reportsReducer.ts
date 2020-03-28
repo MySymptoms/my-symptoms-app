@@ -158,7 +158,7 @@ export const requestUpdateSymptomInReport = ({
     dispatch(action);
   }
 
-  dispatch(updateSymptomInReport(reportId, symptom));
+  dispatch(updateSymptomInReport(reportId, now, symptom));
 };
 
 // dispatch(requestCreateNewReport());
