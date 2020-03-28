@@ -9,7 +9,7 @@
  */
 
 import React from 'react';
-import {SafeAreaView, StatusBar} from 'react-native';
+import {StatusBar, View} from 'react-native';
 import {compose, createStore} from 'redux';
 import rootReducer from './src/reducers/rootReducer';
 import {Provider} from 'react-redux';
@@ -18,6 +18,7 @@ import {OverviewScreen} from './src/OverviewScreen';
 import {createStackNavigator} from '@react-navigation/stack';
 import {FeverInputScreen} from './src/FeverInputScreen';
 import {DryCoughInputScreen} from './src/DryCoughInputScreen';
+import {SafeAreaProvider, useSafeArea} from 'react-native-safe-area-context';
 
 // TS declaration for making redux devtools extension stop complaining in createStore below.
 declare global {
@@ -40,8 +41,16 @@ export type RootStackParamList = {
 };
 
 const App = () => {
+  const insets = useSafeArea();
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#2E2E2E'}}>
+    <View
+      style={{
+        paddingTop: insets.top,
+        paddingLeft: insets.left,
+        paddingRight: insets.right,
+        flex: 1,
+        backgroundColor: '#2E2E2E',
+      }}>
       <Provider store={store}>
         <StatusBar barStyle="light-content" />
         <NavigationContainer>
@@ -52,8 +61,12 @@ const App = () => {
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>
-    </SafeAreaView>
+    </View>
   );
 };
 
-export default App;
+export default () => (
+  <SafeAreaProvider>
+    <App />
+  </SafeAreaProvider>
+);

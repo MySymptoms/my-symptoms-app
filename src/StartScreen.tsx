@@ -1,5 +1,5 @@
 import React, {ReactNode, useState} from 'react';
-import {Text, TouchableOpacity, View, Image} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import {Space} from './components/Block';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
 import SmoothPicker from 'react-native-smooth-picker';

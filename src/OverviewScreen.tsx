@@ -3,10 +3,9 @@ import {Image, StyleSheet, Text, View} from 'react-native';
 import {CircleButton} from './components/CircleButton';
 import styled from 'styled-components/native';
 import PaperSheet from '../assets/paper_sheet.png';
-import {Button, Space, CenterTitleText, HeaderRow} from './components/Block';
+import {Button, CenterTitleText, HeaderRow, Space} from './components/Block';
 import {fontName} from './lib/vars';
 import {HorizontalStatusCalendar} from './HorizontalStatusCalendar';
-import {FancyGradientChart} from './FancyGradientChart';
 import {Icon, Icons} from './lib/icons';
 import {Colors} from './lib/colors';
 import {getRandomEmoji} from './lib/emoji';
@@ -37,7 +36,6 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
         </HeaderRow>
         <HorizontalStatusCalendar style={{marginBottom: 30}} />
       </View>
-      <FancyGradientChart />
       <View style={{alignItems: 'center', justifyContent: 'center'}}>
         <View style={{flexDirection: 'row'}}>
           <Button onPress={() => navigation.navigate('Fever')}>

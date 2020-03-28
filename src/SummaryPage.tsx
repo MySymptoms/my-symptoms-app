@@ -4,7 +4,7 @@ import styled from 'styled-components/native';
 import {fontName} from './lib/vars';
 import {HalfSpace, Space} from './components/Block';
 import {CheckIcon} from './components/CheckIcon';
-import {LinearBackground} from './components/LinearBackground';
+import {Background} from './components/Background';
 
 const Row = styled.View`
   flex-direction: row;
@@ -63,7 +63,7 @@ const SummaryViewColumn: React.FC = ({children}) => (
 
 export const SummaryPage = () => {
   return (
-    <LinearBackground style={{paddingHorizontal: 15}}>
+    <Background style={{paddingHorizontal: 15}}>
       <Space />
       <Row>
         <SummaryViewColumn>
@@ -117,6 +117,6 @@ export const SummaryPage = () => {
         <HalfSpace />
         <SummaryViewListItem text="Diabetes" />
       </View>
-    </LinearBackground>
+    </Background>
   );
 };
