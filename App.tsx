@@ -23,6 +23,7 @@ import {SummaryPage} from './src/SummaryPage';
 import {ReportList} from './src/ReportList';
 import {ShortnessOfBreathInputScreen} from './src/ShortnessOfBreathInputScreen';
 import {AchesAndPainInputScreen} from './src/AchesAndPainsInputScreen';
+import {SoreThroatInputScreen} from './src/SoreThroatInputScreen';
 
 // TS declaration for making redux devtools extension stop complaining in createStore below.
 declare global {
@@ -44,6 +45,7 @@ export type RootStackParamList = {
   DryCough: undefined;
   ShortnessOfBreath: undefined;
   AchesAndPain: undefined;
+  SoreThroat: undefined;
   ReportList: undefined;
   Summary: undefined;
 };
@@ -73,6 +75,10 @@ const App = () => {
             <Stack.Screen
               name={'AchesAndPain'}
               component={AchesAndPainInputScreen}
+            />
+            <Stack.Screen
+              name={'SoreThroat'}
+              component={SoreThroatInputScreen}
             />
             <Stack.Screen name={'Summary'} component={SummaryPage} />
             <Stack.Screen name={'ReportList'} component={ReportList} />
