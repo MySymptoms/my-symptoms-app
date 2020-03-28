@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import styled from 'styled-components/native';
 import {Button, Space} from './components/Block';
 import PaperSheet from '../assets/paper_sheet.png';
@@ -99,11 +99,13 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
           <View style={{width: 100, height: 100}} />
         </View>
         <Space />
-        <NoSymtoms>
-          <Icon source={Icons.Flex} />
-          <Space />
-          <Text style={styles.emojiButtonText}>No symptoms today</Text>
-        </NoSymtoms>
+        <TouchableOpacity onPress={() => {}}>
+          <NoSymtoms>
+            <Icon source={Icons.Flex} />
+            <Space />
+            <Text style={styles.emojiButtonText}>No symptoms today</Text>
+          </NoSymtoms>
+        </TouchableOpacity>
       </View>
     </Background>
   );
