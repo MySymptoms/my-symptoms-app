@@ -88,7 +88,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
             <Text style={styles.emojiButtonText}>Sense of taste</Text>
           </Button>
           <Space />
-          <Button>
+          <Button onPress={() => navigation.navigate('SenseOfSmell')}>
             <Icon source={Icons.Nose} />
             <Text style={styles.emojiButtonText}>Sense of smell</Text>
           </Button>

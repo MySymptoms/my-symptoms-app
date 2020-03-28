@@ -29,6 +29,7 @@ import {DiarrhoeaInputScreen} from './src/DiarrhoeaInputScreen';
 import {NauseaInputScreen} from './src/NauseaInputScreen';
 import {RunnyNoseInputScreen} from './src/RunnyNoseInputScreen';
 import {SenseOfTasteInputScreen} from './src/SenseOfTasteInputScreen';
+import {SenseOfSmellInputScreen} from './src/SenseOfSmellInputScreen';
 
 // TS declaration for making redux devtools extension stop complaining in createStore below.
 declare global {
@@ -55,6 +56,7 @@ export type RootStackParamList = {
   Nausea: undefined;
   RunnyNose: undefined;
   SenseOfTaste: undefined;
+  SenseOfSmell: undefined;
   ReportList: undefined;
   Summary: undefined;
   DetailedReport: undefined;
@@ -96,6 +98,10 @@ const App = () => {
             <Stack.Screen
               name={'SenseOfTaste'}
               component={SenseOfTasteInputScreen}
+            />
+            <Stack.Screen
+              name={'SenseOfSmell'}
+              component={SenseOfSmellInputScreen}
             />
             <Stack.Screen name={'Summary'} component={SummaryPage} />
             <Stack.Screen name={'ReportList'} component={ReportList} />
