@@ -74,7 +74,7 @@ export const SummaryPage = () => {
         showBackButton
         title={'TRACK MY SYMPTOMS'}
         right={<Image source={PaperSheet} />}
-        onPressRight={() => navigation.navigate('ReportList')}
+        onPressRight={() => navigation.navigate('DetailedReport')}
       />
       <Space />
       <Row>

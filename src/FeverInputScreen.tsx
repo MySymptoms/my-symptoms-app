@@ -1,9 +1,7 @@
 import React, {FC, useState} from 'react';
 import {Background} from './components/Background';
-import {CircleButton, CircleButtonPlaceHolder} from './components/CircleButton';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {Icon, Icons} from './lib/icons';
-import {CenterTitleText, HeaderRow} from './components/Block';
 import {FancyGradientChart} from './FancyGradientChart';
 import {TextInput} from 'react-native-gesture-handler';
 import {StyleSheet, View} from 'react-native';
@@ -12,7 +10,8 @@ import {fontName} from './lib/vars';
 import {DoneButton} from './components/DoneButton';
 import {SegmentedControl} from './components/SegmentedControl';
 import RadialGradient from 'react-native-radial-gradient';
-import {BackIcon} from './components/BackIcon';
+import {createDataPoint, getGraphDate} from './DetailedReportScreen';
+import {NavigationHeader} from './NavigationHeader';
 
 type Props = {
   navigation: StackNavigationProp<{}>;
@@ -23,16 +22,18 @@ export const FeverInputScreen: FC<Props> = ({navigation}) => {
 
   return (
     <Background>
-      <HeaderRow>
-        <CircleButton onPress={() => navigation.goBack()}>
-          <BackIcon />
-        </CircleButton>
-        <CenterTitleText>TRACKING FEVER</CenterTitleText>
-        <CircleButtonPlaceHolder />
-      </HeaderRow>
+      <NavigationHeader title={'TRACKING FEVER'} showBackButton />
       <View style={{flexDirection: 'row'}}>
         <Icon style={styles.emojiStyle} source={Icons.FaceWithThermometer} />
-        <FancyGradientChart />
+        <FancyGradientChart
+          data={[
+            createDataPoint(getGraphDate(24), 1),
+            createDataPoint(getGraphDate(25), 1),
+            createDataPoint(getGraphDate(26), 2),
+            createDataPoint(getGraphDate(27), 2),
+            createDataPoint(getGraphDate(28), 3),
+          ]}
+        />
       </View>
       <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
         <SegmentedControl
