@@ -23,7 +23,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
     <Background>
       <View>
         <NavigationHeader
-          left={<SummaryViewIcon/>}
+          left={<SummaryViewIcon />}
           onPressLeft={() => navigation.navigate('Summary')}
           title={'TRACK MY SYMPTOMS'}
           right={<UserEmojiContainer>{getRandomEmoji()}</UserEmojiContainer>}
