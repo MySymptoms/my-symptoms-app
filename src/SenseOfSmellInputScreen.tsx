@@ -40,7 +40,7 @@ export const SenseOfSmellInputScreen: FC<Props> = ({navigation}) => {
         ]}
       />
       <View style={styles.center}>
-        <DoneButton style={{paddingTop: 50}} />
+        <DoneButton style={{marginTop: 50}} />
       </View>
     </Background>
   );

@@ -12,11 +12,11 @@ import {SelectionGroup} from './components/SelectionGroup';
 import styled from 'styled-components/native';
 import {createDataPoint, getGraphDate} from './DetailedReportScreen';
 
-type Props = {
+interface Props {
   navigation: StackNavigationProp<{}>;
-};
+}
 
-export const DryCoughInputScreen: FC<Props> = ({navigation}) => {
+export const DryCoughInputScreen: FC<Props> = () => {
   return (
     <Background>
       <NavigationHeader title={'TRACKING DRY COUGH'} showBackButton />
@@ -59,7 +59,7 @@ export const DryCoughInputScreen: FC<Props> = ({navigation}) => {
         options={[{title: 'daytime'}, {title: 'nighttime'}]}
       />
       <View style={styles.center}>
-        <DoneButton style={{paddingTop: 50}} />
+        <DoneButton style={{marginTop: 50}} />
       </View>
     </Background>
   );
