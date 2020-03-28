@@ -10,7 +10,8 @@
 
 import React from 'react';
 import {StatusBar, View} from 'react-native';
-import {compose, createStore} from 'redux';
+import {compose, createStore, applyMiddleware} from 'redux';
+import thunk from 'redux-thunk';
 import rootReducer from './src/reducers/rootReducer';
 import {Provider} from 'react-redux';
 import {NavigationContainer} from '@react-navigation/native';
@@ -39,7 +40,17 @@ declare global {
   }
 }
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const composeEnhancers =
+  typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+        // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
+      })
+    : compose;
+
+const store = createStore(
+  rootReducer,
+  composeEnhancers(applyMiddleware(thunk)),
+);
 
 const Stack = createStackNavigator();
 
