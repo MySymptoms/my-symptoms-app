@@ -59,10 +59,10 @@ export const FancyGradientChart: React.FC<{
     <VictoryChart
       standalone={true}
       minDomain={{y: 0}}
-      maxDomain={{y: 4}}
+      maxDomain={{y: 3}}
       domainPadding={[30, 0]}
       width={350}
-      height={200}
+      height={150}
       theme={theme}>
       <Defs>
         <LinearGradient id="gradientStroke" x1="0%" x2="0%" y1="100%" y2="0%">

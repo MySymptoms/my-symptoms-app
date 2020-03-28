@@ -1,19 +1,17 @@
 import React, {FC} from 'react';
 import {Background} from './components/Background';
-import {CircleButton, CircleButtonPlaceHolder} from './components/CircleButton';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {Icon, Icons} from './lib/icons';
-import {CenterTitleText, HeaderRow} from './components/Block';
+import {Space} from './components/Block';
 import {FancyGradientChart} from './FancyGradientChart';
 import {StyleSheet, View} from 'react-native';
 import {Colors} from './lib/colors';
 import {fontName} from './lib/vars';
 import {DoneButton} from './components/DoneButton';
-import {BackIcon} from './components/BackIcon';
 import {SelectionGroup} from './components/SelectionGroup';
-import styled from 'styled-components/native';
-import { NavigationHeader } from "./NavigationHeader";
-import { createDataPoint, getGraphDate } from "./DetailedReportScreen";
+import {NavigationHeader} from './NavigationHeader';
+import {createDataPoint, getGraphDate} from './DetailedReportScreen';
+import {Divider} from './components/Divider';
 
 type Props = {
   navigation: StackNavigationProp<{}>;
@@ -61,8 +59,9 @@ export const ShortnessOfBreathInputScreen: FC<Props> = ({navigation}) => {
           {title: 'interferes with daily activity'},
         ]}
       />
+      <Space />
       <View style={styles.center}>
-        <DoneButton style={{marginTop: 50}} />
+        <DoneButton onPress={() => {}} />
       </View>
     </Background>
   );
@@ -95,9 +94,3 @@ const styles = StyleSheet.create({
     bottom: '30%',
   },
 });
-
-const Divider = styled.View`
-  border-top-width: 1px;
-  margin-top: 30px;
-  margin-bottom: 30px;
-`;

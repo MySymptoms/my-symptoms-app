@@ -2,12 +2,12 @@ import React, {FC} from 'react';
 import styled from 'styled-components/native';
 import RadialGradient from 'react-native-radial-gradient';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {ViewProps, StyleSheet} from 'react-native';
+import {ViewProps, StyleSheet, ViewStyle} from 'react-native';
 import {fontName} from '../lib/vars';
 
 interface Props {
-  style: ViewProps;
   onPress: () => void;
+  style: ViewStyle;
 }
 
 export const DoneButton: FC<Props> = ({style, onPress}) => {

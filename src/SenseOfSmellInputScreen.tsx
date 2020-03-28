@@ -15,7 +15,7 @@ type Props = {
   navigation: StackNavigationProp<{}>;
 };
 
-export const SenseOfSmellInputScreen: FC<Props> = ({navigation}) => {
+export const SenseOfSmellInputScreen: FC<Props> = () => {
   return (
     <Background>
       <NavigationHeader title={'TRACKING SENSE OF SMELL'} showBackButton />
@@ -40,7 +40,7 @@ export const SenseOfSmellInputScreen: FC<Props> = ({navigation}) => {
         ]}
       />
       <View style={styles.center}>
-        <DoneButton style={{marginTop: 50}} />
+        <DoneButton style={{marginTop: 50}} onPress={() => {}} />
       </View>
     </Background>
   );

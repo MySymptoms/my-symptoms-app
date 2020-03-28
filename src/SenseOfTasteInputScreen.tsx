@@ -111,9 +111,3 @@ const styles = StyleSheet.create({
     bottom: '30%',
   },
 });
-
-const Divider = styled.View`
-  border-top-width: 1px;
-  margin-top: 30px;
-  margin-bottom: 30px;
-`;

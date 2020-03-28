@@ -1,6 +1,5 @@
 import React, {FC} from 'react';
 import {Background} from './components/Background';
-import {StackNavigationProp} from '@react-navigation/stack';
 import {Icon, Icons} from './lib/icons';
 import {NavigationHeader} from './NavigationHeader';
 import {View, StyleSheet} from 'react-native';
@@ -11,12 +10,11 @@ import {SelectionGroup} from './components/SelectionGroup';
 import styled from 'styled-components/native';
 import {FancyGradientChart} from './FancyGradientChart';
 import {createDataPoint, getGraphDate} from './DetailedReportScreen';
+import {Divider} from './components/Divider';
 
-type Props = {
-  navigation: StackNavigationProp<{}>;
-};
+type Props = {};
 
-export const DiarrhoeaInputScreen: FC<Props> = ({navigation}) => {
+export const DiarrhoeaInputScreen: FC<Props> = () => {
   return (
     <Background>
       <NavigationHeader title={'TRACKING DIARRHOEA'} showBackButton />
@@ -51,7 +49,7 @@ export const DiarrhoeaInputScreen: FC<Props> = ({navigation}) => {
         ]}
       />
       <View style={styles.center}>
-        <DoneButton style={{marginTop: 50}} />
+        <DoneButton style={{marginTop: 50}} onPress={() => {}} />
       </View>
     </Background>
   );
@@ -84,9 +82,3 @@ const styles = StyleSheet.create({
     bottom: '30%',
   },
 });
-
-const Divider = styled.View`
-  border-top-width: 1px;
-  margin-top: 30px;
-  margin-bottom: 30px;
-`;
