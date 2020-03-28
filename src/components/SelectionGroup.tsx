@@ -31,7 +31,7 @@ export const SelectionGroup: FC<Props> = ({
       <ScrollView horizontal>
         {options.map(({title: header, color}, index) => {
           return (
-            <View key={index}>
+            <View style={styles.horizontal} key={index}>
               <SelectableButton
                 onPress={() => {
                   setSelectedIndex(selectedIndex === index ? null : index);
@@ -60,4 +60,5 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 23,
   },
+  horizontal: {flexDirection: 'row'},
 });
