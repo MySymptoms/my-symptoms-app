@@ -14,7 +14,6 @@ export const DoneButton: FC<Props> = ({style, onPress}) => {
   return (
     <TouchableOpacity style={style} onPress={onPress}>
       <Container
-        style={{width: 175, height: 54}}
         colors={['#00DCC2', 'rgba(0, 220, 180, 0)']}
         stops={[0.1, 0.4, 0.3, 0.75]}
         center={[100, 100]}
