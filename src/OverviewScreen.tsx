@@ -15,6 +15,7 @@ import {SummaryViewIcon} from './components/SummaryViewIcon';
 import {formatDate} from './lib/util';
 import {OverviewSymptomButton} from './components/OverviewSymptomButton';
 import {RootState} from './reducers/rootReducer';
+import {selectDateToReportId} from './reducers/dateToReportIdReducer';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList>;

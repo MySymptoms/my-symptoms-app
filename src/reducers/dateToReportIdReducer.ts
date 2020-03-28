@@ -17,3 +17,6 @@ export const dateToReportIdReducer = (
       return state;
   }
 };
+
+export const selectDateToReportId = (state: RootState) =>
+  Object.keys(state.dateToReportId);

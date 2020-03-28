@@ -10,24 +10,14 @@ import {
   isPast,
   isToday,
   parseISO,
+  add,
 } from 'date-fns';
 import {ViewStyle} from 'react-native';
 import {format} from 'date-fns/esm';
 import {formatDate} from './lib/util';
-
-const padEndDays = 10;
-
-const dates = eachDayOfInterval({
-  start: new Date(2020, 1, 25),
-  end: addDays(new Date(), padEndDays),
-});
-
-const data: DayEntry[] = dates.map(date => {
-  return {
-    date,
-    hasData: Math.random() < 0.5,
-  };
-});
+import {useSelector} from 'react-redux';
+import {selectDateToReportId} from './reducers/dateToReportIdReducer';
+import _ from 'lodash';
 
 interface DayEntry {
   date: Date;
@@ -40,11 +30,28 @@ interface Props {
   value: string;
 }
 
+const padDays = 10;
+
 export const HorizontalStatusCalendar: FC<Props> = ({
   style,
   value,
   onChange,
 }) => {
+  const daysWithReports = useSelector(selectDateToReportId).sort();
+  const firstDateStr =
+    _.first(daysWithReports) || formatDate(addDays(new Date(), -padDays));
+  const dateSpan = eachDayOfInterval({
+    start: addDays(parseISO(firstDateStr), -padDays),
+    end: addDays(new Date(), padDays),
+  });
+
+  const data: DayEntry[] = dateSpan.map(date => {
+    return {
+      date,
+      hasData: daysWithReports.includes(formatDate(date)),
+    };
+  });
+
   return (
     <HorizontalView {...style}>
       <MonthText>{format(parseISO(value), 'MMMM')}</MonthText>
@@ -53,7 +60,7 @@ export const HorizontalStatusCalendar: FC<Props> = ({
         horizontal
         scrollAnimation
         keyExtractor={(dayEntry: DayEntry) => String(dayEntry.date)}
-        initialScrollToIndex={dates.length - padEndDays}
+        initialScrollToIndex={dateSpan.length - padDays}
         data={data}
         onSelected={({item}: {item: DayEntry}) =>
           onChange(formatDate(item.date))
