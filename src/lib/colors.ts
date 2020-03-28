@@ -6,6 +6,10 @@ export const titleGrey = '#C1C1C1';
 export const buttonBackground = '#333333';
 export const buttonBorder = 'rgba(0, 0, 0, 0.6)';
 
+const highStopColor = '#FF7A7A';
+const mediumStopColor = '#FFBC5C';
+const lowStopColor = '#8CF081';
+
 export const Colors = {
   title: titleGrey,
   statusOn: statusGreen,
@@ -13,5 +17,8 @@ export const Colors = {
   deactivatedText: deactivatedGrey,
   buttonBackground: buttonBackground,
   buttonBorder: buttonBorder,
+  highStopColor,
+  mediumStopColor,
+  lowStopColor,
   sectionHeader: activeGrey,
 };

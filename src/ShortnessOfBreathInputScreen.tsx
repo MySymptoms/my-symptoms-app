@@ -12,6 +12,8 @@ import {DoneButton} from './components/DoneButton';
 import {BackIcon} from './components/BackIcon';
 import {SelectionGroup} from './components/SelectionGroup';
 import styled from 'styled-components/native';
+import { NavigationHeader } from "./NavigationHeader";
+import { createDataPoint, getGraphDate } from "./DetailedReportScreen";
 
 type Props = {
   navigation: StackNavigationProp<{}>;
@@ -20,16 +22,18 @@ type Props = {
 export const ShortnessOfBreathInputScreen: FC<Props> = ({navigation}) => {
   return (
     <Background>
-      <HeaderRow>
-        <CircleButton onPress={() => navigation.goBack()}>
-          <BackIcon />
-        </CircleButton>
-        <CenterTitleText>TRACKING SHORTNESS OF BREATH</CenterTitleText>
-        <CircleButtonPlaceHolder />
-      </HeaderRow>
+      <NavigationHeader title={'TRACKING SHORTNESS OF BREATH'} showBackButton />
       <View style={{flexDirection: 'row'}}>
         <Icon style={styles.emojiStyle} source={Icons.Yawn} />
-        <FancyGradientChart />
+        <FancyGradientChart
+          data={[
+            createDataPoint(getGraphDate(24), 1),
+            createDataPoint(getGraphDate(25), 1),
+            createDataPoint(getGraphDate(26), 2),
+            createDataPoint(getGraphDate(27), 2),
+            createDataPoint(getGraphDate(28), 3),
+          ]}
+        />
       </View>
       <SelectionGroup
         title="Describe the feeling"

@@ -2,6 +2,7 @@ import React, {FC} from 'react';
 import {Background} from './components/Background';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {Icon, Icons} from './lib/icons';
+import {FancyGradientChart} from './FancyGradientChart';
 import {NavigationHeader} from './NavigationHeader';
 import {View, StyleSheet} from 'react-native';
 import {Colors} from './lib/colors';
@@ -9,6 +10,7 @@ import {fontName} from './lib/vars';
 import {DoneButton} from './components/DoneButton';
 import {SelectionGroup} from './components/SelectionGroup';
 import styled from 'styled-components/native';
+import {createDataPoint, getGraphDate} from './DetailedReportScreen';
 
 type Props = {
   navigation: StackNavigationProp<{}>;
@@ -20,7 +22,15 @@ export const DryCoughInputScreen: FC<Props> = ({navigation}) => {
       <NavigationHeader title={'TRACKING DRY COUGH'} showBackButton />
       <View style={{flexDirection: 'row'}}>
         <Icon style={styles.emojiStyle} source={Icons.Mask} />
-        {/* <FancyGradientChart /> */}
+        <FancyGradientChart
+          data={[
+            createDataPoint(getGraphDate(24), 1),
+            createDataPoint(getGraphDate(25), 1),
+            createDataPoint(getGraphDate(26), 2),
+            createDataPoint(getGraphDate(27), 2),
+            createDataPoint(getGraphDate(28), 3),
+          ]}
+        />
       </View>
       <SelectionGroup
         title="cough frequency"

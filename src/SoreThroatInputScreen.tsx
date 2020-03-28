@@ -10,6 +10,7 @@ import {DoneButton} from './components/DoneButton';
 import {SelectionGroup} from './components/SelectionGroup';
 import styled from 'styled-components/native';
 import {FancyGradientChart} from './FancyGradientChart';
+import {createDataPoint, getGraphDate} from './DetailedReportScreen';
 
 type Props = {
   navigation: StackNavigationProp<{}>;
@@ -21,7 +22,15 @@ export const SoreThroatInputScreen: FC<Props> = ({navigation}) => {
       <NavigationHeader title={'TRACKING SORE THROAT'} showBackButton />
       <View style={{flexDirection: 'row'}}>
         <Icon style={styles.emojiStyle} source={Icons.Weary} />
-        <FancyGradientChart />
+        <FancyGradientChart
+          data={[
+            createDataPoint(getGraphDate(24), 1),
+            createDataPoint(getGraphDate(25), 1),
+            createDataPoint(getGraphDate(26), 2),
+            createDataPoint(getGraphDate(27), 2),
+            createDataPoint(getGraphDate(28), 3),
+          ]}
+        />
       </View>
       <SelectionGroup
         title="describe the feeling"
