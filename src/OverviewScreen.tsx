@@ -42,7 +42,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
             <Text style={styles.emojiButtonText}>Dry Cough</Text>
           </Button>
           <Space />
-          <Button>
+          <Button onPress={() => navigation.navigate('Tiredness')}>
             <Icon source={Icons.Bed} />
             <Text style={styles.emojiButtonText}>Tiredness</Text>
           </Button>
@@ -76,22 +76,19 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
             <Text style={styles.emojiButtonText}>Nausea</Text>
           </Button>
           <Space />
-          <Button>
+          <Button onPress={() => navigation.navigate('RunnyNose')}>
             <Icon source={Icons.Sneezing} />
             <Text style={styles.emojiButtonText}>Runny Nose</Text>
           </Button>
         </View>
         <Space />
-        <View
-          style={{
-            flexDirection: 'row',
-          }}>
-          <Button>
+        <View style={{flexDirection: 'row'}}>
+          <Button onPress={() => navigation.navigate('SenseOfTaste')}>
             <Icon source={Icons.Food} />
             <Text style={styles.emojiButtonText}>Sense of taste</Text>
           </Button>
           <Space />
-          <Button>
+          <Button onPress={() => navigation.navigate('SenseOfSmell')}>
             <Icon source={Icons.Nose} />
             <Text style={styles.emojiButtonText}>Sense of smell</Text>
           </Button>

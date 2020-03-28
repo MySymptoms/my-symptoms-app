@@ -27,6 +27,10 @@ import {SoreThroatInputScreen} from './src/SoreThroatInputScreen';
 import {DetailedReportScreen} from './src/DetailedReportScreen';
 import {DiarrhoeaInputScreen} from './src/DiarrhoeaInputScreen';
 import {NauseaInputScreen} from './src/NauseaInputScreen';
+import {RunnyNoseInputScreen} from './src/RunnyNoseInputScreen';
+import {SenseOfTasteInputScreen} from './src/SenseOfTasteInputScreen';
+import {SenseOfSmellInputScreen} from './src/SenseOfSmellInputScreen';
+import {TirednessInputScreen} from './src/TirednessInputScreen';
 
 // TS declaration for making redux devtools extension stop complaining in createStore below.
 declare global {
@@ -46,11 +50,15 @@ export type RootStackParamList = {
   Overview: undefined;
   Fever: undefined;
   DryCough: undefined;
+  Tiredness: undefined;
   ShortnessOfBreath: undefined;
   AchesAndPain: undefined;
   SoreThroat: undefined;
   Diarrhoea: undefined;
   Nausea: undefined;
+  RunnyNose: undefined;
+  SenseOfTaste: undefined;
+  SenseOfSmell: undefined;
   ReportList: undefined;
   Summary: undefined;
   DetailedReport: undefined;
@@ -74,6 +82,7 @@ const App = () => {
             <Stack.Screen name={'Overview'} component={OverviewScreen} />
             <Stack.Screen name={'Fever'} component={FeverInputScreen} />
             <Stack.Screen name={'DryCough'} component={DryCoughInputScreen} />
+            <Stack.Screen name={'Tiredness'} component={TirednessInputScreen} />
             <Stack.Screen
               name={'ShortnessOfBreath'}
               component={ShortnessOfBreathInputScreen}
@@ -88,6 +97,15 @@ const App = () => {
             />
             <Stack.Screen name={'Diarrhoea'} component={DiarrhoeaInputScreen} />
             <Stack.Screen name={'Nausea'} component={NauseaInputScreen} />
+            <Stack.Screen name={'RunnyNose'} component={RunnyNoseInputScreen} />
+            <Stack.Screen
+              name={'SenseOfTaste'}
+              component={SenseOfTasteInputScreen}
+            />
+            <Stack.Screen
+              name={'SenseOfSmell'}
+              component={SenseOfSmellInputScreen}
+            />
             <Stack.Screen name={'Summary'} component={SummaryPage} />
             <Stack.Screen name={'ReportList'} component={ReportList} />
             <Stack.Screen
