@@ -76,7 +76,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
             <Text style={styles.emojiButtonText}>Nausea</Text>
           </Button>
           <Space />
-          <Button>
+          <Button onPress={() => navigation.navigate('RunnyNose')}>
             <Icon source={Icons.Sneezing} />
             <Text style={styles.emojiButtonText}>Runny Nose</Text>
           </Button>
