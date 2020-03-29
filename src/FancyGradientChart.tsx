@@ -45,6 +45,7 @@ export interface GraphDataPoint {
 }
 
 const formatTick = (t: Date) => {
+  console.log(t, isToday(t));
   if (isToday(t)) {
     return 'TODAY';
   } else {
