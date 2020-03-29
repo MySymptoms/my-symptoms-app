@@ -69,7 +69,7 @@ export const DryCoughInputScreen: FC<Props> = ({route}) => {
         options={[
           {title: 'none', color: Colors.stepOneColor},
           {title: 'bearable', color: Colors.stepTwoColor},
-          {title: 'harsh', color: Colors.stepfourColor},
+          {title: 'harsh', color: Colors.stepFourColor},
           {title: 'physical discomfort', color: Colors.stepFiveColor},
         ]}
       />

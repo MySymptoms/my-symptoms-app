@@ -9,12 +9,13 @@ import {fontName} from '../lib/vars';
 interface Option {
   title: string;
   color?: string;
+  dataValue: any;
 }
 
 interface Props {
   title: string;
   options: Option[];
-  onOptionSelected: (option: Option, index: number) => void;
+  onOptionSelected: (option: Option | null, index: number) => void;
 }
 
 export const SelectionGroup: FC<Props> = ({
@@ -34,8 +35,13 @@ export const SelectionGroup: FC<Props> = ({
             <View style={styles.horizontal} key={index}>
               <SelectableButton
                 onPress={() => {
-                  setSelectedIndex(selectedIndex === index ? null : index);
-                  onOptionSelected(options[index], index);
+                  if (selectedIndex === index) {
+                    setSelectedIndex(null);
+                    onOptionSelected(null, -1);
+                  } else {
+                    setSelectedIndex(index);
+                    onOptionSelected(options[index], index);
+                  }
                 }}
                 title={header}
                 selected={index === selectedIndex}

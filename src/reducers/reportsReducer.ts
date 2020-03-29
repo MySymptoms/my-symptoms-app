@@ -59,13 +59,10 @@ const initialState: ReportsReducerState = {
           disruption: '',
         },
       },
-      sense_of_taste: null,
       tiredness: {
         symptom: 'tiredness',
         values: {
-          energy_level: 9, // 1-9
-          nausea: true,
-          fainting: true,
+          description: 'as_usual',
         },
       },
       shortness_of_breath: {

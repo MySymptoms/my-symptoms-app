@@ -41,7 +41,7 @@ export const SenseOfTasteInputScreen: FC<Props> = ({route}) => {
           if (symptom) {
             return {
               date: report.date,
-              score: symptom.values.lost_sense_of_taste === 'yes' ? 3 : 1,
+              score: symptom.values.description === 'normal' ? 1 : 3,
             };
           } else {
             return null;
@@ -71,16 +71,27 @@ export const SenseOfTasteInputScreen: FC<Props> = ({route}) => {
         )}
       </View>
       <SelectionGroup
-        title="Have you lost your sense of taste?"
+        title="How's your sense of taste?"
         onOptionSelected={option =>
           setValues({
-            lost_sense_of_taste: option.title as 'yes' | 'no',
+            description: option?.dataValue as
+              | 'normal'
+              | 'less_than_usual'
+              | 'can_not_taste_anything',
           })
         }
         options={[
-          {title: 'no', color: Colors.stepOneColor},
-          {title: 'Food tastes less than usual', color: Colors.stepThreeColor},
-          {title: "Can't taste anything", color: Colors.stepFiveColor},
+          {title: 'normal', color: Colors.stepOneColor, dataValue: 'normal'},
+          {
+            title: 'Food tastes less than usual',
+            color: Colors.stepThreeColor,
+            dataValue: 'less_than_usual',
+          },
+          {
+            title: "Can't taste anything",
+            color: Colors.stepFiveColor,
+            dataValue: 'can_not_taste_anything',
+          },
         ]}
       />
 

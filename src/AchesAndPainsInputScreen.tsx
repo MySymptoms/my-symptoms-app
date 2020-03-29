@@ -12,12 +12,21 @@ import {NavigationHeader} from './NavigationHeader';
 import {createDataPoint, getGraphDate} from './DetailedReportScreen';
 import {Divider} from './components/Divider';
 import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
+import {useReportState} from './hooks/useReportState';
+import {RootStackParamList} from 'App';
+import {RouteProp} from '@react-navigation/native';
 
 type Props = {
-  navigation: StackNavigationProp<{}>;
+  route: RouteProp<RootStackParamList, 'AchesAndPain'>;
 };
 
-export const AchesAndPainInputScreen: FC<Props> = ({}) => {
+export const AchesAndPainInputScreen: FC<Props> = ({route}) => {
+  const {currentReportDate} = route.params;
+  const {setValues, values, onSave} = useReportState(
+    currentReportDate,
+    'aches_and_pain',
+  );
+
   return (
     <Background>
       <NavigationHeader
@@ -38,24 +47,38 @@ export const AchesAndPainInputScreen: FC<Props> = ({}) => {
       </View>
       <SelectionGroup
         title="Do you have body ache?"
-        onOptionSelected={() => {}}
+        onOptionSelected={option => {
+          setValues({have_ache: option?.dataValue === 'yes'});
+        }}
         options={[
-          {title: 'yes', color: '#FF7A7A'},
-          {title: 'no', color: '#8cf081'},
+          {title: 'yes', color: '#FF7A7A', dataValue: 'yes'},
+          {title: 'no', color: '#8cf081', dataValue: 'no'},
         ]}
       />
       <Divider />
       <SelectionGroup
         title="frequency"
-        onOptionSelected={() => {}}
+        onOptionSelected={option => {
+          setValues({
+            frequency: option?.dataValue as
+              | 'not_often'
+              | 'on-going'
+              | 'persistent',
+          });
+        }}
         options={[
-          {title: 'not often'},
-          {title: 'on-going'},
-          {title: 'persistent'},
+          {title: 'not often', dataValue: 'not_often'},
+          {title: 'on-going', dataValue: 'on-going'},
+          {title: 'persistent', dataValue: 'persistent'},
         ]}
       />
       <View style={styles.center}>
-        <DoneButton style={{marginTop: 50}} onPress={() => {}} />
+        <DoneButton
+          style={{marginTop: 50}}
+          onPress={() => {
+            onSave(values);
+          }}
+        />
       </View>
     </Background>
   );

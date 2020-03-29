@@ -8,7 +8,7 @@ export const buttonBackgroundActive = '#222222';
 export const buttonBorder = 'rgba(0, 0, 0, 0.6)';
 
 const stepFiveColor = '#FF7A7A';
-const stepfourColor = '#FF966E';
+const stepFourColor = '#FF966E';
 const stepThreeColor = '#FFBC5C';
 const stepTwoColor = '#E4C965';
 const stepOneColor = '#8CF081';
@@ -29,7 +29,7 @@ export const Colors = {
   buttonLineBad: stepFiveColor,
   buttonBackgroundActive,
   stepFiveColor,
-  stepfourColor,
+  stepFourColor,
   stepThreeColor,
   stepTwoColor,
   stepOneColor,

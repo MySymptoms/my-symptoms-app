@@ -18,30 +18,15 @@ import {
   OverviewSymptomButton,
 } from './components/OverviewSymptomButton';
 import {RootState} from './reducers/rootReducer';
-import {Report, selectReport} from './reducers/reportsReducer';
+import {selectReport} from './reducers/reportsReducer';
 import {useGeoLocation} from './hooks/useGeoLocation';
+import {getColorForReportAndSymptom} from './lib/symptomToColor';
+import {useReportState} from './hooks/useReportState';
+import {HeartBeatIcon} from './components/HeartBeatIcon';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList>;
 };
-
-function getColorForSenseOfTaste(report: Report | null): ColorState | null {
-  if (!report || !report.symptoms.sense_of_taste) {
-    return null;
-  } else {
-    return report.symptoms.sense_of_taste.values.lost_sense_of_taste === 'yes'
-      ? 'red'
-      : 'green';
-  }
-}
-
-function getColorForFever(report: Report | null): ColorState | null {
-  if (!report || !report.symptoms.fever) {
-    return null;
-  } else {
-    return report.symptoms.fever.values.degrees > 38 ? 'red' : 'green';
-  }
-}
 
 export const OverviewScreen: FC<Props> = ({navigation}) => {
   const {getLatestLocation, requestPermission} = useGeoLocation();
@@ -75,7 +60,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
       <View style={{alignItems: 'center', justifyContent: 'center'}}>
         <View style={{flexDirection: 'row'}}>
           <OverviewSymptomButton
-            color={getColorForFever(report)}
+            color={getColorForReportAndSymptom(report, 'fever')}
             onPress={() =>
               navigation.navigate('Fever', {currentReportDate: currentDate})
             }
@@ -84,7 +69,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
           />
           <Space />
           <OverviewSymptomButton
-            color={null}
+            color={getColorForReportAndSymptom(report, 'dry_cough')}
             onPress={() =>
               navigation.navigate('DryCough', {currentReportDate: currentDate})
             }
@@ -93,7 +78,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
           />
           <Space />
           <OverviewSymptomButton
-            color={null}
+            color={getColorForReportAndSymptom(report, 'tiredness')}
             onPress={() =>
               navigation.navigate('Tiredness', {currentReportDate: currentDate})
             }
@@ -104,7 +89,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
         <Space />
         <View style={{flexDirection: 'row'}}>
           <OverviewSymptomButton
-            color={null}
+            color={getColorForReportAndSymptom(report, 'shortness_of_breath')}
             onPress={() =>
               navigation.navigate('ShortnessOfBreath', {
                 currentReportDate: currentDate,
@@ -115,7 +100,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
           />
           <Space />
           <OverviewSymptomButton
-            color={null}
+            color={getColorForReportAndSymptom(report, 'aches_and_pain')}
             onPress={() =>
               navigation.navigate('AchesAndPain', {
                 currentReportDate: currentDate,
@@ -126,7 +111,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
           />
           <Space />
           <OverviewSymptomButton
-            color={null}
+            color={getColorForReportAndSymptom(report, 'sore_throat')}
             onPress={() =>
               navigation.navigate('SoreThroat', {
                 currentReportDate: currentDate,
@@ -139,7 +124,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
         <Space />
         <View style={{flexDirection: 'row'}}>
           <OverviewSymptomButton
-            color={null}
+            color={getColorForReportAndSymptom(report, 'diarrhoea')}
             onPress={() =>
               navigation.navigate('Diarrhoea', {currentReportDate: currentDate})
             }
@@ -148,7 +133,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
           />
           <Space />
           <OverviewSymptomButton
-            color={null}
+            color={getColorForReportAndSymptom(report, 'nausea')}
             onPress={() =>
               navigation.navigate('Nausea', {currentReportDate: currentDate})
             }
@@ -157,7 +142,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
           />
           <Space />
           <OverviewSymptomButton
-            color={null}
+            color={getColorForReportAndSymptom(report, 'runny_nose')}
             onPress={() =>
               navigation.navigate('RunnyNose', {currentReportDate: currentDate})
             }
@@ -168,7 +153,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
         <Space />
         <View style={{flexDirection: 'row'}}>
           <OverviewSymptomButton
-            color={getColorForSenseOfTaste(report)}
+            color={getColorForReportAndSymptom(report, 'sense_of_taste')}
             onPress={() =>
               navigation.navigate('SenseOfTaste', {
                 currentReportDate: currentDate,
@@ -179,7 +164,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
           />
           <Space />
           <OverviewSymptomButton
-            color={null}
+            color={getColorForReportAndSymptom(report, 'sense_of_smell')}
             onPress={() =>
               navigation.navigate('SenseOfSmell', {
                 currentReportDate: currentDate,
@@ -192,19 +177,50 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
           <View style={{width: 100, height: 100}} />
         </View>
         <Space />
-        <TouchableOpacity onPress={() => {}}>
-          <NoSymtoms>
-            <Icon source={Icons.Flex} />
-            <Space />
-            <Text style={styles.emojiButtonText}>No symptoms today</Text>
-          </NoSymtoms>
-        </TouchableOpacity>
+        <NoSymptomsTodayButton currentDate={currentDate} />
       </View>
     </Background>
   );
 };
 
-const NoSymtoms = styled.View`
+interface NoSymptomsTodayButtonProps {
+  currentDate: string;
+}
+
+const NoSymptomsTodayButton: FC<NoSymptomsTodayButtonProps> = ({
+  currentDate,
+}) => {
+  const {setValues, values, onSave} = useReportState(
+    currentDate,
+    'no_symptoms',
+  );
+
+  return (
+    <TouchableOpacity
+      onPress={() => {
+        setValues({checked: !values?.checked});
+        onSave(values, false);
+      }}>
+      <NoSymtoms selected={!!values?.checked}>
+        {values?.checked && (
+          <HeartBeatIcon
+            stroke={Colors.stepOneColor}
+            style={{position: 'absolute', top: 5, right: 14}}
+          />
+        )}
+        <Icon source={Icons.Flex} />
+        <Space />
+        <Text style={styles.emojiButtonText}>No symptoms today</Text>
+      </NoSymtoms>
+    </TouchableOpacity>
+  );
+};
+
+interface NoSymptomsProps {
+  selected: boolean;
+}
+
+const NoSymtoms = styled.View<NoSymptomsProps>`
   flex-direction: row;
   width: 245px;
   height: 62px;
@@ -214,7 +230,8 @@ const NoSymtoms = styled.View`
   border-radius: 55px;
   background-color: ${Colors.buttonBackground};
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-  border: 3px rgba(0, 0, 0, 0.6);
+  border: 3px
+    ${props => (props.selected ? Colors.stepOneColor : 'rgba(0, 0, 0, 0.6)')};
   elevation: 100;
 `;
 

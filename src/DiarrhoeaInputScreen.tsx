@@ -11,10 +11,21 @@ import {FancyGradientChart} from './FancyGradientChart';
 import {createDataPoint, getGraphDate} from './DetailedReportScreen';
 import {Divider} from './components/Divider';
 import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
+import {RootStackParamList} from 'App';
+import {RouteProp} from '@react-navigation/native';
+import {useReportState} from './hooks/useReportState';
 
-type Props = {};
+type Props = {
+  route: RouteProp<RootStackParamList, 'Diarrhoea'>;
+};
 
-export const DiarrhoeaInputScreen: FC<Props> = () => {
+export const DiarrhoeaInputScreen: FC<Props> = ({route}) => {
+  const {currentReportDate} = route.params;
+  const {setValues, values, onSave} = useReportState(
+    currentReportDate,
+    'diarrhoea',
+  );
+
   return (
     <Background>
       <NavigationHeader
@@ -35,24 +46,49 @@ export const DiarrhoeaInputScreen: FC<Props> = () => {
       </View>
       <SelectionGroup
         title="do you have diarrhoea?"
-        onOptionSelected={() => {}}
+        onOptionSelected={option => {
+          switch (option?.dataValue) {
+            case 'yes':
+              setValues({presense: true});
+              break;
+            case 'no':
+              setValues({presense: false});
+              break;
+            default:
+              setValues({presense: undefined});
+              break;
+          }
+          setValues({presense: option?.dataValue === 'yes'});
+        }}
         options={[
-          {title: 'yes', color: '#FF7A7A'},
-          {title: 'no', color: '#8cf081'},
+          {title: 'yes', color: Colors.stepFiveColor, dataValue: 'yes'},
+          {title: 'no', color: Colors.stepOneColor, dataValue: 'no'},
         ]}
       />
       <Divider />
       <SelectionGroup
         title="frequency"
-        onOptionSelected={() => {}}
+        onOptionSelected={option => {
+          setValues({
+            frequency: option?.dataValue as
+              | 'not_often'
+              | 'often'
+              | 'very_often',
+          });
+        }}
         options={[
-          {title: 'not often'},
-          {title: 'often'},
-          {title: 'very often'},
+          {title: 'not often', dataValue: 'not_often'},
+          {title: 'often', dataValue: 'often'},
+          {title: 'very often', dataValue: 'very_often'},
         ]}
       />
       <View style={styles.center}>
-        <DoneButton style={{marginTop: 50}} onPress={() => {}} />
+        <DoneButton
+          style={{marginTop: 50}}
+          onPress={() => {
+            onSave(values);
+          }}
+        />
       </View>
     </Background>
   );

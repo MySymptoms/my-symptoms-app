@@ -24,7 +24,7 @@ export const SenseOfSmellInputScreen: FC<Props> = ({route}) => {
   const {currentReportDate} = route.params;
   const {setValues, values, onSave} = useReportState(
     currentReportDate,
-    'dry_cough',
+    'sense_of_smell',
   );
   return (
     <Background>
@@ -46,15 +46,35 @@ export const SenseOfSmellInputScreen: FC<Props> = ({route}) => {
       </View>
       <SelectionGroup
         title="have you lost your sense of smell?"
-        onOptionSelected={() => {}}
+        onOptionSelected={option => {
+          setValues({
+            description: option?.dataValue as
+              | 'normal'
+              | 'less_than_usual'
+              | 'can_not_smell_anything',
+          });
+        }}
         options={[
-          {title: 'no', color: Colors.stepOneColor},
-          {title: 'Things smell less', color: Colors.stepThreeColor},
-          {title: "Can't smell anything", color: Colors.stepFiveColor},
+          {title: 'normal', color: Colors.stepOneColor, dataValue: 'normal'},
+          {
+            title: 'Things smell less',
+            color: Colors.stepThreeColor,
+            dataValue: 'less_than_usual',
+          },
+          {
+            title: "Can't smell anything",
+            color: Colors.stepFiveColor,
+            dataValue: 'can_not_smell_anything',
+          },
         ]}
       />
       <View style={styles.center}>
-        <DoneButton style={{marginTop: 50}} onPress={() => {}} />
+        <DoneButton
+          style={{marginTop: 50}}
+          onPress={() => {
+            onSave(values);
+          }}
+        />
       </View>
     </Background>
   );
