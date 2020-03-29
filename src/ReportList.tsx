@@ -5,8 +5,9 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import {format, parseISO} from 'date-fns';
 
 export const ReportList = () => {
-  const reports = useSelector((state: RootState) => Object.values(state.reports));
-  console.log('reports', reports);
+  const reports = useSelector((state: RootState) =>
+    Object.values(state.reports),
+  );
 
   return (
     <View>

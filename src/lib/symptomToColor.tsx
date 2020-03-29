@@ -133,8 +133,6 @@ export function getColorForReportAndSymptom<TKey extends keyof SymptomsRecord>(
   if (!report.symptoms) {
     return null;
   }
-  console.log(map);
-
   switch (symptom) {
     case 'aches_and_pain': {
       const reportedSymptom = report.symptoms.aches_and_pain;
