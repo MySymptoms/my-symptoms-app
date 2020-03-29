@@ -110,7 +110,6 @@ const colors = [
   Colors.stepFiveColor,
 ];
 
-const offsets = ['0%', '25%', '50%', '75%', '100%'];
 
 const calculateLinearGradient = (data: GraphDataPoint[]) => {
   console.log(data);
