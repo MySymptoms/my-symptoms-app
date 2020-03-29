@@ -60,7 +60,7 @@ export const HorizontalStatusCalendar: FC<Props> = ({
         horizontal
         scrollAnimation
         keyExtractor={(dayEntry: DayEntry) => String(dayEntry.date)}
-        initialScrollToIndex={dateSpan.length - padDays}
+        initialScrollToIndex={dateSpan.length - padDays - 1}
         data={data}
         onSelected={({item}: {item: DayEntry}) =>
           onChange(formatDate(item.date))
