@@ -29,7 +29,7 @@ export const SelectionGroup: FC<Props> = ({
     <View>
       <Text style={styles.title}>{title}</Text>
       <Space />
-      <ScrollView horizontal style={{overflow: 'visible'}}>
+      <ScrollView horizontal style={{overflow: 'visible', paddingBottom: 5}}>
         {options.map(({title: header, color}, index) => {
           return (
             <View style={styles.horizontal} key={index}>
