@@ -17,7 +17,7 @@ type Props = {
   navigation: StackNavigationProp<{}>;
 };
 
-export const AchesAndPainInputScreen: FC<Props> = ({navigation}) => {
+export const AchesAndPainInputScreen: FC<Props> = ({}) => {
   return (
     <Background>
       <NavigationHeader
@@ -55,7 +55,7 @@ export const AchesAndPainInputScreen: FC<Props> = ({navigation}) => {
         ]}
       />
       <View style={styles.center}>
-        <DoneButton style={{marginTop: 50}} />
+        <DoneButton style={{marginTop: 50}} onPress={() => {}} />
       </View>
     </Background>
   );

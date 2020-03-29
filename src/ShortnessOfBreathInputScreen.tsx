@@ -12,7 +12,7 @@ import {SelectionGroup} from './components/SelectionGroup';
 import {NavigationHeader} from './NavigationHeader';
 import {createDataPoint, getGraphDate} from './DetailedReportScreen';
 import {Divider} from './components/Divider';
-import {useReportState} from './useReportState';
+import {useReportState} from './hooks/useReportState';
 import {RouteProp} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
@@ -22,10 +22,8 @@ type Props = {
   route: RouteProp<RootStackParamList, 'ShortnessOfBreath'>;
 };
 
-export const ShortnessOfBreathInputScreen: FC<Props> = ({
-  route,
-}) => {
-  const { currentReportDate } = route.params;
+export const ShortnessOfBreathInputScreen: FC<Props> = ({route}) => {
+  const {currentReportDate} = route.params;
   const {setValues, values, onSave} = useReportState(
     currentReportDate,
     'shortness_of_breath',
@@ -50,7 +48,15 @@ export const ShortnessOfBreathInputScreen: FC<Props> = ({
       </View>
       <SelectionGroup
         title="Describe the feeling"
-        onOptionSelected={option => setValues({feeling: option.title})}
+        onOptionSelected={option =>
+          setValues({
+            feeling: option.title as
+              | 'breathe_normally'
+              | 'shortness of breath'
+              | 'tightness in my chest'
+              | 'cannot get enough air',
+          })
+        }
         options={[
           {title: 'breathe normally', color: '#8cf081'},
           {title: 'Short of breath', color: '#FFBC5C'},

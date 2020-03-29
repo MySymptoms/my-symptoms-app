@@ -11,9 +11,9 @@ import {SelectionGroup} from './components/SelectionGroup';
 import {FancyGradientChart} from './FancyGradientChart';
 import {createDataPoint, getGraphDate} from './DetailedReportScreen';
 import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
-import { useReportState } from "./useReportState";
-import { RootStackParamList } from "../App";
-import { RouteProp } from "@react-navigation/native";
+import {useReportState} from './hooks/useReportState';
+import {RootStackParamList} from '../App';
+import {RouteProp} from '@react-navigation/native';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Tiredness'>;
@@ -21,7 +21,7 @@ type Props = {
 };
 
 export const TirednessInputScreen: FC<Props> = ({route}) => {
-  const { currentReportDate } = route.params;
+  const {currentReportDate} = route.params;
   const {setValues, values, onSave} = useReportState(
     currentReportDate,
     'tiredness',
@@ -46,7 +46,9 @@ export const TirednessInputScreen: FC<Props> = ({route}) => {
       </View>
       <SelectionGroup
         title="are you tired?"
-        onOptionSelected={option => setValues({energy_level: option.title === 'yes' ? 9 : 1})}
+        onOptionSelected={option =>
+          setValues({energy_level: option.title === 'yes' ? 9 : 1})
+        }
         options={[
           {title: 'yes', color: '#FF7A7A'},
           {title: 'no', color: '#8cf081'},

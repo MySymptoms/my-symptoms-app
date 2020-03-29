@@ -17,7 +17,7 @@ import { FancyGradientChart } from './FancyGradientChart';
 import { createDataPoint } from './DetailedReportScreen';
 import { parseISO } from 'date-fns';
 import { sortBy } from 'lodash';
-import { useReportState } from './useReportState';
+import { useReportState } from "./hooks/useReportState";
 import { TrackMySymptomHeader } from './components/TrackMySymtomHeader';
 
 interface Props {

@@ -15,7 +15,7 @@ import {SummaryViewIcon} from './components/SummaryViewIcon';
 import {formatDate} from './lib/util';
 import {OverviewSymptomButton} from './components/OverviewSymptomButton';
 import {RootState} from './reducers/rootReducer';
-import {selectDateToReportId} from './reducers/dateToReportIdReducer';
+import {selectReport} from './reducers/reportsReducer';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -24,16 +24,7 @@ type Props = {
 export const OverviewScreen: FC<Props> = ({navigation}) => {
   const [currentDate, setCurrentDate] = useState(formatDate(new Date()));
   const emoji = useSelector((state: RootState) => state.user.user_emoji);
-  const report = useSelector((state: RootState) => {
-    const reportId = state.dateToReportId[currentDate];
-    if (reportId) {
-      return state.reports[reportId];
-    } else {
-      return null;
-    }
-  });
-
-  console.log(report);
+  const report = useSelector(selectReport(currentDate));
 
   return (
     <Background>
@@ -150,7 +141,8 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
             color={
               !report || !report.symptoms.sense_of_taste
                 ? null
-                : report.symptoms.sense_of_taste.values.lost_sense_of_taste === 'yes'
+                : report.symptoms.sense_of_taste.values.lost_sense_of_taste ===
+                  'yes'
                 ? 'red'
                 : 'green'
             }

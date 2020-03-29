@@ -47,7 +47,6 @@ const initialState: ReportsReducerState = {
         // or null/undefined
         symptom: 'fever',
         values: {
-          unit: 'C',
           degrees: 37.6, // celcius
         },
       },
@@ -55,7 +54,7 @@ const initialState: ReportsReducerState = {
         symptom: 'dry_cough',
         values: {
           frequency: 'every_minute', // "few_times_an_hour", "few_times_a_day"
-          intencity: '',
+          intensity: '',
           disruption: '',
         },
       },
@@ -154,7 +153,7 @@ export const requestUpdateSymptomInReport = <
   date: string;
   now: Date;
   symptomKey: TKey;
-  symptom: SymptomsRecord[TKey]['values'];
+  symptom: Partial<SymptomsRecord[TKey]['values']>;
 }): ThunkAction<any, RootState, undefined, AnyAction> => (
   dispatch,
   getState,
@@ -206,14 +205,14 @@ interface UpdateSymptomAction<TKey extends keyof SymptomsRecord> {
   uuid: string;
   now: Date;
   symptomKey: TKey;
-  symptom: SymptomsRecord[TKey]['values'];
+  symptom: Partial<SymptomsRecord[TKey]['values']>;
 }
 
 export const updateSymptomInReport = <TKey extends keyof SymptomsRecord>(
   uuid: string,
   now: Date,
   symptomKey: TKey,
-  symptom: SymptomsRecord[TKey]['values'],
+  symptom: Partial<SymptomsRecord[TKey]['values']>,
 ): UpdateSymptomAction<TKey> => {
   return {
     type: UPDATE_SYMPTOM,
@@ -222,4 +221,15 @@ export const updateSymptomInReport = <TKey extends keyof SymptomsRecord>(
     symptomKey,
     symptom,
   };
+};
+
+export const selectReport = (currentReportDate: string) => (
+  state: RootState,
+) => {
+  const reportId = state.dateToReportId[currentReportDate];
+  if (reportId) {
+    return state.reports[reportId];
+  } else {
+    return null;
+  }
 };

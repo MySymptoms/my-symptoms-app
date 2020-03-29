@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useRef, useState} from 'react';
 import {Background} from './components/Background';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {Icon, Icons} from './lib/icons';
@@ -15,25 +15,45 @@ import {NavigationHeader} from './NavigationHeader';
 import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
 import {RootStackParamList} from '../App';
 import {RouteProp} from '@react-navigation/native';
-import {useReportState} from './useReportState';
 import {Space} from './components/Block';
+import {
+  selectTemperatureUnit,
+  setTemperatureUnit,
+  TemperatureUnit,
+} from './reducers/userReducer';
+import {useDispatch, useSelector} from 'react-redux';
+import {useReportState} from './hooks/useReportState';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Fever'>;
   route: RouteProp<RootStackParamList, 'Fever'>;
 };
 
+const temperatureUnits: TemperatureUnit[] = ['celsius', 'fahrenheit'];
+
+const convertToFahrenheit = (temperature: number) => (temperature * 9) / 5 + 32;
+const convertToCelsius = (temperature: number) => ((temperature - 32) * 5) / 9;
+
 export const FeverInputScreen: FC<Props> = ({route}) => {
+  const isEditing = useRef(false);
   const {currentReportDate} = route.params;
   const {setValues, values, onSave} = useReportState(
     currentReportDate,
     'fever',
   );
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [textValue, setTextValue] = useState(String(36.7));
-  let temperature = 36.7;
-  const displayValue =
-    selectedIndex === 0 ? temperature : (temperature * 9) / 5 + 32;
+
+  const temperatureUnit = useSelector(selectTemperatureUnit);
+
+  const temperatureInCelsius = values && values.degrees ? values.degrees : 36.7;
+  const [textValue, setTextValue] = useState(
+    String(
+      temperatureUnit === 'fahrenheit'
+        ? convertToFahrenheit(temperatureInCelsius)
+        : temperatureInCelsius,
+    ),
+  );
+
+  const dispatch = useDispatch();
 
   return (
     <Background>
@@ -57,9 +77,32 @@ export const FeverInputScreen: FC<Props> = ({route}) => {
         <SegmentedControl
           firstOption="C"
           secondOption="F"
-          selectedIndex={selectedIndex}
+          selectedIndex={temperatureUnits.indexOf(temperatureUnit)}
           onTabPress={() => {
-            setSelectedIndex((selectedIndex + 1) % 2);
+            const nextUnit =
+              temperatureUnits[
+                (temperatureUnits.indexOf(temperatureUnit) + 1) % 2
+              ];
+            if (isEditing.current) {
+              if (nextUnit === 'fahrenheit') {
+                setTextValue(
+                  convertToFahrenheit(parseFloat(textValue)).toString(10),
+                );
+              } else {
+                setTextValue(
+                  convertToCelsius(parseFloat(textValue)).toString(10),
+                );
+              }
+            } else {
+              if (nextUnit === 'fahrenheit') {
+                setTextValue(
+                  convertToFahrenheit(temperatureInCelsius).toString(10),
+                );
+              } else {
+                setTextValue(String(temperatureInCelsius));
+              }
+            }
+            dispatch(setTemperatureUnit(nextUnit));
           }}
         />
       </View>
@@ -74,11 +117,25 @@ export const FeverInputScreen: FC<Props> = ({route}) => {
             style={styles.tempInputText}
             value={textValue}
             onChangeText={v => setTextValue(v)}
-            onEndEditing={() => setValues({degrees: parseFloat(textValue)})}
+            keyboardType={'numeric'}
+            maxLength={6}
+            onFocus={() => (isEditing.current = true)}
+            onEndEditing={() => {
+              isEditing.current = false;
+            }}
           />
         </RadialGradient>
         <Space />
-        <DoneButton onPress={() => onSave(values)} />
+        <DoneButton
+          onPress={() => {
+            onSave({
+              degrees:
+                temperatureUnit === 'fahrenheit'
+                  ? convertToCelsius(parseFloat(textValue))
+                  : parseFloat(textValue),
+            });
+          }}
+        />
       </View>
     </Background>
   );

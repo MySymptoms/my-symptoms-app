@@ -12,17 +12,17 @@ import {SelectionGroup} from './components/SelectionGroup';
 import {createDataPoint, getGraphDate} from './DetailedReportScreen';
 import {Divider} from './components/Divider';
 import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
-import { useReportState } from "./useReportState";
-import { RootStackParamList } from "../App";
-import { RouteProp } from "@react-navigation/native";
+import {useReportState} from './hooks/useReportState';
+import {RootStackParamList} from '../App';
+import {RouteProp} from '@react-navigation/native';
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList, 'DryCough'>;
   route: RouteProp<RootStackParamList, 'DryCough'>;
 }
 
-export const DryCoughInputScreen: FC<Props> = ({ route }) => {
-  const { currentReportDate } = route.params;
+export const DryCoughInputScreen: FC<Props> = ({route}) => {
+  const {currentReportDate} = route.params;
   const {setValues, values, onSave} = useReportState(
     currentReportDate,
     'dry_cough',
@@ -47,7 +47,14 @@ export const DryCoughInputScreen: FC<Props> = ({ route }) => {
       </View>
       <SelectionGroup
         title="cough frequency"
-        onOptionSelected={option => setValues({frequency: option.title})}
+        onOptionSelected={option =>
+          setValues({
+            frequency: option.title as
+              | 'every minute'
+              | 'few times an hour'
+              | 'few times a day',
+          })
+        }
         options={[
           {title: 'every minute'},
           {title: 'few times an hour'},

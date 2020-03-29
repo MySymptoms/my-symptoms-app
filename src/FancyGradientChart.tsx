@@ -22,15 +22,19 @@ const labelStyle = {
 
 const theme: VictoryThemeDefinition = {
   ...VictoryTheme.grayscale,
+  // @ts-ignore
   axis: {
     ...VictoryTheme.grayscale.axis,
     style: {
+      // @ts-ignore
       ...VictoryTheme.grayscale.axis.style,
       axis: {
+        // @ts-ignore
         ...VictoryTheme.grayscale.axis.style.axis,
         stroke: '#000',
       },
       tickLabels: {
+        // @ts-ignore
         ...VictoryTheme.grayscale.axis.style.tickLabels,
         ...labelStyle,
       },
@@ -45,7 +49,6 @@ export interface GraphDataPoint {
 }
 
 const formatTick = (t: Date) => {
-  console.log(t, isToday(t));
   if (isToday(t)) {
     return 'TODAY';
   } else {

@@ -13,7 +13,7 @@ import {createDataPoint, getGraphDate} from './DetailedReportScreen';
 import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
 import { RootStackParamList } from "../App";
 import { RouteProp } from "@react-navigation/native";
-import { useReportState } from "./useReportState";
+import { useReportState } from "./hooks/useReportState";
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'SenseOfSmell'>;
