@@ -62,9 +62,12 @@ export const HorizontalStatusCalendar: FC<Props> = ({
         keyExtractor={(dayEntry: DayEntry) => String(dayEntry.date)}
         initialScrollToIndex={dateSpan.length - padDays - 1}
         data={data}
-        onSelected={({item}: {item: DayEntry}) =>
-          onChange(formatDate(item.date))
-        }
+        onSelected={({item}: {item: DayEntry}) => {
+          if (isFuture(item.date) && !isToday(item.date)) {
+            return;
+          }
+          onChange(formatDate(item.date));
+        }}
         renderItem={({item, index}: {item: DayEntry; index: number}) => {
           let DateTextComp = DateText;
           if (formatDate(parseISO(value)) === formatDate(item.date)) {
