@@ -1,21 +1,21 @@
-import React, {FC} from 'react';
-import {Background} from './components/Background';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {Icon, Icons} from './lib/icons';
-import {FancyGradientChart} from './FancyGradientChart';
-import {NavigationHeader} from './NavigationHeader';
-import {StyleSheet, View} from 'react-native';
-import {Colors} from './lib/colors';
-import {fontName} from './lib/vars';
-import {DoneButton} from './components/DoneButton';
-import {SelectionGroup} from './components/SelectionGroup';
-import {createDataPoint, getGraphDate} from './DetailedReportScreen';
-import {Divider} from './components/Divider';
-import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
-import {useReportState} from './hooks/useReportState';
-import {RootStackParamList} from '../App';
-import {RouteProp} from '@react-navigation/native';
-import {Row, PaddedContainer} from './components/Block';
+import React, { FC } from 'react';
+import { Background } from './components/Background';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { Icon, Icons } from './lib/icons';
+import { FancyGradientChart } from './FancyGradientChart';
+import { NavigationHeader } from './NavigationHeader';
+import { StyleSheet, View } from 'react-native';
+import { Colors } from './lib/colors';
+import { fontName } from './lib/vars';
+import { DoneButton } from './components/DoneButton';
+import { SelectionGroup } from './components/SelectionGroup';
+import { createDataPoint, getGraphDate } from './DetailedReportScreen';
+import { Divider } from './components/Divider';
+import { TrackMySymptomHeader } from './components/TrackMySymtomHeader';
+import { useReportState } from './hooks/useReportState';
+import { RootStackParamList } from '../App';
+import { RouteProp } from '@react-navigation/native';
+import { PaddedContainer, Row } from './components/Block';
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList, 'DryCough'>;
@@ -28,6 +28,9 @@ export const DryCoughInputScreen: FC<Props> = ({route}) => {
     currentReportDate,
     'dry_cough',
   );
+
+
+
   return (
     <Background
       header={
@@ -49,6 +52,7 @@ export const DryCoughInputScreen: FC<Props> = ({route}) => {
             ]}
           />
         </Row>
+      </PaddedContainer>
         <SelectionGroup
           title="cough frequency"
           onOptionSelected={option =>
@@ -95,6 +99,7 @@ export const DryCoughInputScreen: FC<Props> = ({route}) => {
             {title: 'nighttime', dataValue: 'nighttime'},
           ]}
         />
+        <PaddedContainer>
         <View style={styles.center}>
           <DoneButton style={{marginTop: 50}} onPress={() => onSave(values)} />
         </View>

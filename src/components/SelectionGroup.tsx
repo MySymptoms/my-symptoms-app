@@ -29,7 +29,7 @@ export const SelectionGroup: FC<Props> = ({
     <View>
       <Text style={styles.title}>{title}</Text>
       <Space />
-      <ScrollView horizontal style={{overflow: 'visible', paddingBottom: 5}}>
+      <ScrollView horizontal style={{paddingBottom: 10, paddingLeft: 10}}>
         {options.map(({title: header, color}, index) => {
           return (
             <View style={styles.horizontal} key={index}>
@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontSize: 18,
     lineHeight: 23,
+    paddingLeft: 10
   },
   horizontal: {flexDirection: 'row'},
 });
