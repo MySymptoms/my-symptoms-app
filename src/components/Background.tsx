@@ -10,7 +10,7 @@ export const Background: FC<{style?: ViewStyle}> = ({children, style}) => (
     colors={['#000', 'rgba(37,37,37,0)']}
     locations={[0, 0.1502]}
     style={[styles.linearGradient, style]}>
-    <ScrollView>{children}</ScrollView>
+    <ScrollView style={styles.scrollView}>{children}</ScrollView>
   </LinearGradient>
 );
 
@@ -18,6 +18,8 @@ const styles = StyleSheet.create({
   linearGradient: {
     backgroundColor: '#2E2E2E',
     flex: 1,
+  },
+  scrollView: {
     paddingLeft: 15,
     paddingRight: 15,
   },
