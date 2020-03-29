@@ -11,17 +11,17 @@ import {SelectionGroup} from './components/SelectionGroup';
 import {FancyGradientChart} from './FancyGradientChart';
 import {createDataPoint, getGraphDate} from './DetailedReportScreen';
 import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
-import { RootStackParamList } from "../App";
-import { RouteProp } from "@react-navigation/native";
-import { useReportState } from "./hooks/useReportState";
+import {RootStackParamList} from '../App';
+import {RouteProp} from '@react-navigation/native';
+import {useReportState} from './hooks/useReportState';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'SenseOfSmell'>;
   route: RouteProp<RootStackParamList, 'SenseOfSmell'>;
 };
 
-export const SenseOfSmellInputScreen: FC<Props> = ({ route }) => {
-  const { currentReportDate } = route.params;
+export const SenseOfSmellInputScreen: FC<Props> = ({route}) => {
+  const {currentReportDate} = route.params;
   const {setValues, values, onSave} = useReportState(
     currentReportDate,
     'dry_cough',
@@ -48,8 +48,9 @@ export const SenseOfSmellInputScreen: FC<Props> = ({ route }) => {
         title="have you lost your sense of smell?"
         onOptionSelected={() => {}}
         options={[
-          {title: 'yes', color: '#FF7A7A'},
-          {title: 'no', color: '#8cf081'},
+          {title: 'no', color: Colors.stepOneColor},
+          {title: 'Things smell less', color: Colors.stepThreeColor},
+          {title: "Can't smell anything", color: Colors.stepFiveColor},
         ]}
       />
       <View style={styles.center}>

@@ -1,5 +1,5 @@
 import {CREATE_REPORT, CreateReportAction} from './reportsReducer';
-import { RootState } from './rootReducer';
+import {RootState} from './rootReducer';
 
 export type DateToReportIdReducerState = Record<string, string>;
 

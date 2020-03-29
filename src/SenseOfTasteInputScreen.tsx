@@ -1,24 +1,24 @@
-import React, { FC } from 'react';
-import { Background } from './components/Background';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { Icon, Icons } from './lib/icons';
-import { NavigationHeader } from './NavigationHeader';
-import { StyleSheet, View } from 'react-native';
-import { Colors } from './lib/colors';
-import { fontName } from './lib/vars';
-import { DoneButton } from './components/DoneButton';
-import { SelectionGroup } from './components/SelectionGroup';
-import { useSelector } from 'react-redux';
-import { RootState } from './reducers/rootReducer';
-import { RootStackParamList } from 'App';
-import { RouteProp } from '@react-navigation/native';
-import { isDefined } from './lib/util';
-import { FancyGradientChart } from './FancyGradientChart';
-import { createDataPoint } from './DetailedReportScreen';
-import { parseISO } from 'date-fns';
-import { sortBy } from 'lodash';
-import { useReportState } from "./hooks/useReportState";
-import { TrackMySymptomHeader } from './components/TrackMySymtomHeader';
+import React, {FC} from 'react';
+import {Background} from './components/Background';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {Icon, Icons} from './lib/icons';
+import {NavigationHeader} from './NavigationHeader';
+import {StyleSheet, View} from 'react-native';
+import {Colors} from './lib/colors';
+import {fontName} from './lib/vars';
+import {DoneButton} from './components/DoneButton';
+import {SelectionGroup} from './components/SelectionGroup';
+import {useSelector} from 'react-redux';
+import {RootState} from './reducers/rootReducer';
+import {RootStackParamList} from 'App';
+import {RouteProp} from '@react-navigation/native';
+import {isDefined} from './lib/util';
+import {FancyGradientChart} from './FancyGradientChart';
+import {createDataPoint} from './DetailedReportScreen';
+import {parseISO} from 'date-fns';
+import {sortBy} from 'lodash';
+import {useReportState} from './hooks/useReportState';
+import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList, 'SenseOfTaste'>;
@@ -78,8 +78,9 @@ export const SenseOfTasteInputScreen: FC<Props> = ({route}) => {
           })
         }
         options={[
-          {title: 'yes', color: Colors.buttonLineBad},
-          {title: 'no', color: Colors.buttonLineGood},
+          {title: 'no', color: Colors.stepOneColor},
+          {title: 'Food tastes less than usual', color: Colors.stepThreeColor},
+          {title: "Can't taste anything", color: Colors.stepFiveColor},
         ]}
       />
 

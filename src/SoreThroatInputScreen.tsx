@@ -45,7 +45,7 @@ export const SoreThroatInputScreen: FC<Props> = () => {
       />
       <Divider />
       <SelectionGroup
-        title="how does the back throat lookk like?"
+        title="how does the back throat look?"
         onOptionSelected={() => {}}
         options={[{title: 'not inflamed'}, {title: 'inflamed & red'}]}
       />

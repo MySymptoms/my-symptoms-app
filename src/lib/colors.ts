@@ -7,9 +7,11 @@ export const buttonBackground = '#333333';
 export const buttonBackgroundActive = '#222222';
 export const buttonBorder = 'rgba(0, 0, 0, 0.6)';
 
-const highStopColor = '#FF7A7A';
-const mediumStopColor = '#FFBC5C';
-const lowStopColor = '#8CF081';
+const stepFiveColor = '#FF7A7A';
+const stepfourColor = '#FF966E';
+const stepThreeColor = '#FFBC5C';
+const stepTwoColor = '#E4C965';
+const stepOneColor = '#8CF081';
 
 export const Colors = {
   title: titleGrey,
@@ -18,12 +20,17 @@ export const Colors = {
   deactivatedText: deactivatedGrey,
   buttonBackground: buttonBackground,
   buttonBorder: buttonBorder,
-  highStopColor,
-  mediumStopColor,
-  lowStopColor,
+  highStopColor: stepFiveColor,
+  mediumStopColor: stepThreeColor,
+  lowStopColor: stepOneColor,
   sectionHeader: activeGrey,
-  buttonLineGood: lowStopColor,
-  buttonLineAvarage: mediumStopColor,
-  buttonLineBad: highStopColor,
+  buttonLineGood: stepOneColor,
+  buttonLineAvarage: stepThreeColor,
+  buttonLineBad: stepFiveColor,
   buttonBackgroundActive,
+  stepFiveColor,
+  stepfourColor,
+  stepThreeColor,
+  stepTwoColor,
+  stepOneColor,
 };

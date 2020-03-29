@@ -56,6 +56,7 @@ export const DryCoughInputScreen: FC<Props> = ({route}) => {
           })
         }
         options={[
+          {title: 'none'},
           {title: 'every minute'},
           {title: 'few times an hour'},
           {title: 'few times a day'},
@@ -66,9 +67,10 @@ export const DryCoughInputScreen: FC<Props> = ({route}) => {
         title="intensity"
         onOptionSelected={option => setValues({intensity: option.title})}
         options={[
-          {title: 'bearable', color: Colors.lowStopColor},
-          {title: 'harsh', color: Colors.mediumStopColor},
-          {title: 'physical discomfort', color: Colors.highStopColor},
+          {title: 'none', color: Colors.stepOneColor},
+          {title: 'bearable', color: Colors.stepTwoColor},
+          {title: 'harsh', color: Colors.stepfourColor},
+          {title: 'physical discomfort', color: Colors.stepFiveColor},
         ]}
       />
       <Divider />

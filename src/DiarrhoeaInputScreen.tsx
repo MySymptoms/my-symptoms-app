@@ -43,7 +43,7 @@ export const DiarrhoeaInputScreen: FC<Props> = () => {
       />
       <Divider />
       <SelectionGroup
-        title="fequency"
+        title="frequency"
         onOptionSelected={() => {}}
         options={[
           {title: 'not often'},

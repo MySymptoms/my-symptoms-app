@@ -49,7 +49,7 @@ export const RunnyNoseInputScreen: FC<Props> = ({route}) => {
       />
       <Divider />
       <SelectionGroup
-        title="fequency"
+        title="frequency"
         onOptionSelected={() => {}}
         options={[
           {title: 'not often'},
