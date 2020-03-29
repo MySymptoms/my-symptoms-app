@@ -10,6 +10,7 @@ import {DoneButton} from './components/DoneButton';
 import {SelectionGroup} from './components/SelectionGroup';
 import {FancyGradientChart} from './FancyGradientChart';
 import {createDataPoint, getGraphDate} from './DetailedReportScreen';
+import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
 
 type Props = {
   navigation: StackNavigationProp<{}>;
@@ -18,7 +19,10 @@ type Props = {
 export const TirednessInputScreen: FC<Props> = ({navigation}) => {
   return (
     <Background>
-      <NavigationHeader title={'TRACKING TIREDNESS'} showBackButton />
+      <NavigationHeader
+        center={<TrackMySymptomHeader symptomName="tiredness" />}
+        showBackButton
+      />
       <View style={{flexDirection: 'row'}}>
         <Icon style={styles.emojiStyle} source={Icons.Bed} />
         <FancyGradientChart

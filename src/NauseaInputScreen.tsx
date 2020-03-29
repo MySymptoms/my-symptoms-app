@@ -12,6 +12,7 @@ import styled from 'styled-components/native';
 import {FancyGradientChart} from './FancyGradientChart';
 import {createDataPoint, getGraphDate} from './DetailedReportScreen';
 import {Divider} from './components/Divider';
+import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
 
 type Props = {
   navigation: StackNavigationProp<{}>;
@@ -20,7 +21,10 @@ type Props = {
 export const NauseaInputScreen: FC<Props> = () => {
   return (
     <Background>
-      <NavigationHeader title={'TRACKING NAUSEA'} showBackButton />
+      <NavigationHeader
+        center={<TrackMySymptomHeader symptomName="nausea" />}
+        showBackButton
+      />
       <View style={{flexDirection: 'row'}}>
         <Icon style={styles.emojiStyle} source={Icons.Nauseated} />
         <FancyGradientChart

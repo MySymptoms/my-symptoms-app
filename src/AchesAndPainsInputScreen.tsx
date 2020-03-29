@@ -11,6 +11,7 @@ import {SelectionGroup} from './components/SelectionGroup';
 import {NavigationHeader} from './NavigationHeader';
 import {createDataPoint, getGraphDate} from './DetailedReportScreen';
 import {Divider} from './components/Divider';
+import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
 
 type Props = {
   navigation: StackNavigationProp<{}>;
@@ -19,7 +20,10 @@ type Props = {
 export const AchesAndPainInputScreen: FC<Props> = ({navigation}) => {
   return (
     <Background>
-      <NavigationHeader title={'TRACKING ACHES AND PAINS'} showBackButton />
+      <NavigationHeader
+        center={<TrackMySymptomHeader symptomName="aches & pain" />}
+        showBackButton
+      />
       <View style={{flexDirection: 'row'}}>
         <Icon style={styles.emojiStyle} source={Icons.Sweat} />
         <FancyGradientChart

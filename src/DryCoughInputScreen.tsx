@@ -9,9 +9,9 @@ import {Colors} from './lib/colors';
 import {fontName} from './lib/vars';
 import {DoneButton} from './components/DoneButton';
 import {SelectionGroup} from './components/SelectionGroup';
-import styled from 'styled-components/native';
 import {createDataPoint, getGraphDate} from './DetailedReportScreen';
 import {Divider} from './components/Divider';
+import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
 
 interface Props {
   navigation: StackNavigationProp<{}>;
@@ -20,7 +20,10 @@ interface Props {
 export const DryCoughInputScreen: FC<Props> = () => {
   return (
     <Background>
-      <NavigationHeader title={'TRACKING DRY COUGH'} showBackButton />
+      <NavigationHeader
+        center={<TrackMySymptomHeader symptomName="dry cough" />}
+        showBackButton
+      />
       <View style={{flexDirection: 'row'}}>
         <Icon style={styles.emojiStyle} source={Icons.Mask} />
         <FancyGradientChart

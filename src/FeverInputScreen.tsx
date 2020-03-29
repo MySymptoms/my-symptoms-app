@@ -12,6 +12,7 @@ import {SegmentedControl} from './components/SegmentedControl';
 import RadialGradient from 'react-native-radial-gradient';
 import {createDataPoint, getGraphDate} from './DetailedReportScreen';
 import {NavigationHeader} from './NavigationHeader';
+import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
 
 type Props = {
   navigation: StackNavigationProp<{}>;
@@ -22,7 +23,10 @@ export const FeverInputScreen: FC<Props> = ({}) => {
 
   return (
     <Background>
-      <NavigationHeader title={'TRACKING FEVER'} showBackButton />
+      <NavigationHeader
+        center={<TrackMySymptomHeader symptomName="fever" />}
+        showBackButton
+      />
       <View style={{flexDirection: 'row'}}>
         <Icon style={styles.emojiStyle} source={Icons.FaceWithThermometer} />
         <FancyGradientChart

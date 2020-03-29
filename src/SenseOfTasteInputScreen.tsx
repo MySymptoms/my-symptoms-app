@@ -19,6 +19,7 @@ import {createDataPoint} from './DetailedReportScreen';
 import {parseISO} from 'date-fns';
 import {sortBy} from 'lodash';
 import {SenseOfTasteSymptom, SymptomsRecord} from './reducers/symptoms';
+import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
 
 const useReportState = <TKey extends keyof SymptomsRecord>(
   currentReportDate: string,
@@ -77,7 +78,10 @@ export const SenseOfTasteInputScreen: FC<Props> = ({route, navigation}) => {
 
   return (
     <Background>
-      <NavigationHeader title={'TRACKING SENSE OF TASTE'} showBackButton />
+      <NavigationHeader
+        center={<TrackMySymptomHeader symptomName="sense of taste" />}
+        showBackButton
+      />
       <View style={{flexDirection: 'row'}}>
         <Icon style={styles.emojiStyle} source={Icons.Food} />
         {data.length > 0 ? (

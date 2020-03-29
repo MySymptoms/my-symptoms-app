@@ -8,10 +8,10 @@ import {Colors} from './lib/colors';
 import {fontName} from './lib/vars';
 import {DoneButton} from './components/DoneButton';
 import {SelectionGroup} from './components/SelectionGroup';
-import styled from 'styled-components/native';
 import {FancyGradientChart} from './FancyGradientChart';
 import {createDataPoint, getGraphDate} from './DetailedReportScreen';
 import {Divider} from './components/Divider';
+import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
 
 type Props = {
   navigation: StackNavigationProp<{}>;
@@ -20,7 +20,10 @@ type Props = {
 export const RunnyNoseInputScreen: FC<Props> = () => {
   return (
     <Background>
-      <NavigationHeader title={'TRACKING RUNNY NOSE'} showBackButton />
+      <NavigationHeader
+        center={<TrackMySymptomHeader symptomName="runny nose" />}
+        showBackButton
+      />
       <View style={{flexDirection: 'row'}}>
         <Icon style={styles.emojiStyle} source={Icons.Sneezing} />
         <FancyGradientChart

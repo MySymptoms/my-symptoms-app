@@ -11,13 +11,17 @@ import {SelectionGroup} from './components/SelectionGroup';
 import {FancyGradientChart} from './FancyGradientChart';
 import {createDataPoint, getGraphDate} from './DetailedReportScreen';
 import {Divider} from './components/Divider';
+import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
 
 type Props = {};
 
 export const SoreThroatInputScreen: FC<Props> = () => {
   return (
     <Background>
-      <NavigationHeader title={'TRACKING SORE THROAT'} showBackButton />
+      <NavigationHeader
+        center={<TrackMySymptomHeader symptomName="sore throat" />}
+        showBackButton
+      />
       <View style={{flexDirection: 'row'}}>
         <Icon style={styles.emojiStyle} source={Icons.Weary} />
         <FancyGradientChart

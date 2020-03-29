@@ -12,6 +12,7 @@ import {SelectionGroup} from './components/SelectionGroup';
 import {NavigationHeader} from './NavigationHeader';
 import {createDataPoint, getGraphDate} from './DetailedReportScreen';
 import {Divider} from './components/Divider';
+import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
 
 type Props = {
   navigation: StackNavigationProp<{}>;
@@ -20,7 +21,10 @@ type Props = {
 export const ShortnessOfBreathInputScreen: FC<Props> = ({navigation}) => {
   return (
     <Background>
-      <NavigationHeader title={'TRACKING SHORTNESS OF BREATH'} showBackButton />
+      <NavigationHeader
+        center={<TrackMySymptomHeader symptomName="shortness of breath" />}
+        showBackButton
+      />
       <View style={{flexDirection: 'row'}}>
         <Icon style={styles.emojiStyle} source={Icons.Yawn} />
         <FancyGradientChart
