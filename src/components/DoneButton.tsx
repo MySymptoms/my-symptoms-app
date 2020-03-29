@@ -7,7 +7,7 @@ import {fontName} from '../lib/vars';
 
 interface Props {
   onPress: () => void;
-  style: ViewStyle;
+  style?: ViewStyle;
 }
 
 export const DoneButton: FC<Props> = ({style, onPress}) => {

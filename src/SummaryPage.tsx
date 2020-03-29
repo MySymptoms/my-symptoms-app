@@ -12,7 +12,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../App';
 import {useSelector} from 'react-redux';
 import {selectUserEmoji} from './reducers/userReducer';
-import {UserEmojiField} from './components/UserEmojiField';
+import {HelloUserHeader} from './components/HelloUserHeader';
 
 const Row = styled.View`
   flex-direction: row;
@@ -76,13 +76,7 @@ export const SummaryPage = () => {
     <Background style={{paddingHorizontal: 15}}>
       <NavigationHeader
         showBackButton
-        center={
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <MyText style={{fontSize: 14}}>HELLO ANONYMOUS </MyText>
-            <HalfSpace />
-            <UserEmojiField emoji={userEmoji} />
-          </View>
-        }
+        center={<HelloUserHeader emoji={userEmoji} />}
         right={<Image source={PaperSheet} />}
         onPressRight={() => navigation.navigate('DetailedReport')}
       />

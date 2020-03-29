@@ -7,17 +7,20 @@ import {Colors} from './lib/colors';
 import {fontName} from './lib/vars';
 import {DoneButton} from './components/DoneButton';
 import {SelectionGroup} from './components/SelectionGroup';
-import styled from 'styled-components/native';
 import {FancyGradientChart} from './FancyGradientChart';
 import {createDataPoint, getGraphDate} from './DetailedReportScreen';
 import {Divider} from './components/Divider';
+import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
 
 type Props = {};
 
 export const DiarrhoeaInputScreen: FC<Props> = () => {
   return (
     <Background>
-      <NavigationHeader title={'TRACKING DIARRHOEA'} showBackButton />
+      <NavigationHeader
+        center={<TrackMySymptomHeader symptomName="diarrhoea" />}
+        showBackButton
+      />
       <View style={{flexDirection: 'row'}}>
         <Icon style={styles.emojiStyle} source={Icons.Toilet} />
         <FancyGradientChart

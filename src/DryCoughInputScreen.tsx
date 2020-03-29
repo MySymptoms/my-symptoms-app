@@ -9,18 +9,30 @@ import {Colors} from './lib/colors';
 import {fontName} from './lib/vars';
 import {DoneButton} from './components/DoneButton';
 import {SelectionGroup} from './components/SelectionGroup';
-import styled from 'styled-components/native';
 import {createDataPoint, getGraphDate} from './DetailedReportScreen';
 import {Divider} from './components/Divider';
+import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
+import { useReportState } from "./useReportState";
+import { RootStackParamList } from "../App";
+import { RouteProp } from "@react-navigation/native";
 
 interface Props {
-  navigation: StackNavigationProp<{}>;
+  navigation: StackNavigationProp<RootStackParamList, 'DryCough'>;
+  route: RouteProp<RootStackParamList, 'DryCough'>;
 }
 
-export const DryCoughInputScreen: FC<Props> = () => {
+export const DryCoughInputScreen: FC<Props> = ({ route }) => {
+  const { currentReportDate } = route.params;
+  const {setValues, values, onSave} = useReportState(
+    currentReportDate,
+    'dry_cough',
+  );
   return (
     <Background>
-      <NavigationHeader title={'TRACKING DRY COUGH'} showBackButton />
+      <NavigationHeader
+        center={<TrackMySymptomHeader symptomName="dry cough" />}
+        showBackButton
+      />
       <View style={{flexDirection: 'row'}}>
         <Icon style={styles.emojiStyle} source={Icons.Mask} />
         <FancyGradientChart
@@ -35,7 +47,7 @@ export const DryCoughInputScreen: FC<Props> = () => {
       </View>
       <SelectionGroup
         title="cough frequency"
-        onOptionSelected={() => {}}
+        onOptionSelected={option => setValues({frequency: option.title})}
         options={[
           {title: 'every minute'},
           {title: 'few times an hour'},
@@ -45,7 +57,7 @@ export const DryCoughInputScreen: FC<Props> = () => {
       <Divider />
       <SelectionGroup
         title="intensity"
-        onOptionSelected={() => {}}
+        onOptionSelected={option => setValues({intensity: option.title})}
         options={[
           {title: 'bearable', color: Colors.lowStopColor},
           {title: 'harsh', color: Colors.mediumStopColor},
@@ -56,11 +68,11 @@ export const DryCoughInputScreen: FC<Props> = () => {
 
       <SelectionGroup
         title="disruption"
-        onOptionSelected={() => {}}
+        onOptionSelected={option => setValues({disruption: option.title})}
         options={[{title: 'daytime'}, {title: 'nighttime'}]}
       />
       <View style={styles.center}>
-        <DoneButton style={{marginTop: 50}} />
+        <DoneButton style={{marginTop: 50}} onPress={() => onSave(values)} />
       </View>
     </Background>
   );
