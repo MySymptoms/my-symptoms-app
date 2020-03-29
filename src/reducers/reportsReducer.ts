@@ -88,6 +88,7 @@ export const reportsReducer = (
         ...state,
         [action.uuid]: {
           ...report,
+          updated_at: formatISO(action.now),
           symptoms: {
             ...symptoms,
             [action.symptomKey]: {
@@ -113,6 +114,12 @@ export const reportsReducer = (
             shortness_of_breath: null,
             tiredness: null,
             sense_of_taste: null,
+            aches_and_pain: null,
+            diarrhoea: null,
+            nausea: null,
+            runny_nose: null,
+            sense_of_smell: null,
+            sore_throat: null,
           },
         },
       };
