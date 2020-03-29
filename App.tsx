@@ -35,6 +35,7 @@ import {TirednessInputScreen} from './src/TirednessInputScreen';
 import AsyncStorage from '@react-native-community/async-storage';
 import {PersistConfig, persistReducer, persistStore} from 'redux-persist';
 import {AdditionalDataInputScreen} from './src/AdditionalDataInputScreen';
+import {DiagnosisInputScreen} from './src/DiagnosisInputScreen';
 
 // TS declaration for making redux devtools extension stop complaining in createStore below.
 declare global {
@@ -81,6 +82,7 @@ export type RootStackParamList = {
   Summary: undefined;
   DetailedReport: undefined;
   AdditionalData: undefined;
+  Diagnosis: undefined;
 };
 
 const App = () => {
@@ -135,6 +137,7 @@ const App = () => {
               name={'AdditionalData'}
               component={AdditionalDataInputScreen}
             />
+            <Stack.Screen name={'Diagnosis'} component={DiagnosisInputScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>

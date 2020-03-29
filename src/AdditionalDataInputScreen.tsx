@@ -89,7 +89,7 @@ export const AdditionalDataInputScreen: FC<Props> = ({navigation}) => {
       <Space />
       <Space />
       <View style={styles.center}>
-        <Button>
+        <Button onPress={() => navigation.navigate('Diagnosis')}>
           <Row>
             <Icon source={Icons.Corona} style={styles.emojiStyle} />
             <ButtonText>I have been diagnosed with Covid-19</ButtonText>
