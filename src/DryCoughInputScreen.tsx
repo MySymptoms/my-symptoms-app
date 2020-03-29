@@ -2,20 +2,20 @@ import React, { FC } from 'react';
 import { Background } from './components/Background';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Icon, Icons } from './lib/icons';
-import { FancyGradientChart } from './FancyGradientChart';
 import { NavigationHeader } from './NavigationHeader';
 import { StyleSheet, View } from 'react-native';
 import { Colors } from './lib/colors';
 import { fontName } from './lib/vars';
 import { DoneButton } from './components/DoneButton';
 import { SelectionGroup } from './components/SelectionGroup';
-import { createDataPoint, getGraphDate } from './DetailedReportScreen';
 import { Divider } from './components/Divider';
 import { TrackMySymptomHeader } from './components/TrackMySymtomHeader';
 import { useReportState } from './hooks/useReportState';
 import { RootStackParamList } from '../App';
 import { RouteProp } from '@react-navigation/native';
 import { PaddedContainer, Row } from './components/Block';
+import { useHistoricalDataForSymptom } from "./hooks/useHistoricalDataForSymptom";
+import { SafeGraph } from "./SafeGraph";
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList, 'DryCough'>;
@@ -29,7 +29,7 @@ export const DryCoughInputScreen: FC<Props> = ({route}) => {
     'dry_cough',
   );
 
-
+  const data = useHistoricalDataForSymptom('dry_cough');
 
   return (
     <Background
@@ -42,15 +42,7 @@ export const DryCoughInputScreen: FC<Props> = ({route}) => {
       <PaddedContainer>
         <Row>
           <Icon style={styles.emojiStyle} source={Icons.Mask} />
-          <FancyGradientChart
-            data={[
-              createDataPoint(getGraphDate(24), 1),
-              createDataPoint(getGraphDate(25), 1),
-              createDataPoint(getGraphDate(26), 2),
-              createDataPoint(getGraphDate(27), 2),
-              createDataPoint(getGraphDate(28), 3),
-            ]}
-          />
+          <SafeGraph graphDataPoints={data}/>
         </Row>
       </PaddedContainer>
         <SelectionGroup

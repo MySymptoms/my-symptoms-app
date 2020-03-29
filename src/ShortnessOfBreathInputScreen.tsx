@@ -16,6 +16,8 @@ import {useReportState} from './hooks/useReportState';
 import {RouteProp} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
+import { useHistoricalDataForSymptom } from "./hooks/useHistoricalDataForSymptom";
+import { SafeGraph } from "./SafeGraph";
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'ShortnessOfBreath'>;
@@ -28,6 +30,9 @@ export const ShortnessOfBreathInputScreen: FC<Props> = ({route}) => {
     currentReportDate,
     'shortness_of_breath',
   );
+
+  const data = useHistoricalDataForSymptom('shortness_of_breath');
+
   return (
     <Background
       header={
@@ -39,15 +44,7 @@ export const ShortnessOfBreathInputScreen: FC<Props> = ({route}) => {
       <PaddedContainer>
         <Row>
           <Icon style={styles.emojiStyle} source={Icons.Yawn} />
-          <FancyGradientChart
-            data={[
-              createDataPoint(getGraphDate(24), 1),
-              createDataPoint(getGraphDate(25), 1),
-              createDataPoint(getGraphDate(26), 2),
-              createDataPoint(getGraphDate(27), 2),
-              createDataPoint(getGraphDate(28), 3),
-            ]}
-          />
+          <SafeGraph graphDataPoints={data}/>
         </Row>
         <SelectionGroup
           title="Describe the feeling"

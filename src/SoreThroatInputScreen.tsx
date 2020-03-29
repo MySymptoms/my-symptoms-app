@@ -16,6 +16,8 @@ import {Row, PaddedContainer} from './components/Block';
 import {RootStackParamList} from 'App';
 import {RouteProp} from '@react-navigation/native';
 import {useReportState} from './hooks/useReportState';
+import { useHistoricalDataForSymptom } from "./hooks/useHistoricalDataForSymptom";
+import { SafeGraph } from "./SafeGraph";
 
 type Props = {
   route: RouteProp<RootStackParamList, 'SoreThroat'>;
@@ -28,6 +30,8 @@ export const SoreThroatInputScreen: FC<Props> = ({route}) => {
     'sore_throat',
   );
 
+  const data = useHistoricalDataForSymptom('sore_throat');
+
   return (
     <Background
       header={
@@ -39,15 +43,7 @@ export const SoreThroatInputScreen: FC<Props> = ({route}) => {
       <PaddedContainer>
         <Row>
           <Icon style={styles.emojiStyle} source={Icons.Weary} />
-          <FancyGradientChart
-            data={[
-              createDataPoint(getGraphDate(24), 1),
-              createDataPoint(getGraphDate(25), 1),
-              createDataPoint(getGraphDate(26), 2),
-              createDataPoint(getGraphDate(27), 2),
-              createDataPoint(getGraphDate(28), 3),
-            ]}
-          />
+          <SafeGraph graphDataPoints={data}/>
         </Row>
         <SelectionGroup
           title="describe the feeling"

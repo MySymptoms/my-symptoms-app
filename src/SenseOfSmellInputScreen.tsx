@@ -15,6 +15,8 @@ import {RootStackParamList} from '../App';
 import {RouteProp} from '@react-navigation/native';
 import {useReportState} from './hooks/useReportState';
 import {Row, PaddedContainer} from './components/Block';
+import { useHistoricalDataForSymptom } from "./hooks/useHistoricalDataForSymptom";
+import { SafeGraph } from "./SafeGraph";
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'SenseOfSmell'>;
@@ -27,6 +29,9 @@ export const SenseOfSmellInputScreen: FC<Props> = ({route}) => {
     currentReportDate,
     'sense_of_smell',
   );
+
+  const data = useHistoricalDataForSymptom('sense_of_smell');
+
   return (
     <Background
       header={
@@ -38,15 +43,7 @@ export const SenseOfSmellInputScreen: FC<Props> = ({route}) => {
       <PaddedContainer>
         <Row>
           <Icon style={styles.emojiStyle} source={Icons.Nose} />
-          <FancyGradientChart
-            data={[
-              createDataPoint(getGraphDate(24), 1),
-              createDataPoint(getGraphDate(25), 1),
-              createDataPoint(getGraphDate(26), 2),
-              createDataPoint(getGraphDate(27), 2),
-              createDataPoint(getGraphDate(28), 3),
-            ]}
-          />
+          <SafeGraph graphDataPoints={data} />
         </Row>
         <SelectionGroup
           title="have you lost your sense of smell?"

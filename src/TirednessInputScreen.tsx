@@ -15,6 +15,8 @@ import {useReportState} from './hooks/useReportState';
 import {RootStackParamList} from '../App';
 import {RouteProp} from '@react-navigation/native';
 import {Row, PaddedContainer} from './components/Block';
+import { useHistoricalDataForSymptom } from "./hooks/useHistoricalDataForSymptom";
+import { SafeGraph } from "./SafeGraph";
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Tiredness'>;
@@ -27,6 +29,9 @@ export const TirednessInputScreen: FC<Props> = ({route}) => {
     currentReportDate,
     'tiredness',
   );
+
+  const data = useHistoricalDataForSymptom('tiredness');
+
   return (
     <Background
       header={
@@ -38,15 +43,7 @@ export const TirednessInputScreen: FC<Props> = ({route}) => {
       <PaddedContainer>
         <Row>
           <Icon style={styles.emojiStyle} source={Icons.Bed} />
-          <FancyGradientChart
-            data={[
-              createDataPoint(getGraphDate(24), 1),
-              createDataPoint(getGraphDate(25), 1),
-              createDataPoint(getGraphDate(26), 2),
-              createDataPoint(getGraphDate(27), 2),
-              createDataPoint(getGraphDate(28), 3),
-            ]}
-          />
+          <SafeGraph graphDataPoints={data}/>
         </Row>
         <SelectionGroup
           title="are you tired?"
