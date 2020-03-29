@@ -8,7 +8,6 @@ import {Colors} from './lib/colors';
 import {fontName} from './lib/vars';
 import {DoneButton} from './components/DoneButton';
 import {SelectionGroup} from './components/SelectionGroup';
-import styled from 'styled-components/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from './reducers/rootReducer';
 import {RootStackParamList} from 'App';
@@ -18,6 +17,7 @@ import {isDefined} from './lib/util';
 import {FancyGradientChart} from './FancyGradientChart';
 import {createDataPoint} from './DetailedReportScreen';
 import {parseISO} from 'date-fns';
+import {sortBy} from 'lodash';
 
 const useReportState = (currentReportDate: string) => {
   const dispatch = useDispatch();
@@ -45,19 +45,22 @@ export const SenseOfTasteInputScreen: FC<Props> = ({route}) => {
   const {onSave} = useReportState(currentReportDate);
 
   const data = useSelector((state: RootState) =>
-    Object.values(state.reports)
-      .map(report => {
-        const symptom = report.symptoms['senseOfTaste'];
-        if (symptom) {
-          return {
-            date: report.date,
-            score: symptom.values.have_you_lost_your_sense_of_taste ? 3 : 1,
-          };
-        } else {
-          return null;
-        }
-      })
-      .filter(isDefined),
+    sortBy(
+      Object.values(state.reports)
+        .map(report => {
+          const symptom = report.symptoms['senseOfTaste'];
+          if (symptom) {
+            return {
+              date: report.date,
+              score: symptom.values.have_you_lost_your_sense_of_taste ? 3 : 1,
+            };
+          } else {
+            return null;
+          }
+        })
+        .filter(isDefined),
+      r => r.date,
+    ),
   );
 
   const [values, setValues] = useState<Symptom>({
