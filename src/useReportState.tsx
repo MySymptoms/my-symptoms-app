@@ -28,8 +28,8 @@ export function useReportState<TKey extends keyof SymptomsRecord>(
     null,
   );
 
-  const setValuesMerge = (values: SymptomsRecord[TKey]['values']) => {
-    setValues(v => (v ? {...v, ...values} : values));
+  const setValuesMerge = (vals: Partial<SymptomsRecord[TKey]['values']>) => {
+    setValues(v => (v ? {...v, ...vals} : vals));
   };
 
   return {values, setValues: setValuesMerge, onSave};

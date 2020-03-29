@@ -12,12 +12,21 @@ import {SelectionGroup} from './components/SelectionGroup';
 import {createDataPoint, getGraphDate} from './DetailedReportScreen';
 import {Divider} from './components/Divider';
 import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
+import { useReportState } from "./useReportState";
+import { RootStackParamList } from "../App";
+import { RouteProp } from "@react-navigation/native";
 
 interface Props {
-  navigation: StackNavigationProp<{}>;
+  navigation: StackNavigationProp<RootStackParamList, 'DryCough'>;
+  route: RouteProp<RootStackParamList, 'DryCough'>;
 }
 
-export const DryCoughInputScreen: FC<Props> = () => {
+export const DryCoughInputScreen: FC<Props> = ({ route }) => {
+  const { currentReportDate } = route.params;
+  const {setValues, values, onSave} = useReportState(
+    currentReportDate,
+    'dry_cough',
+  );
   return (
     <Background>
       <NavigationHeader
@@ -38,7 +47,7 @@ export const DryCoughInputScreen: FC<Props> = () => {
       </View>
       <SelectionGroup
         title="cough frequency"
-        onOptionSelected={() => {}}
+        onOptionSelected={option => setValues({frequency: option.title})}
         options={[
           {title: 'every minute'},
           {title: 'few times an hour'},
@@ -48,7 +57,7 @@ export const DryCoughInputScreen: FC<Props> = () => {
       <Divider />
       <SelectionGroup
         title="intensity"
-        onOptionSelected={() => {}}
+        onOptionSelected={option => setValues({intensity: option.title})}
         options={[
           {title: 'bearable', color: Colors.lowStopColor},
           {title: 'harsh', color: Colors.mediumStopColor},
@@ -59,11 +68,11 @@ export const DryCoughInputScreen: FC<Props> = () => {
 
       <SelectionGroup
         title="disruption"
-        onOptionSelected={() => {}}
+        onOptionSelected={option => setValues({disruption: option.title})}
         options={[{title: 'daytime'}, {title: 'nighttime'}]}
       />
       <View style={styles.center}>
-        <DoneButton style={{marginTop: 50}} />
+        <DoneButton style={{marginTop: 50}} onPress={() => onSave(values)} />
       </View>
     </Background>
   );

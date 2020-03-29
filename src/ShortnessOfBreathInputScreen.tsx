@@ -22,9 +22,12 @@ type Props = {
   route: RouteProp<RootStackParamList, 'ShortnessOfBreath'>;
 };
 
-export const ShortnessOfBreathInputScreen: FC<Props> = ({route}) => {
+export const ShortnessOfBreathInputScreen: FC<Props> = ({
+  route,
+}) => {
+  const { currentReportDate } = route.params;
   const {setValues, values, onSave} = useReportState(
-    route.params.currentReportDate,
+    currentReportDate,
     'shortness_of_breath',
   );
   return (

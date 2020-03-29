@@ -13,13 +13,24 @@ import RadialGradient from 'react-native-radial-gradient';
 import {createDataPoint, getGraphDate} from './DetailedReportScreen';
 import {NavigationHeader} from './NavigationHeader';
 import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
+import {RootStackParamList} from '../App';
+import {RouteProp} from '@react-navigation/native';
+import {useReportState} from './useReportState';
+import {Space} from './components/Block';
 
 type Props = {
-  navigation: StackNavigationProp<{}>;
+  navigation: StackNavigationProp<RootStackParamList, 'Fever'>;
+  route: RouteProp<RootStackParamList, 'Fever'>;
 };
 
-export const FeverInputScreen: FC<Props> = ({}) => {
+export const FeverInputScreen: FC<Props> = ({route}) => {
+  const {currentReportDate} = route.params;
+  const {setValues, values, onSave} = useReportState(
+    currentReportDate,
+    'fever',
+  );
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [textValue, setTextValue] = useState(String(36.7));
   let temperature = 36.7;
   const displayValue =
     selectedIndex === 0 ? temperature : (temperature * 9) / 5 + 32;
@@ -61,10 +72,13 @@ export const FeverInputScreen: FC<Props> = ({}) => {
           radius={200}>
           <TextInput
             style={styles.tempInputText}
-            value={displayValue.toString()}
+            value={textValue}
+            onChangeText={v => setTextValue(v)}
+            onEndEditing={() => setValues({degrees: parseFloat(textValue)})}
           />
         </RadialGradient>
-        <DoneButton style={{marginTop: 50}} />
+        <Space />
+        <DoneButton onPress={() => onSave(values)} />
       </View>
     </Background>
   );

@@ -11,12 +11,21 @@ import {SelectionGroup} from './components/SelectionGroup';
 import {FancyGradientChart} from './FancyGradientChart';
 import {createDataPoint, getGraphDate} from './DetailedReportScreen';
 import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
+import { useReportState } from "./useReportState";
+import { RootStackParamList } from "../App";
+import { RouteProp } from "@react-navigation/native";
 
 type Props = {
-  navigation: StackNavigationProp<{}>;
+  navigation: StackNavigationProp<RootStackParamList, 'Tiredness'>;
+  route: RouteProp<RootStackParamList, 'Tiredness'>;
 };
 
-export const TirednessInputScreen: FC<Props> = ({navigation}) => {
+export const TirednessInputScreen: FC<Props> = ({route}) => {
+  const { currentReportDate } = route.params;
+  const {setValues, values, onSave} = useReportState(
+    currentReportDate,
+    'tiredness',
+  );
   return (
     <Background>
       <NavigationHeader
@@ -37,14 +46,14 @@ export const TirednessInputScreen: FC<Props> = ({navigation}) => {
       </View>
       <SelectionGroup
         title="are you tired?"
-        onOptionSelected={() => {}}
+        onOptionSelected={option => setValues({energy_level: option.title === 'yes' ? 9 : 1})}
         options={[
           {title: 'yes', color: '#FF7A7A'},
           {title: 'no', color: '#8cf081'},
         ]}
       />
       <View style={styles.center}>
-        <DoneButton style={{marginTop: 50}} />
+        <DoneButton style={{marginTop: 50}} onPress={() => onSave(values)} />
       </View>
     </Background>
   );

@@ -11,12 +11,21 @@ import {SelectionGroup} from './components/SelectionGroup';
 import {FancyGradientChart} from './FancyGradientChart';
 import {createDataPoint, getGraphDate} from './DetailedReportScreen';
 import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
+import { RootStackParamList } from "../App";
+import { RouteProp } from "@react-navigation/native";
+import { useReportState } from "./useReportState";
 
 type Props = {
-  navigation: StackNavigationProp<{}>;
+  navigation: StackNavigationProp<RootStackParamList, 'SenseOfSmell'>;
+  route: RouteProp<RootStackParamList, 'SenseOfSmell'>;
 };
 
-export const SenseOfSmellInputScreen: FC<Props> = () => {
+export const SenseOfSmellInputScreen: FC<Props> = ({ route }) => {
+  const { currentReportDate } = route.params;
+  const {setValues, values, onSave} = useReportState(
+    currentReportDate,
+    'dry_cough',
+  );
   return (
     <Background>
       <NavigationHeader

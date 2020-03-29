@@ -5,13 +5,16 @@ interface BaseSymptom {
 
 export interface FeverSymptom extends BaseSymptom {
   symptom: 'fever';
+  values: {
+    degrees: number;
+  }
 }
 
 export interface DryCoughSymptom extends BaseSymptom {
   symptom: 'dry_cough';
   values: {
     frequency: 'every_minute' | 'few_times_an_hour' | 'few_times_a_day';
-    intencity: string;
+    intensity: string;
     disruption: string;
   };
 }
