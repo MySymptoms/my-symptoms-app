@@ -13,13 +13,34 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {NavigationHeader} from './NavigationHeader';
 import {SummaryViewIcon} from './components/SummaryViewIcon';
 import {formatDate} from './lib/util';
-import {OverviewSymptomButton} from './components/OverviewSymptomButton';
+import {
+  ColorState,
+  OverviewSymptomButton,
+} from './components/OverviewSymptomButton';
 import {RootState} from './reducers/rootReducer';
-import {selectReport} from './reducers/reportsReducer';
+import {Report, selectReport} from './reducers/reportsReducer';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList>;
 };
+
+function getColorForSenseOfTaste(report: Report | null): ColorState | null {
+  if (!report || !report.symptoms.sense_of_taste) {
+    return null;
+  } else {
+    return report.symptoms.sense_of_taste.values.lost_sense_of_taste === 'yes'
+      ? 'red'
+      : 'green';
+  }
+}
+
+function getColorForFever(report: Report | null): ColorState | null {
+  if (!report || !report.symptoms.fever) {
+    return null;
+  } else {
+    return report.symptoms.fever.values.degrees > 38 ? 'red' : 'green';
+  }
+}
 
 export const OverviewScreen: FC<Props> = ({navigation}) => {
   const [currentDate, setCurrentDate] = useState(formatDate(new Date()));
@@ -45,7 +66,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
       <View style={{alignItems: 'center', justifyContent: 'center'}}>
         <View style={{flexDirection: 'row'}}>
           <OverviewSymptomButton
-            color={null}
+            color={getColorForFever(report)}
             onPress={() =>
               navigation.navigate('Fever', {currentReportDate: currentDate})
             }
@@ -138,14 +159,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
         <Space />
         <View style={{flexDirection: 'row'}}>
           <OverviewSymptomButton
-            color={
-              !report || !report.symptoms.sense_of_taste
-                ? null
-                : report.symptoms.sense_of_taste.values.lost_sense_of_taste ===
-                  'yes'
-                ? 'red'
-                : 'green'
-            }
+            color={getColorForSenseOfTaste(report)}
             onPress={() =>
               navigation.navigate('SenseOfTaste', {
                 currentReportDate: currentDate,
