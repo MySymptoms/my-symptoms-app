@@ -17,7 +17,7 @@ type Props = {
   navigation: StackNavigationProp<{}>;
 };
 
-export const FeverInputScreen: FC<Props> = ({navigation}) => {
+export const FeverInputScreen: FC<Props> = ({}) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   return (
