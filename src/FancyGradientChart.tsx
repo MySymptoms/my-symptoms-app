@@ -10,7 +10,7 @@ import {
 import {VictoryThemeDefinition} from 'victory';
 import React from 'react';
 import {Colors} from './lib/colors';
-import {format, isToday} from 'date-fns';
+import {format, isToday, parseISO} from 'date-fns';
 import {fontName} from './lib/vars';
 import _ from 'lodash';
 
@@ -44,7 +44,7 @@ const theme: VictoryThemeDefinition = {
 };
 
 export interface GraphDataPoint {
-  x: number;
+  x: string;
   y: number;
   date: Date;
 }
@@ -60,9 +60,11 @@ const formatTick = (t: Date) => {
 export const FancyGradientChart: React.FC<{
   data: GraphDataPoint[];
 }> = ({data}) => {
+  console.log(data);
+
   return (
     <VictoryChart
-      standalone={true}
+      scale={{x: 'time'}}
       minDomain={{y: 0}}
       maxDomain={{y: 6}}
       width={350}
@@ -89,15 +91,7 @@ export const FancyGradientChart: React.FC<{
         data={data}
       />
       <VictoryLabel x={50} y={167} text={'MAR'} style={labelStyle} />
-      <VictoryAxis
-        tickCount={data.length}
-        tickFormat={(t, index) => {
-          if (index >= data.length) {
-            return '';
-          }
-          return formatTick(data[index].date);
-        }}
-      />
+      <VictoryAxis tickFormat={t => formatTick(parseISO(t))} />
     </VictoryChart>
   );
 };
@@ -110,10 +104,7 @@ const colors = [
   Colors.stepFiveColor,
 ];
 
-
 const calculateLinearGradient = (data: GraphDataPoint[]) => {
-  console.log(data);
-
   if (data.length <= 1) {
     return (
       <LinearGradient id="gradientStroke" x1="0%" x2="0%" y1="100%" y2="0%">
@@ -126,24 +117,18 @@ const calculateLinearGradient = (data: GraphDataPoint[]) => {
   const minValue = _.minBy(data, 'y')!;
 
   if (maxValue.y === minValue.y) {
-    console.log('Not this');
-
     return (
       <LinearGradient id="gradientStroke" x1="0%" x2="0%" y1="100%" y2="0%">
         <Stop stopColor={colors[maxValue.y - 1]} />
       </LinearGradient>
     );
   }
-  console.log('This');
-
   const uniqVals = _.uniq(data.map(d => d.y));
   const stepDistance = 100 / (uniqVals.length - 1);
 
   return (
     <LinearGradient id="gradientStroke" x1="0%" x2="0%" y1="100%" y2="0%">
       {_.range(minValue.y, maxValue.y + 1).map((v, i) => {
-        console.log(v, colors[v - 1], `${i * stepDistance}%`);
-
         return (
           <Stop
             key={i}

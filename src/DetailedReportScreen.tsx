@@ -4,6 +4,7 @@ import {Background} from './components/Background';
 import {ScrollView} from 'react-native-gesture-handler';
 import {differenceInCalendarDays} from 'date-fns';
 import {PaddedContainer} from './components/Block';
+import { formatDate } from "./lib/util";
 
 export interface DetailedReportScreenProps {}
 
@@ -15,7 +16,7 @@ const getDayNumber = (graphDate: Date): number =>
   differenceInCalendarDays(graphDate, new Date(2020, 0, 1));
 
 export const createDataPoint = (date: Date, point: number): GraphDataPoint => ({
-  x: getDayNumber(date),
+  x: formatDate(date),
   date: date,
   y: point,
 });
