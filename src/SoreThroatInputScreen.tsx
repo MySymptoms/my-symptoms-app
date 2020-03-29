@@ -13,10 +13,21 @@ import {createDataPoint, getGraphDate} from './DetailedReportScreen';
 import {Divider} from './components/Divider';
 import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
 import {Row, PaddedContainer} from './components/Block';
+import {RootStackParamList} from 'App';
+import {RouteProp} from '@react-navigation/native';
+import {useReportState} from './hooks/useReportState';
 
-type Props = {};
+type Props = {
+  route: RouteProp<RootStackParamList, 'SoreThroat'>;
+};
 
-export const SoreThroatInputScreen: FC<Props> = () => {
+export const SoreThroatInputScreen: FC<Props> = ({route}) => {
+  const {currentReportDate} = route.params;
+  const {setValues, values, onSave} = useReportState(
+    currentReportDate,
+    'sore_throat',
+  );
+
   return (
     <Background
       header={
@@ -40,21 +51,56 @@ export const SoreThroatInputScreen: FC<Props> = () => {
         </Row>
         <SelectionGroup
           title="describe the feeling"
-          onOptionSelected={() => {}}
+          onOptionSelected={option => {
+            setValues({
+              feeling: option?.dataValue as
+                | 'normal'
+                | 'easy_to_gulp'
+                | 'scratchy'
+                | 'difficult_to_swallow',
+            });
+          }}
           options={[
-            {title: 'easy to gulp', color: '#8cf081'},
-            {title: 'scratchy', color: '#FFBC5C'},
-            {title: 'difficult to swallow', color: '#FF7A7A'},
+            {
+              title: 'normal',
+              color: Colors.stepOneColor,
+              dataValue: 'easy_to_gulp',
+            },
+            {
+              title: 'easy to gulp',
+              color: Colors.stepTwoColor,
+              dataValue: 'easy_to_gulp',
+            },
+            {
+              title: 'scratchy',
+              color: Colors.stepFourColor,
+              dataValue: 'scratchy',
+            },
+            {
+              title: 'difficult to swallow',
+              color: Colors.stepFiveColor,
+              dataValue: 'difficult_to_swallow',
+            },
           ]}
         />
         <Divider />
         <SelectionGroup
           title="how does the back throat look?"
-          onOptionSelected={() => {}}
-          options={[{title: 'not inflamed'}, {title: 'inflamed & red'}]}
+          onOptionSelected={option => {
+            setValues({});
+          }}
+          options={[
+            {title: 'not inflamed', dataValue: 'not_inflamed'},
+            {title: 'inflamed & red', dataValue: 'inflamed'},
+          ]}
         />
         <View style={styles.center}>
-          <DoneButton style={{marginTop: 50}} onPress={() => {}} />
+          <DoneButton
+            style={{marginTop: 50}}
+            onPress={() => {
+              onSave(values);
+            }}
+          />
         </View>
       </PaddedContainer>
     </Background>

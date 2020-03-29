@@ -53,36 +53,47 @@ export const DryCoughInputScreen: FC<Props> = ({route}) => {
           title="cough frequency"
           onOptionSelected={option =>
             setValues({
-              frequency: option.title as
-                | 'every minute'
-                | 'few times an hour'
-                | 'few times a day',
+              frequency: option?.dataValue as
+              | "none"
+                | 'every_minute'
+                | 'few_times_an_hour'
+                | 'few_times_a_day',
             })
           }
           options={[
-            {title: 'none'},
-            {title: 'every minute'},
-            {title: 'few times an hour'},
-            {title: 'few times a day'},
+            {title: 'none', dataValue: "none"},
+            {title: 'every minute', dataValue: 'every_minute'},
+            {title: 'few times an hour', dataValue: 'few_times_an_hour'},
+            {title: 'few times a day', dataValue: 'few_times_a_day'},
           ]}
         />
         <Divider />
         <SelectionGroup
           title="intensity"
-          onOptionSelected={option => setValues({intensity: option.title})}
+          onOptionSelected={option => setValues({intensity: option?.dataValue as "none" | "bearable" | "harsh" | "physical_discomfort"})}
           options={[
-            {title: 'none', color: Colors.stepOneColor},
-            {title: 'bearable', color: Colors.stepTwoColor},
-            {title: 'harsh', color: Colors.stepfourColor},
-            {title: 'physical discomfort', color: Colors.stepFiveColor},
+            {title: 'none', color: Colors.stepOneColor, dataValue: 'none'},
+            {
+              title: 'bearable',
+              color: Colors.stepTwoColor,
+              dataValue: 'bearable',
+            },
+            {title: 'harsh', color: Colors.stepFourColor, dataValue: 'harsh'},
+            {
+              title: 'physical discomfort',
+              color: Colors.stepFiveColor,
+              dataValue: 'physical_discomfort',
+            },
           ]}
         />
         <Divider />
-
         <SelectionGroup
           title="disruption"
-          onOptionSelected={option => setValues({disruption: option.title})}
-          options={[{title: 'daytime'}, {title: 'nighttime'}]}
+          onOptionSelected={option => setValues({disruption: option?.dataValue as "daytime" | "nighttime"})}
+          options={[
+            {title: 'daytime', dataValue: 'daytime'},
+            {title: 'nighttime', dataValue: 'nighttime'},
+          ]}
         />
         <View style={styles.center}>
           <DoneButton style={{marginTop: 50}} onPress={() => onSave(values)} />

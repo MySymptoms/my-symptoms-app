@@ -1,9 +1,12 @@
-import { useNavigation } from '@react-navigation/native';
-import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
-import { requestUpdateSymptomInReport, selectReport } from '../reducers/reportsReducer';
-import { SymptomsRecord } from '../reducers/symptoms';
-import { RootState } from '../reducers/rootReducer';
+import {useNavigation} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
+import {useState} from 'react';
+import {
+  requestUpdateSymptomInReport,
+  selectReport,
+} from '../reducers/reportsReducer';
+import {SymptomsRecord} from '../reducers/symptoms';
+import {RootState} from '../reducers/rootReducer';
 
 export function useReportState<TKey extends keyof SymptomsRecord>(
   currentReportDate: string,
@@ -21,7 +24,10 @@ export function useReportState<TKey extends keyof SymptomsRecord>(
     }
   });
 
-  const onSave = (values: Partial<SymptomsRecord[TKey]['values']> | null) => {
+  const onSave = (
+    values: Partial<SymptomsRecord[TKey]['values']> | null,
+    goBack: boolean = true,
+  ) => {
     if (values) {
       dispatch(
         requestUpdateSymptomInReport<TKey>({
@@ -32,7 +38,9 @@ export function useReportState<TKey extends keyof SymptomsRecord>(
         }),
       );
     }
-    navigation.goBack();
+    if (goBack) {
+      navigation.goBack();
+    }
   };
 
   const [values, setValues] = useState<Partial<
@@ -40,7 +48,7 @@ export function useReportState<TKey extends keyof SymptomsRecord>(
   > | null>(reportValues ?? null);
 
   const setValuesMerge = (vals: Partial<SymptomsRecord[TKey]['values']>) => {
-    setValues((v) => (v ? {...v, ...vals} : vals));
+    setValues(v => (v ? {...v, ...vals} : vals));
   };
 
   return {values, setValues: setValuesMerge, onSave};

@@ -10,7 +10,7 @@ export interface OverviewSymptomButtonProps {
   icon: ImageSourcePropType;
   text: string;
   onPress: () => void;
-  color: ColorState | null;
+  color: string | null;
 }
 
 export type ColorState = 'red' | 'green' | 'orange';
@@ -47,12 +47,12 @@ export const OverviewSymptomButton: React.FC<OverviewSymptomButtonProps> = ({
     <Button
       style={{
         position: 'relative',
-        borderColor: color ? getButtonBorderColor(color) : undefined,
+        borderColor: color ? color : undefined,
       }}
       onPress={onPress}>
       {color && (
         <HeartBeatIcon
-          stroke={getIconColor(color)}
+          stroke={color}
           style={{position: 'absolute', top: 5, right: 5}}
         />
       )}

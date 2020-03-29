@@ -51,11 +51,41 @@ export const TirednessInputScreen: FC<Props> = ({route}) => {
         <SelectionGroup
           title="are you tired?"
           onOptionSelected={option =>
-            setValues({energy_level: option.title === 'yes' ? 9 : 1})
+            setValues({
+              description: option?.dataValue as
+                | 'as_usual'
+                | 'tired_but_not_bedridden'
+                | 'mostly_bedridden'
+                | 'can_get_to_the_bathroom'
+                | 'cannot_get_out_of_bed',
+            })
           }
           options={[
-            {title: 'yes', color: '#FF7A7A'},
-            {title: 'no', color: '#8cf081'},
+            {
+              title: 'As usual',
+              color: Colors.stepOneColor,
+              dataValue: 'as_usual',
+            },
+            {
+              title: 'Tired, but not bedridden',
+              color: Colors.stepTwoColor,
+              dataValue: 'tired_but_not_bedridden',
+            },
+            {
+              title: 'Mostly bedridden',
+              color: Colors.stepThreeColor,
+              dataValue: 'mostly_bedridden',
+            },
+            {
+              title: 'Can get to the bathroom',
+              color: Colors.stepFourColor,
+              dataValue: 'can_get_to_the_bathroom',
+            },
+            {
+              title: 'Cannot get out of bed',
+              color: Colors.stepFiveColor,
+              dataValue: 'cannot_get_out_of_bed',
+            },
           ]}
         />
         <View style={styles.center}>
