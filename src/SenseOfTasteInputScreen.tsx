@@ -1,60 +1,42 @@
-import React, {FC, useState} from 'react';
-import {Background} from './components/Background';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {Icon, Icons} from './lib/icons';
-import {NavigationHeader} from './NavigationHeader';
-import {StyleSheet, View} from 'react-native';
-import {Colors} from './lib/colors';
-import {fontName} from './lib/vars';
-import {DoneButton} from './components/DoneButton';
-import {SelectionGroup} from './components/SelectionGroup';
-import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from './reducers/rootReducer';
-import {RootStackParamList} from 'App';
-import {RouteProp} from '@react-navigation/native';
-import {requestUpdateSymptomInReport} from './reducers/reportsReducer';
-import {isDefined} from './lib/util';
-import {FancyGradientChart} from './FancyGradientChart';
-import {createDataPoint} from './DetailedReportScreen';
-import {parseISO} from 'date-fns';
-import {sortBy} from 'lodash';
-import {SenseOfTasteSymptom, SymptomsRecord} from './reducers/symptoms';
-import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
-
-const useReportState = <TKey extends keyof SymptomsRecord>(
-  currentReportDate: string,
-  key: TKey,
-) => {
-  const dispatch = useDispatch();
-  const onSave = (values: SymptomsRecord[TKey]['values']) => {
-    dispatch(
-      requestUpdateSymptomInReport<TKey>({
-        date: currentReportDate,
-        now: new Date(),
-        symptomKey: key,
-        symptom: values,
-      }),
-    );
-  };
-
-  return {onSave};
-};
+import React, { FC } from 'react';
+import { Background } from './components/Background';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { Icon, Icons } from './lib/icons';
+import { NavigationHeader } from './NavigationHeader';
+import { StyleSheet, View } from 'react-native';
+import { Colors } from './lib/colors';
+import { fontName } from './lib/vars';
+import { DoneButton } from './components/DoneButton';
+import { SelectionGroup } from './components/SelectionGroup';
+import { useSelector } from 'react-redux';
+import { RootState } from './reducers/rootReducer';
+import { RootStackParamList } from 'App';
+import { RouteProp } from '@react-navigation/native';
+import { isDefined } from './lib/util';
+import { FancyGradientChart } from './FancyGradientChart';
+import { createDataPoint } from './DetailedReportScreen';
+import { parseISO } from 'date-fns';
+import { sortBy } from 'lodash';
+import { useReportState } from './useReportState';
+import { TrackMySymptomHeader } from './components/TrackMySymtomHeader';
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList, 'SenseOfTaste'>;
   route: RouteProp<RootStackParamList, 'SenseOfTaste'>;
 }
 
-export const SenseOfTasteInputScreen: FC<Props> = ({route, navigation}) => {
+export const SenseOfTasteInputScreen: FC<Props> = ({route}) => {
   const {currentReportDate} = route.params;
 
-  const {onSave} = useReportState(currentReportDate, 'sense_of_taste');
+  const {onSave, values, setValues} = useReportState(
+    currentReportDate,
+    'sense_of_taste',
+  );
 
   const data = useSelector((state: RootState) =>
     sortBy(
       Object.values(state.reports)
         .map(report => {
-          console.log(report);
           const symptom = report.symptoms.sense_of_taste;
           if (symptom) {
             return {
@@ -68,12 +50,6 @@ export const SenseOfTasteInputScreen: FC<Props> = ({route, navigation}) => {
         .filter(isDefined),
       r => r.date,
     ),
-  );
-
-  console.log(data)
-
-  const [values, setValues] = useState<SenseOfTasteSymptom['values'] | null>(
-    null,
   );
 
   return (
@@ -96,18 +72,9 @@ export const SenseOfTasteInputScreen: FC<Props> = ({route, navigation}) => {
       </View>
       <SelectionGroup
         title="Have you lost your sense of taste?"
-        onOptionSelected={option => {
-          setValues(v =>
-            v
-              ? {
-                  ...v,
-                  lost_sense_of_taste: option.title as 'yes' | 'no',
-                }
-              : {
-                  lost_sense_of_taste: option.title as 'yes' | 'no',
-                },
-          );
-        }}
+        onOptionSelected={option =>
+          setValues({lost_sense_of_taste: option.title as 'yes' | 'no'})
+        }
         options={[
           {title: 'yes', color: Colors.buttonLineBad},
           {title: 'no', color: Colors.buttonLineGood},
@@ -115,15 +82,7 @@ export const SenseOfTasteInputScreen: FC<Props> = ({route, navigation}) => {
       />
 
       <View style={styles.center}>
-        <DoneButton
-          style={{marginTop: 50}}
-          onPress={() => {
-            if (values) {
-              onSave(values);
-            }
-            navigation.goBack();
-          }}
-        />
+        <DoneButton style={{marginTop: 50}} onPress={() => onSave(values)} />
       </View>
     </Background>
   );
