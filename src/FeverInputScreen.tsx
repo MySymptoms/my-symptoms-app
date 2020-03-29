@@ -2,7 +2,6 @@ import React, {FC, useRef, useState} from 'react';
 import {Background} from './components/Background';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {Icon, Icons} from './lib/icons';
-import {FancyGradientChart} from './FancyGradientChart';
 import {TextInput} from 'react-native-gesture-handler';
 import {StyleSheet, View} from 'react-native';
 import {Colors} from './lib/colors';
@@ -10,12 +9,11 @@ import {fontName} from './lib/vars';
 import {DoneButton} from './components/DoneButton';
 import {SegmentedControl} from './components/SegmentedControl';
 import RadialGradient from 'react-native-radial-gradient';
-import {createDataPoint, getGraphDate} from './DetailedReportScreen';
 import {NavigationHeader} from './NavigationHeader';
 import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
 import {RootStackParamList} from '../App';
 import {RouteProp} from '@react-navigation/native';
-import {Space, PaddedContainer} from './components/Block';
+import {PaddedContainer, Space} from './components/Block';
 import {
   selectTemperatureUnit,
   setTemperatureUnit,
@@ -23,6 +21,8 @@ import {
 } from './reducers/userReducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {useReportState} from './hooks/useReportState';
+import {SafeGraph} from './SafeGraph';
+import {useHistoricalDataForSymptom} from './hooks/useHistoricalDataForSymptom';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Fever'>;
@@ -55,6 +55,8 @@ export const FeverInputScreen: FC<Props> = ({route}) => {
 
   const dispatch = useDispatch();
 
+  const data = useHistoricalDataForSymptom('fever');
+
   return (
     <Background
       header={
@@ -66,15 +68,7 @@ export const FeverInputScreen: FC<Props> = ({route}) => {
       <PaddedContainer>
         <View style={{flexDirection: 'row'}}>
           <Icon style={styles.emojiStyle} source={Icons.FaceWithThermometer} />
-          <FancyGradientChart
-            data={[
-              createDataPoint(getGraphDate(24), 1),
-              createDataPoint(getGraphDate(25), 1),
-              createDataPoint(getGraphDate(26), 2),
-              createDataPoint(getGraphDate(27), 2),
-              createDataPoint(getGraphDate(28), 3),
-            ]}
-          />
+          <SafeGraph graphDataPoints={data} isTemperature />
         </View>
         <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
           <SegmentedControl

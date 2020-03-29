@@ -39,7 +39,10 @@ export function useReportState<TKey extends keyof SymptomsRecord>(
       );
     }
     if (goBack) {
-      navigation.goBack();
+      setTimeout(() => {
+        navigation.goBack();
+      }, 2000)
+
     }
   };
 

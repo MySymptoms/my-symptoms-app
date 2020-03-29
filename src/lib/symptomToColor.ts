@@ -3,9 +3,7 @@ import {Report} from 'src/reducers/reportsReducer';
 import {SymptomsRecord} from 'src/reducers/symptoms';
 import {getNumberForReportAndSymptom} from './symptomToNumber';
 
-type KeyGetterWhatever<T> = {
-  [K in keyof T]: (symptom: T[K]) => string | null;
-};
+type KeyGetterWhatever<T> = {[K in keyof T]: (symptom: T[K]) => string | null};
 
 const map: KeyGetterWhatever<SymptomsRecord> = {
   fever: ({values: {degrees: value}}) => {
@@ -117,6 +115,16 @@ const map: KeyGetterWhatever<SymptomsRecord> = {
   },
 };
 
+export const getColorForTemperature = (temp: number) => {
+  if (36.1 <= temp && temp <= 37.2) {
+    return Colors.stepOneColor;
+  } else if (temp <= 38) {
+    return Colors.stepThreeColor;
+  } else {
+    return Colors.stepFiveColor;
+  }
+};
+
 export function getColorForReportAndSymptom<TKey extends keyof SymptomsRecord>(
   report: Report | null,
   symptom: TKey,
@@ -128,13 +136,7 @@ export function getColorForReportAndSymptom<TKey extends keyof SymptomsRecord>(
   }
 
   if (symptom === 'fever') {
-    if (36.1 <= number && number <= 37.2) {
-      return Colors.stepOneColor;
-    } else if (number <= 38) {
-      return Colors.stepThreeColor;
-    } else {
-      return Colors.stepFiveColor;
-    }
+    return getColorForTemperature(number);
   }
 
   const colors = [

@@ -13,6 +13,7 @@ import {Colors} from './lib/colors';
 import {format, isToday, parseISO} from 'date-fns';
 import {fontName} from './lib/vars';
 import _ from 'lodash';
+import {getColorForTemperature} from './lib/symptomToColor';
 
 const labelStyle = {
   fill: '#9D9D9D',
@@ -58,19 +59,22 @@ const formatTick = (t: Date) => {
 };
 
 export const FancyGradientChart: React.FC<{
+  isTemperature?: boolean;
   data: GraphDataPoint[];
-}> = ({data}) => {
-  console.log(data);
+}> = ({data, isTemperature}) => {
+  const getColor = isTemperature
+    ? getColorForTemperature
+    : getColorForScaledValue;
 
   return (
     <VictoryChart
       scale={{x: 'time'}}
-      minDomain={{y: 0}}
-      maxDomain={{y: 6}}
+      minDomain={{y: isTemperature ? 35 : 0}}
+      maxDomain={{y: isTemperature ? 42 : 5}}
       width={350}
       height={150}
       theme={theme}>
-      <Defs>{calculateLinearGradient(data)}</Defs>
+      <Defs>{calculateLinearGradient(data, getColor)}</Defs>
       <VictoryLine
         animate
         style={{
@@ -85,7 +89,7 @@ export const FancyGradientChart: React.FC<{
         size={5}
         style={{
           data: {
-            fill: ({datum}) => colors[datum.y - 1],
+            fill: ({datum}) => getColor(datum.y),
           },
         }}
         data={data}
@@ -104,11 +108,18 @@ const colors = [
   Colors.stepFiveColor,
 ];
 
-const calculateLinearGradient = (data: GraphDataPoint[]) => {
+function getColorForScaledValue(datum: number): string {
+  return colors[datum - 1];
+}
+
+const calculateLinearGradient = (
+  data: GraphDataPoint[],
+  getColor: (d: number) => string,
+) => {
   if (data.length <= 1) {
     return (
       <LinearGradient id="gradientStroke" x1="0%" x2="0%" y1="100%" y2="0%">
-        <Stop offset="0%" stopColor={colors[data[0].y]} />
+        <Stop offset="0%" stopColor={getColor(data[0].y)} />
       </LinearGradient>
     );
   }
@@ -119,7 +130,7 @@ const calculateLinearGradient = (data: GraphDataPoint[]) => {
   if (maxValue.y === minValue.y) {
     return (
       <LinearGradient id="gradientStroke" x1="0%" x2="0%" y1="100%" y2="0%">
-        <Stop stopColor={colors[maxValue.y - 1]} />
+        <Stop stopColor={getColor(maxValue.y)} />
       </LinearGradient>
     );
   }
@@ -133,7 +144,7 @@ const calculateLinearGradient = (data: GraphDataPoint[]) => {
           <Stop
             key={i}
             offset={`${i * stepDistance}%`}
-            stopColor={colors[v - 1]}
+            stopColor={getColor(v)}
           />
         );
       })}
