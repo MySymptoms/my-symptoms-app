@@ -20,6 +20,9 @@ type Props = {
 
 export const FeverInputScreen: FC<Props> = ({}) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
+  let temperature = 36.7;
+  const displayValue =
+    selectedIndex === 0 ? temperature : (temperature * 9) / 5 + 32;
 
   return (
     <Background>
@@ -56,7 +59,10 @@ export const FeverInputScreen: FC<Props> = ({}) => {
           stops={[0.01, 1]}
           center={[80, 80]}
           radius={200}>
-          <TextInput style={styles.tempInputText} value="37.6" />
+          <TextInput
+            style={styles.tempInputText}
+            value={displayValue.toString()}
+          />
         </RadialGradient>
         <DoneButton style={{marginTop: 50}} />
       </View>
