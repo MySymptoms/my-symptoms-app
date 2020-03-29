@@ -14,6 +14,7 @@ import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
 import {RootStackParamList} from '../App';
 import {RouteProp} from '@react-navigation/native';
 import {useReportState} from './hooks/useReportState';
+import {Row, PaddedContainer} from './components/Block';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'SenseOfSmell'>;
@@ -27,35 +28,39 @@ export const SenseOfSmellInputScreen: FC<Props> = ({route}) => {
     'dry_cough',
   );
   return (
-    <Background>
-      <NavigationHeader
-        center={<TrackMySymptomHeader symptomName="sense of smell" />}
-        showBackButton
-      />
-      <View style={{flexDirection: 'row'}}>
-        <Icon style={styles.emojiStyle} source={Icons.Nose} />
-        <FancyGradientChart
-          data={[
-            createDataPoint(getGraphDate(24), 1),
-            createDataPoint(getGraphDate(25), 1),
-            createDataPoint(getGraphDate(26), 2),
-            createDataPoint(getGraphDate(27), 2),
-            createDataPoint(getGraphDate(28), 3),
+    <Background
+      header={
+        <NavigationHeader
+          center={<TrackMySymptomHeader symptomName="sense of smell" />}
+          showBackButton
+        />
+      }>
+      <PaddedContainer>
+        <Row>
+          <Icon style={styles.emojiStyle} source={Icons.Nose} />
+          <FancyGradientChart
+            data={[
+              createDataPoint(getGraphDate(24), 1),
+              createDataPoint(getGraphDate(25), 1),
+              createDataPoint(getGraphDate(26), 2),
+              createDataPoint(getGraphDate(27), 2),
+              createDataPoint(getGraphDate(28), 3),
+            ]}
+          />
+        </Row>
+        <SelectionGroup
+          title="have you lost your sense of smell?"
+          onOptionSelected={() => {}}
+          options={[
+            {title: 'no', color: Colors.stepOneColor},
+            {title: 'Things smell less', color: Colors.stepThreeColor},
+            {title: "Can't smell anything", color: Colors.stepFiveColor},
           ]}
         />
-      </View>
-      <SelectionGroup
-        title="have you lost your sense of smell?"
-        onOptionSelected={() => {}}
-        options={[
-          {title: 'no', color: Colors.stepOneColor},
-          {title: 'Things smell less', color: Colors.stepThreeColor},
-          {title: "Can't smell anything", color: Colors.stepFiveColor},
-        ]}
-      />
-      <View style={styles.center}>
-        <DoneButton style={{marginTop: 50}} onPress={() => {}} />
-      </View>
+        <View style={styles.center}>
+          <DoneButton style={{marginTop: 50}} onPress={() => {}} />
+        </View>
+      </PaddedContainer>
     </Background>
   );
 };

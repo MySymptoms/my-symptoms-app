@@ -15,7 +15,7 @@ import {NavigationHeader} from './NavigationHeader';
 import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
 import {RootStackParamList} from '../App';
 import {RouteProp} from '@react-navigation/native';
-import {Space} from './components/Block';
+import {Space, PaddedContainer} from './components/Block';
 import {
   selectTemperatureUnit,
   setTemperatureUnit,
@@ -56,87 +56,91 @@ export const FeverInputScreen: FC<Props> = ({route}) => {
   const dispatch = useDispatch();
 
   return (
-    <Background>
-      <NavigationHeader
-        center={<TrackMySymptomHeader symptomName="fever" />}
-        showBackButton
-      />
-      <View style={{flexDirection: 'row'}}>
-        <Icon style={styles.emojiStyle} source={Icons.FaceWithThermometer} />
-        <FancyGradientChart
-          data={[
-            createDataPoint(getGraphDate(24), 1),
-            createDataPoint(getGraphDate(25), 1),
-            createDataPoint(getGraphDate(26), 2),
-            createDataPoint(getGraphDate(27), 2),
-            createDataPoint(getGraphDate(28), 3),
-          ]}
+    <Background
+      header={
+        <NavigationHeader
+          center={<TrackMySymptomHeader symptomName="fever" />}
+          showBackButton
         />
-      </View>
-      <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
-        <SegmentedControl
-          firstOption="C"
-          secondOption="F"
-          selectedIndex={temperatureUnits.indexOf(temperatureUnit)}
-          onTabPress={() => {
-            const nextUnit =
-              temperatureUnits[
-                (temperatureUnits.indexOf(temperatureUnit) + 1) % 2
-              ];
-            if (isEditing.current) {
-              if (nextUnit === 'fahrenheit') {
-                setTextValue(
-                  convertToFahrenheit(parseFloat(textValue)).toString(10),
-                );
+      }>
+      <PaddedContainer>
+        <View style={{flexDirection: 'row'}}>
+          <Icon style={styles.emojiStyle} source={Icons.FaceWithThermometer} />
+          <FancyGradientChart
+            data={[
+              createDataPoint(getGraphDate(24), 1),
+              createDataPoint(getGraphDate(25), 1),
+              createDataPoint(getGraphDate(26), 2),
+              createDataPoint(getGraphDate(27), 2),
+              createDataPoint(getGraphDate(28), 3),
+            ]}
+          />
+        </View>
+        <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+          <SegmentedControl
+            firstOption="C"
+            secondOption="F"
+            selectedIndex={temperatureUnits.indexOf(temperatureUnit)}
+            onTabPress={() => {
+              const nextUnit =
+                temperatureUnits[
+                  (temperatureUnits.indexOf(temperatureUnit) + 1) % 2
+                ];
+              if (isEditing.current) {
+                if (nextUnit === 'fahrenheit') {
+                  setTextValue(
+                    convertToFahrenheit(parseFloat(textValue)).toString(10),
+                  );
+                } else {
+                  setTextValue(
+                    convertToCelsius(parseFloat(textValue)).toString(10),
+                  );
+                }
               } else {
-                setTextValue(
-                  convertToCelsius(parseFloat(textValue)).toString(10),
-                );
+                if (nextUnit === 'fahrenheit') {
+                  setTextValue(
+                    convertToFahrenheit(temperatureInCelsius).toString(10),
+                  );
+                } else {
+                  setTextValue(String(temperatureInCelsius));
+                }
               }
-            } else {
-              if (nextUnit === 'fahrenheit') {
-                setTextValue(
-                  convertToFahrenheit(temperatureInCelsius).toString(10),
-                );
-              } else {
-                setTextValue(String(temperatureInCelsius));
-              }
-            }
-            dispatch(setTemperatureUnit(nextUnit));
-          }}
-        />
-      </View>
-      <View style={styles.center}>
-        <RadialGradient
-          style={styles.tempInputContainer}
-          colors={['rgba(32, 32, 32, 0.77)', 'rgba(21, 21, 21, 0)']}
-          stops={[0.01, 1]}
-          center={[80, 80]}
-          radius={200}>
-          <TextInput
-            style={styles.tempInputText}
-            value={textValue}
-            onChangeText={v => setTextValue(v)}
-            keyboardType={'numeric'}
-            maxLength={6}
-            onFocus={() => (isEditing.current = true)}
-            onEndEditing={() => {
-              isEditing.current = false;
+              dispatch(setTemperatureUnit(nextUnit));
             }}
           />
-        </RadialGradient>
-        <Space />
-        <DoneButton
-          onPress={() => {
-            onSave({
-              degrees:
-                temperatureUnit === 'fahrenheit'
-                  ? convertToCelsius(parseFloat(textValue))
-                  : parseFloat(textValue),
-            });
-          }}
-        />
-      </View>
+        </View>
+        <View style={styles.center}>
+          <RadialGradient
+            style={styles.tempInputContainer}
+            colors={['rgba(32, 32, 32, 0.77)', 'rgba(21, 21, 21, 0)']}
+            stops={[0.01, 1]}
+            center={[80, 80]}
+            radius={200}>
+            <TextInput
+              style={styles.tempInputText}
+              value={textValue}
+              onChangeText={v => setTextValue(v)}
+              keyboardType={'numeric'}
+              maxLength={6}
+              onFocus={() => (isEditing.current = true)}
+              onEndEditing={() => {
+                isEditing.current = false;
+              }}
+            />
+          </RadialGradient>
+          <Space />
+          <DoneButton
+            onPress={() => {
+              onSave({
+                degrees:
+                  temperatureUnit === 'fahrenheit'
+                    ? convertToCelsius(parseFloat(textValue))
+                    : parseFloat(textValue),
+              });
+            }}
+          />
+        </View>
+      </PaddedContainer>
     </Background>
   );
 };

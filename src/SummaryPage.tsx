@@ -73,14 +73,16 @@ export const SummaryPage = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const userEmoji = useSelector(selectUserEmoji);
   return (
-    <Background style={{paddingHorizontal: 15}}>
-      <NavigationHeader
-        showBackButton
-        center={<HelloUserHeader emoji={userEmoji} />}
-        right={<Image source={PaperSheet} />}
-        onPressRight={() => navigation.navigate('DetailedReport')}
-      />
-      <Space />
+    <Background
+      style={{paddingHorizontal: 15}}
+      header={
+        <NavigationHeader
+          showBackButton
+          center={<HelloUserHeader emoji={userEmoji} />}
+          right={<Image source={PaperSheet} />}
+          onPressRight={() => navigation.navigate('DetailedReport')}
+        />
+      }>
       <Row>
         <SummaryViewColumn>
           <MyText style={{fontSize: 36}}>Age</MyText>

@@ -12,46 +12,51 @@ import {FancyGradientChart} from './FancyGradientChart';
 import {createDataPoint, getGraphDate} from './DetailedReportScreen';
 import {Divider} from './components/Divider';
 import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
+import {Row, PaddedContainer} from './components/Block';
 
 type Props = {};
 
 export const SoreThroatInputScreen: FC<Props> = () => {
   return (
-    <Background>
-      <NavigationHeader
-        center={<TrackMySymptomHeader symptomName="sore throat" />}
-        showBackButton
-      />
-      <View style={{flexDirection: 'row'}}>
-        <Icon style={styles.emojiStyle} source={Icons.Weary} />
-        <FancyGradientChart
-          data={[
-            createDataPoint(getGraphDate(24), 1),
-            createDataPoint(getGraphDate(25), 1),
-            createDataPoint(getGraphDate(26), 2),
-            createDataPoint(getGraphDate(27), 2),
-            createDataPoint(getGraphDate(28), 3),
+    <Background
+      header={
+        <NavigationHeader
+          center={<TrackMySymptomHeader symptomName="sore throat" />}
+          showBackButton
+        />
+      }>
+      <PaddedContainer>
+        <Row>
+          <Icon style={styles.emojiStyle} source={Icons.Weary} />
+          <FancyGradientChart
+            data={[
+              createDataPoint(getGraphDate(24), 1),
+              createDataPoint(getGraphDate(25), 1),
+              createDataPoint(getGraphDate(26), 2),
+              createDataPoint(getGraphDate(27), 2),
+              createDataPoint(getGraphDate(28), 3),
+            ]}
+          />
+        </Row>
+        <SelectionGroup
+          title="describe the feeling"
+          onOptionSelected={() => {}}
+          options={[
+            {title: 'easy to gulp', color: '#8cf081'},
+            {title: 'scratchy', color: '#FFBC5C'},
+            {title: 'difficult to swallow', color: '#FF7A7A'},
           ]}
         />
-      </View>
-      <SelectionGroup
-        title="describe the feeling"
-        onOptionSelected={() => {}}
-        options={[
-          {title: 'easy to gulp', color: '#8cf081'},
-          {title: 'scratchy', color: '#FFBC5C'},
-          {title: 'difficult to swallow', color: '#FF7A7A'},
-        ]}
-      />
-      <Divider />
-      <SelectionGroup
-        title="how does the back throat look?"
-        onOptionSelected={() => {}}
-        options={[{title: 'not inflamed'}, {title: 'inflamed & red'}]}
-      />
-      <View style={styles.center}>
-        <DoneButton style={{marginTop: 50}} onPress={() => {}} />
-      </View>
+        <Divider />
+        <SelectionGroup
+          title="how does the back throat look?"
+          onOptionSelected={() => {}}
+          options={[{title: 'not inflamed'}, {title: 'inflamed & red'}]}
+        />
+        <View style={styles.center}>
+          <DoneButton style={{marginTop: 50}} onPress={() => {}} />
+        </View>
+      </PaddedContainer>
     </Background>
   );
 };

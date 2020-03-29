@@ -6,7 +6,7 @@ import {NavigationHeader} from './NavigationHeader';
 import {View, StyleSheet, Text, Picker} from 'react-native';
 import {fontName} from './lib/vars';
 import styled from 'styled-components/native';
-import {Space} from './components/Block';
+import {Space, PaddedContainer} from './components/Block';
 import {SelectionGroup} from './components/SelectionGroup';
 
 type Props = {
@@ -23,8 +23,9 @@ const BrownBox = styled.View`
   border: 1px solid #000000;
   border-radius: 10px;
   padding: 20px;
-  margin: 0 -10px;
   overflow: hidden;
+  width: 96%;
+  margin: auto;
 `;
 
 const BoxText = styled.Text`
@@ -36,13 +37,19 @@ const BoxText = styled.Text`
 
 export const DiagnosisInputScreen: FC<Props> = ({navigation}) => {
   return (
-    <Background>
-      <NavigationHeader title={<Icon source={Icons.Corona} />} showBackButton />
-      <Space />
-      <TitleText>
-        Please share more about your{' '}
-        <Text style={{fontWeight: '700', color: 'white'}}>diagnosis</Text>
-      </TitleText>
+    <Background
+      header={
+        <NavigationHeader
+          title={<Icon source={Icons.Corona} />}
+          showBackButton
+        />
+      }>
+      <PaddedContainer>
+        <TitleText>
+          Please share more about your{' '}
+          <Text style={{fontWeight: '700', color: 'white'}}>diagnosis</Text>
+        </TitleText>
+      </PaddedContainer>
       <Space />
       <BrownBox>
         <Row>

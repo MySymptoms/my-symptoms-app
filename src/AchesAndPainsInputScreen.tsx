@@ -12,6 +12,7 @@ import {NavigationHeader} from './NavigationHeader';
 import {createDataPoint, getGraphDate} from './DetailedReportScreen';
 import {Divider} from './components/Divider';
 import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
+import {Row, PaddedContainer} from './components/Block';
 
 type Props = {
   navigation: StackNavigationProp<{}>;
@@ -19,44 +20,48 @@ type Props = {
 
 export const AchesAndPainInputScreen: FC<Props> = ({}) => {
   return (
-    <Background>
-      <NavigationHeader
-        center={<TrackMySymptomHeader symptomName="aches & pain" />}
-        showBackButton
-      />
-      <View style={{flexDirection: 'row'}}>
-        <Icon style={styles.emojiStyle} source={Icons.Sweat} />
-        <FancyGradientChart
-          data={[
-            createDataPoint(getGraphDate(24), 1),
-            createDataPoint(getGraphDate(25), 1),
-            createDataPoint(getGraphDate(26), 2),
-            createDataPoint(getGraphDate(27), 2),
-            createDataPoint(getGraphDate(28), 3),
+    <Background
+      header={
+        <NavigationHeader
+          center={<TrackMySymptomHeader symptomName="aches & pain" />}
+          showBackButton
+        />
+      }>
+      <PaddedContainer>
+        <Row>
+          <Icon style={styles.emojiStyle} source={Icons.Sweat} />
+          <FancyGradientChart
+            data={[
+              createDataPoint(getGraphDate(24), 1),
+              createDataPoint(getGraphDate(25), 1),
+              createDataPoint(getGraphDate(26), 2),
+              createDataPoint(getGraphDate(27), 2),
+              createDataPoint(getGraphDate(28), 3),
+            ]}
+          />
+        </Row>
+        <SelectionGroup
+          title="Do you have body ache?"
+          onOptionSelected={() => {}}
+          options={[
+            {title: 'yes', color: '#FF7A7A'},
+            {title: 'no', color: '#8cf081'},
           ]}
         />
-      </View>
-      <SelectionGroup
-        title="Do you have body ache?"
-        onOptionSelected={() => {}}
-        options={[
-          {title: 'yes', color: '#FF7A7A'},
-          {title: 'no', color: '#8cf081'},
-        ]}
-      />
-      <Divider />
-      <SelectionGroup
-        title="frequency"
-        onOptionSelected={() => {}}
-        options={[
-          {title: 'not often'},
-          {title: 'on-going'},
-          {title: 'persistent'},
-        ]}
-      />
-      <View style={styles.center}>
-        <DoneButton style={{marginTop: 50}} onPress={() => {}} />
-      </View>
+        <Divider />
+        <SelectionGroup
+          title="frequency"
+          onOptionSelected={() => {}}
+          options={[
+            {title: 'not often'},
+            {title: 'on-going'},
+            {title: 'persistent'},
+          ]}
+        />
+        <View style={styles.center}>
+          <DoneButton style={{marginTop: 50}} onPress={() => {}} />
+        </View>
+      </PaddedContainer>
     </Background>
   );
 };

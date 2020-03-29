@@ -11,49 +11,54 @@ import {FancyGradientChart} from './FancyGradientChart';
 import {createDataPoint, getGraphDate} from './DetailedReportScreen';
 import {Divider} from './components/Divider';
 import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
+import {Row, PaddedContainer} from './components/Block';
 
 type Props = {};
 
 export const DiarrhoeaInputScreen: FC<Props> = () => {
   return (
-    <Background>
-      <NavigationHeader
-        center={<TrackMySymptomHeader symptomName="diarrhoea" />}
-        showBackButton
-      />
-      <View style={{flexDirection: 'row'}}>
-        <Icon style={styles.emojiStyle} source={Icons.Toilet} />
-        <FancyGradientChart
-          data={[
-            createDataPoint(getGraphDate(24), 1),
-            createDataPoint(getGraphDate(25), 1),
-            createDataPoint(getGraphDate(26), 2),
-            createDataPoint(getGraphDate(27), 2),
-            createDataPoint(getGraphDate(28), 3),
+    <Background
+      header={
+        <NavigationHeader
+          center={<TrackMySymptomHeader symptomName="diarrhoea" />}
+          showBackButton
+        />
+      }>
+      <PaddedContainer>
+        <Row>
+          <Icon style={styles.emojiStyle} source={Icons.Toilet} />
+          <FancyGradientChart
+            data={[
+              createDataPoint(getGraphDate(24), 1),
+              createDataPoint(getGraphDate(25), 1),
+              createDataPoint(getGraphDate(26), 2),
+              createDataPoint(getGraphDate(27), 2),
+              createDataPoint(getGraphDate(28), 3),
+            ]}
+          />
+        </Row>
+        <SelectionGroup
+          title="do you have diarrhoea?"
+          onOptionSelected={() => {}}
+          options={[
+            {title: 'yes', color: '#FF7A7A'},
+            {title: 'no', color: '#8cf081'},
           ]}
         />
-      </View>
-      <SelectionGroup
-        title="do you have diarrhoea?"
-        onOptionSelected={() => {}}
-        options={[
-          {title: 'yes', color: '#FF7A7A'},
-          {title: 'no', color: '#8cf081'},
-        ]}
-      />
-      <Divider />
-      <SelectionGroup
-        title="frequency"
-        onOptionSelected={() => {}}
-        options={[
-          {title: 'not often'},
-          {title: 'often'},
-          {title: 'very often'},
-        ]}
-      />
-      <View style={styles.center}>
-        <DoneButton style={{marginTop: 50}} onPress={() => {}} />
-      </View>
+        <Divider />
+        <SelectionGroup
+          title="frequency"
+          onOptionSelected={() => {}}
+          options={[
+            {title: 'not often'},
+            {title: 'often'},
+            {title: 'very often'},
+          ]}
+        />
+        <View style={styles.center}>
+          <DoneButton style={{marginTop: 50}} onPress={() => {}} />
+        </View>
+      </PaddedContainer>
     </Background>
   );
 };

@@ -8,7 +8,7 @@ import {fontName} from './lib/vars';
 import styled from 'styled-components/native';
 import {SegmentedControl} from './components/SegmentedControl';
 import map3x from './images/map3x.png';
-import {Space} from './components/Block';
+import {Space, PaddedContainer} from './components/Block';
 
 type Props = {
   navigation: StackNavigationProp<{}>;
@@ -24,7 +24,8 @@ const BlackBox = styled.View`
   border: 1px solid #000000;
   border-radius: 10px;
   padding: 20px;
-  margin: 0 -10px;
+  width: 96%;
+  margin: auto;
 `;
 
 const BoxText = styled.Text`
@@ -40,9 +41,8 @@ export const AdditionalDataInputScreen: FC<Props> = ({navigation}) => {
   const [hasCondition, setHasCondition] = useState(false);
 
   return (
-    <Background>
-      <NavigationHeader title={'HELLO ANONYMOUS'} showBackButton />
-      <Space />
+    <Background
+      header={<NavigationHeader title={'HELLO ANONYMOUS'} showBackButton />}>
       <BlackBox>
         <Row style={styles.outerRow}>
           <Row>
@@ -88,38 +88,40 @@ export const AdditionalDataInputScreen: FC<Props> = ({navigation}) => {
       </BlackBox>
       <Space />
       <Space />
-      <View style={styles.center}>
-        <Button onPress={() => navigation.navigate('Diagnosis')}>
+      <PaddedContainer>
+        <View style={styles.center}>
+          <Button onPress={() => navigation.navigate('Diagnosis')}>
+            <Row>
+              <Icon source={Icons.Corona} style={styles.emojiStyle} />
+              <ButtonText>I have been diagnosed with Covid-19</ButtonText>
+            </Row>
+          </Button>
+          <Space />
+          <Image
+            source={map3x}
+            width={Dimensions.get('window').width}
+            style={styles.map}
+          />
+          <ShareText>
+            If you are interested, you can help us compile a gloabal map that
+            illustrates what symptoms actually lead to Covid-19 💛
+          </ShareText>
+          <Space />
+          <ShareButton>
+            <ShareButtonText>Share data anonymously</ShareButtonText>
+          </ShareButton>
+          <Space />
           <Row>
-            <Icon source={Icons.Corona} style={styles.emojiStyle} />
-            <ButtonText>I have been diagnosed with Covid-19</ButtonText>
+            <View style={styles.peopleSharedBorder}>
+              <Text style={styles.peopleShared}>2234</Text>
+            </View>
+            <Text style={styles.text}>
+              {' '}
+              have shared their data anonymously so far
+            </Text>
           </Row>
-        </Button>
-        <Space />
-        <Image
-          source={map3x}
-          width={Dimensions.get('window').width}
-          style={styles.map}
-        />
-        <ShareText>
-          If you are interested, you can help us compile a gloabal map that
-          illustrates what symptoms actually lead to Covid-19 💛
-        </ShareText>
-        <Space />
-        <ShareButton>
-          <ShareButtonText>Share data anonymously</ShareButtonText>
-        </ShareButton>
-        <Space />
-        <Row>
-          <View style={styles.peopleSharedBorder}>
-            <Text style={styles.peopleShared}>2234</Text>
-          </View>
-          <Text style={styles.text}>
-            {' '}
-            have shared their data anonymously so far
-          </Text>
-        </Row>
-      </View>
+        </View>
+      </PaddedContainer>
     </Background>
   );
 };

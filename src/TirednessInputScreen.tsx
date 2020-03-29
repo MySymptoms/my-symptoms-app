@@ -14,6 +14,7 @@ import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
 import {useReportState} from './hooks/useReportState';
 import {RootStackParamList} from '../App';
 import {RouteProp} from '@react-navigation/native';
+import {Row, PaddedContainer} from './components/Block';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Tiredness'>;
@@ -27,36 +28,40 @@ export const TirednessInputScreen: FC<Props> = ({route}) => {
     'tiredness',
   );
   return (
-    <Background>
-      <NavigationHeader
-        center={<TrackMySymptomHeader symptomName="tiredness" />}
-        showBackButton
-      />
-      <View style={{flexDirection: 'row'}}>
-        <Icon style={styles.emojiStyle} source={Icons.Bed} />
-        <FancyGradientChart
-          data={[
-            createDataPoint(getGraphDate(24), 1),
-            createDataPoint(getGraphDate(25), 1),
-            createDataPoint(getGraphDate(26), 2),
-            createDataPoint(getGraphDate(27), 2),
-            createDataPoint(getGraphDate(28), 3),
+    <Background
+      header={
+        <NavigationHeader
+          center={<TrackMySymptomHeader symptomName="tiredness" />}
+          showBackButton
+        />
+      }>
+      <PaddedContainer>
+        <Row>
+          <Icon style={styles.emojiStyle} source={Icons.Bed} />
+          <FancyGradientChart
+            data={[
+              createDataPoint(getGraphDate(24), 1),
+              createDataPoint(getGraphDate(25), 1),
+              createDataPoint(getGraphDate(26), 2),
+              createDataPoint(getGraphDate(27), 2),
+              createDataPoint(getGraphDate(28), 3),
+            ]}
+          />
+        </Row>
+        <SelectionGroup
+          title="are you tired?"
+          onOptionSelected={option =>
+            setValues({energy_level: option.title === 'yes' ? 9 : 1})
+          }
+          options={[
+            {title: 'yes', color: '#FF7A7A'},
+            {title: 'no', color: '#8cf081'},
           ]}
         />
-      </View>
-      <SelectionGroup
-        title="are you tired?"
-        onOptionSelected={option =>
-          setValues({energy_level: option.title === 'yes' ? 9 : 1})
-        }
-        options={[
-          {title: 'yes', color: '#FF7A7A'},
-          {title: 'no', color: '#8cf081'},
-        ]}
-      />
-      <View style={styles.center}>
-        <DoneButton style={{marginTop: 50}} onPress={() => onSave(values)} />
-      </View>
+        <View style={styles.center}>
+          <DoneButton style={{marginTop: 50}} onPress={() => onSave(values)} />
+        </View>
+      </PaddedContainer>
     </Background>
   );
 };

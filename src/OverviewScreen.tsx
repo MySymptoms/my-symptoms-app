@@ -48,8 +48,8 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
   const report = useSelector(selectReport(currentDate));
 
   return (
-    <Background>
-      <View>
+    <Background
+      header={
         <NavigationHeader
           left={<SummaryViewIcon />}
           onPressLeft={() => navigation.navigate('Summary')}
@@ -57,12 +57,12 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
           right={<UserEmojiContainer>{emoji}</UserEmojiContainer>}
           onPressRight={() => navigation.navigate('AdditionalData')}
         />
-        <HorizontalStatusCalendar
-          style={{marginBottom: 30}}
-          onChange={setCurrentDate}
-          value={currentDate}
-        />
-      </View>
+      }>
+      <HorizontalStatusCalendar
+        style={{marginBottom: 30}}
+        onChange={setCurrentDate}
+        value={currentDate}
+      />
       <View style={{alignItems: 'center', justifyContent: 'center'}}>
         <View style={{flexDirection: 'row'}}>
           <OverviewSymptomButton

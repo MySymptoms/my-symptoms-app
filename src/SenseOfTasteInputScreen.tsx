@@ -19,6 +19,7 @@ import {parseISO} from 'date-fns';
 import {sortBy} from 'lodash';
 import {useReportState} from './hooks/useReportState';
 import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
+import {Row, PaddedContainer} from './components/Block';
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList, 'SenseOfTaste'>;
@@ -53,40 +54,44 @@ export const SenseOfTasteInputScreen: FC<Props> = ({route}) => {
   );
 
   return (
-    <Background>
-      <NavigationHeader
-        center={<TrackMySymptomHeader symptomName="sense of taste" />}
-        showBackButton
-      />
-      <View style={{flexDirection: 'row'}}>
-        <Icon style={styles.emojiStyle} source={Icons.Food} />
-        {data.length > 0 ? (
-          <FancyGradientChart
-            data={data.map(({date, score}) =>
-              createDataPoint(parseISO(date), score),
-            )}
-          />
-        ) : (
-          <View style={{height: 150}} />
-        )}
-      </View>
-      <SelectionGroup
-        title="Have you lost your sense of taste?"
-        onOptionSelected={option =>
-          setValues({
-            lost_sense_of_taste: option.title as 'yes' | 'no',
-          })
-        }
-        options={[
-          {title: 'no', color: Colors.stepOneColor},
-          {title: 'Food tastes less than usual', color: Colors.stepThreeColor},
-          {title: "Can't taste anything", color: Colors.stepFiveColor},
-        ]}
-      />
+    <Background
+      header={
+        <NavigationHeader
+          center={<TrackMySymptomHeader symptomName="sense of taste" />}
+          showBackButton
+        />
+      }>
+      <PaddedContainer>
+        <Row>
+          <Icon style={styles.emojiStyle} source={Icons.Food} />
+          {data.length > 0 ? (
+            <FancyGradientChart
+              data={data.map(({date, score}) =>
+                createDataPoint(parseISO(date), score),
+              )}
+            />
+          ) : (
+            <View style={{height: 150}} />
+          )}
+        </Row>
+        <SelectionGroup
+          title="Have you lost your sense of taste?"
+          onOptionSelected={option =>
+            setValues({
+              lost_sense_of_taste: option.title as 'yes' | 'no',
+            })
+          }
+          options={[
+            {title: 'no', color: Colors.stepOneColor},
+            {title: 'Food tastes less than usual', color: Colors.stepThreeColor},
+            {title: "Can't taste anything", color: Colors.stepFiveColor},
+          ]}
+        />
 
-      <View style={styles.center}>
-        <DoneButton style={{marginTop: 50}} onPress={() => onSave(values)} />
-      </View>
+        <View style={styles.center}>
+          <DoneButton style={{marginTop: 50}} onPress={() => onSave(values)} />
+        </View>
+      </PaddedContainer>
     </Background>
   );
 };

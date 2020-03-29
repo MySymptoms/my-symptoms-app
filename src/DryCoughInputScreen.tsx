@@ -15,6 +15,7 @@ import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
 import {useReportState} from './hooks/useReportState';
 import {RootStackParamList} from '../App';
 import {RouteProp} from '@react-navigation/native';
+import {Row, PaddedContainer} from './components/Block';
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList, 'DryCough'>;
@@ -28,61 +29,65 @@ export const DryCoughInputScreen: FC<Props> = ({route}) => {
     'dry_cough',
   );
   return (
-    <Background>
-      <NavigationHeader
-        center={<TrackMySymptomHeader symptomName="dry cough" />}
-        showBackButton
-      />
-      <View style={{flexDirection: 'row'}}>
-        <Icon style={styles.emojiStyle} source={Icons.Mask} />
-        <FancyGradientChart
-          data={[
-            createDataPoint(getGraphDate(24), 1),
-            createDataPoint(getGraphDate(25), 1),
-            createDataPoint(getGraphDate(26), 2),
-            createDataPoint(getGraphDate(27), 2),
-            createDataPoint(getGraphDate(28), 3),
+    <Background
+      header={
+        <NavigationHeader
+          center={<TrackMySymptomHeader symptomName="dry cough" />}
+          showBackButton
+        />
+      }>
+      <PaddedContainer>
+        <Row>
+          <Icon style={styles.emojiStyle} source={Icons.Mask} />
+          <FancyGradientChart
+            data={[
+              createDataPoint(getGraphDate(24), 1),
+              createDataPoint(getGraphDate(25), 1),
+              createDataPoint(getGraphDate(26), 2),
+              createDataPoint(getGraphDate(27), 2),
+              createDataPoint(getGraphDate(28), 3),
+            ]}
+          />
+        </Row>
+        <SelectionGroup
+          title="cough frequency"
+          onOptionSelected={option =>
+            setValues({
+              frequency: option.title as
+                | 'every minute'
+                | 'few times an hour'
+                | 'few times a day',
+            })
+          }
+          options={[
+            {title: 'none'},
+            {title: 'every minute'},
+            {title: 'few times an hour'},
+            {title: 'few times a day'},
           ]}
         />
-      </View>
-      <SelectionGroup
-        title="cough frequency"
-        onOptionSelected={option =>
-          setValues({
-            frequency: option.title as
-              | 'every minute'
-              | 'few times an hour'
-              | 'few times a day',
-          })
-        }
-        options={[
-          {title: 'none'},
-          {title: 'every minute'},
-          {title: 'few times an hour'},
-          {title: 'few times a day'},
-        ]}
-      />
-      <Divider />
-      <SelectionGroup
-        title="intensity"
-        onOptionSelected={option => setValues({intensity: option.title})}
-        options={[
-          {title: 'none', color: Colors.stepOneColor},
-          {title: 'bearable', color: Colors.stepTwoColor},
-          {title: 'harsh', color: Colors.stepfourColor},
-          {title: 'physical discomfort', color: Colors.stepFiveColor},
-        ]}
-      />
-      <Divider />
+        <Divider />
+        <SelectionGroup
+          title="intensity"
+          onOptionSelected={option => setValues({intensity: option.title})}
+          options={[
+            {title: 'none', color: Colors.stepOneColor},
+            {title: 'bearable', color: Colors.stepTwoColor},
+            {title: 'harsh', color: Colors.stepfourColor},
+            {title: 'physical discomfort', color: Colors.stepFiveColor},
+          ]}
+        />
+        <Divider />
 
-      <SelectionGroup
-        title="disruption"
-        onOptionSelected={option => setValues({disruption: option.title})}
-        options={[{title: 'daytime'}, {title: 'nighttime'}]}
-      />
-      <View style={styles.center}>
-        <DoneButton style={{marginTop: 50}} onPress={() => onSave(values)} />
-      </View>
+        <SelectionGroup
+          title="disruption"
+          onOptionSelected={option => setValues({disruption: option.title})}
+          options={[{title: 'daytime'}, {title: 'nighttime'}]}
+        />
+        <View style={styles.center}>
+          <DoneButton style={{marginTop: 50}} onPress={() => onSave(values)} />
+        </View>
+      </PaddedContainer>
     </Background>
   );
 };
