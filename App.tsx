@@ -34,6 +34,7 @@ import {SenseOfSmellInputScreen} from './src/SenseOfSmellInputScreen';
 import {TirednessInputScreen} from './src/TirednessInputScreen';
 import AsyncStorage from '@react-native-community/async-storage';
 import {PersistConfig, persistReducer, persistStore} from 'redux-persist';
+import {AdditionalDataInputScreen} from './src/AdditionalDataInputScreen';
 
 // TS declaration for making redux devtools extension stop complaining in createStore below.
 declare global {
@@ -79,6 +80,7 @@ export type RootStackParamList = {
   ReportList: undefined;
   Summary: undefined;
   DetailedReport: undefined;
+  AdditionalData: undefined;
 };
 
 const App = () => {
@@ -128,6 +130,10 @@ const App = () => {
             <Stack.Screen
               name={'DetailedReport'}
               component={DetailedReportScreen}
+            />
+            <Stack.Screen
+              name={'AdditionalData'}
+              component={AdditionalDataInputScreen}
             />
           </Stack.Navigator>
         </NavigationContainer>

@@ -43,6 +43,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
           onPressLeft={() => navigation.navigate('Summary')}
           title={'TRACK MY SYMPTOMS'}
           right={<UserEmojiContainer>{emoji}</UserEmojiContainer>}
+          onPressRight={() => navigation.navigate('AdditionalData')}
         />
         <HorizontalStatusCalendar
           style={{marginBottom: 30}}

@@ -28,6 +28,9 @@ export const HalfSpace = styled.View`
 export const CenterTitleText = styled.Text`
   font-family: ${fontName};
   color: #c1c1c1;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 1.2px;
 `;
 
 export const HeaderRow = styled.View`
