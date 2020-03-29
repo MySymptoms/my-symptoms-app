@@ -12,13 +12,21 @@ import {SelectionGroup} from './components/SelectionGroup';
 import {NavigationHeader} from './NavigationHeader';
 import {createDataPoint, getGraphDate} from './DetailedReportScreen';
 import {Divider} from './components/Divider';
+import {useReportState} from './useReportState';
+import {RouteProp} from '@react-navigation/native';
+import {RootStackParamList} from '../App';
 import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
 
 type Props = {
-  navigation: StackNavigationProp<{}>;
+  navigation: StackNavigationProp<RootStackParamList, 'ShortnessOfBreath'>;
+  route: RouteProp<RootStackParamList, 'ShortnessOfBreath'>;
 };
 
-export const ShortnessOfBreathInputScreen: FC<Props> = ({navigation}) => {
+export const ShortnessOfBreathInputScreen: FC<Props> = ({route}) => {
+  const {setValues, values, onSave} = useReportState(
+    route.params.currentReportDate,
+    'shortness_of_breath',
+  );
   return (
     <Background>
       <NavigationHeader
@@ -39,7 +47,7 @@ export const ShortnessOfBreathInputScreen: FC<Props> = ({navigation}) => {
       </View>
       <SelectionGroup
         title="Describe the feeling"
-        onOptionSelected={() => {}}
+        onOptionSelected={option => setValues({feeling: option.title})}
         options={[
           {title: 'breathe normally', color: '#8cf081'},
           {title: 'Short of breath', color: '#FFBC5C'},
@@ -50,13 +58,13 @@ export const ShortnessOfBreathInputScreen: FC<Props> = ({navigation}) => {
       <Divider />
       <SelectionGroup
         title="do you also feel"
-        onOptionSelected={() => {}}
+        onOptionSelected={option => setValues({do_you_also_feel: option.title})}
         options={[{title: 'fainting'}]}
       />
       <Divider />
       <SelectionGroup
         title="frequency"
-        onOptionSelected={() => {}}
+        onOptionSelected={option => setValues({frequency: option.title})}
         options={[
           {title: 'comes suddenly'},
           {title: 'is persistent'},
@@ -65,7 +73,7 @@ export const ShortnessOfBreathInputScreen: FC<Props> = ({navigation}) => {
       />
       <Space />
       <View style={styles.center}>
-        <DoneButton onPress={() => {}} />
+        <DoneButton onPress={() => onSave(values)} />
       </View>
     </Background>
   );

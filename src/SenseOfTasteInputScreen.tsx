@@ -73,7 +73,9 @@ export const SenseOfTasteInputScreen: FC<Props> = ({route}) => {
       <SelectionGroup
         title="Have you lost your sense of taste?"
         onOptionSelected={option =>
-          setValues({lost_sense_of_taste: option.title as 'yes' | 'no'})
+          setValues({
+            lost_sense_of_taste: option.title as 'yes' | 'no',
+          })
         }
         options={[
           {title: 'yes', color: Colors.buttonLineBad},
