@@ -10,6 +10,9 @@ import PaperSheet from '../assets/paper_sheet.png';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../App';
+import {useSelector} from 'react-redux';
+import {selectUserEmoji} from './reducers/userReducer';
+import {UserEmojiField} from './components/UserEmojiField';
 
 const Row = styled.View`
   flex-direction: row;
@@ -68,11 +71,18 @@ const SummaryViewColumn: React.FC = ({children}) => (
 
 export const SummaryPage = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const userEmoji = useSelector(selectUserEmoji);
   return (
     <Background style={{paddingHorizontal: 15}}>
       <NavigationHeader
         showBackButton
-        title={'TRACK MY SYMPTOMS'}
+        center={
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <MyText style={{fontSize: 14}}>HELLO ANONYMOUS </MyText>
+            <HalfSpace />
+            <UserEmojiField emoji={userEmoji} />
+          </View>
+        }
         right={<Image source={PaperSheet} />}
         onPressRight={() => navigation.navigate('DetailedReport')}
       />
