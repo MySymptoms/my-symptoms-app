@@ -148,10 +148,9 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
         <View style={{flexDirection: 'row'}}>
           <OverviewSymptomButton
             color={
-              !report || !report.symptoms.senseOfTaste
+              !report || !report.symptoms.sense_of_taste
                 ? null
-                : report.symptoms.senseOfTaste.values
-                    .have_you_lost_your_sense_of_taste
+                : report.symptoms.sense_of_taste.values.lost_sense_of_taste === 'yes'
                 ? 'red'
                 : 'green'
             }

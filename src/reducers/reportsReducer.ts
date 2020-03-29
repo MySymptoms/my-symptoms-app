@@ -1,18 +1,21 @@
 import {v4 as uuidv4} from 'uuid';
-import {format, formatISO} from 'date-fns';
+import {formatISO} from 'date-fns';
 import {ThunkAction} from 'redux-thunk';
 import {RootState} from './rootReducer';
 import {AnyAction} from 'redux';
+import {SymptomsRecord} from './symptoms';
 
 export const UPDATE_SYMPTOM = 'report/update-symptom';
 export const CREATE_REPORT = 'report/create';
+
+type Nullable<T> = {[P in keyof T]: T[P] | null};
 
 export interface Report {
   report_id: string;
   date: string;
   updated_at: string;
   coarse_location: Location;
-  symptoms: Record<string, Symptom>;
+  symptoms: Nullable<SymptomsRecord>;
 }
 
 export interface Symptom {
@@ -27,7 +30,7 @@ export interface Location {
 
 export type ReportsReducerState = Record<string, Report>;
 
-const initialState = {
+const initialState: ReportsReducerState = {
   '7b8a8627-ee14-4912-b453-9131249f9937': {
     report_id: '7b8a8627-ee14-4912-b453-9131249f9937',
     date: '2020-03-28',
@@ -56,6 +59,7 @@ const initialState = {
           disruption: '',
         },
       },
+      sense_of_taste: null,
       tiredness: {
         symptom: 'tiredness',
         values: {
@@ -77,7 +81,7 @@ const initialState = {
 
 export const reportsReducer = (
   state: ReportsReducerState = initialState,
-  action: CreateReportAction | UpdateSymptomAction,
+  action: CreateReportAction | UpdateSymptomAction<keyof SymptomsRecord>,
 ): ReportsReducerState => {
   switch (action.type) {
     case UPDATE_SYMPTOM: {
@@ -89,9 +93,9 @@ export const reportsReducer = (
           ...report,
           symptoms: {
             ...symptoms,
-            [action.symptom.symptom]: {
-              symptom: action.symptom.symptom,
-              values: action.symptom.values,
+            [action.symptomKey]: {
+              symptom: action.symptomKey,
+              values: action.symptom,
             },
           },
         },
@@ -105,7 +109,14 @@ export const reportsReducer = (
           date: action.date,
           updated_at: formatISO(action.now),
           coarse_location: action.location,
-          symptoms: {},
+          symptoms: {
+            dry_cough: null,
+            fever: null,
+            no_symptoms: null,
+            shortness_of_breath: null,
+            tiredness: null,
+            sense_of_taste: null,
+          },
         },
       };
     }
@@ -132,14 +143,18 @@ export const requestCreateNewReport = ({
   }
 };
 
-export const requestUpdateSymptomInReport = ({
+export const requestUpdateSymptomInReport = <
+  TKey extends keyof SymptomsRecord
+>({
   date,
   now,
+  symptomKey,
   symptom,
 }: {
   date: string;
   now: Date;
-  symptom: Symptom;
+  symptomKey: TKey;
+  symptom: SymptomsRecord[TKey]['values'];
 }): ThunkAction<any, RootState, undefined, AnyAction> => (
   dispatch,
   getState,
@@ -158,7 +173,7 @@ export const requestUpdateSymptomInReport = ({
     dispatch(action);
   }
 
-  dispatch(updateSymptomInReport(reportId, now, symptom));
+  dispatch(updateSymptomInReport<TKey>(reportId, now, symptomKey, symptom));
 };
 
 // dispatch(requestCreateNewReport());
@@ -186,22 +201,25 @@ export const createNewReport = (
   };
 };
 
-interface UpdateSymptomAction {
+interface UpdateSymptomAction<TKey extends keyof SymptomsRecord> {
   type: typeof UPDATE_SYMPTOM;
   uuid: string;
   now: Date;
-  symptom: Symptom;
+  symptomKey: TKey;
+  symptom: SymptomsRecord[TKey]['values'];
 }
 
-export const updateSymptomInReport = (
+export const updateSymptomInReport = <TKey extends keyof SymptomsRecord>(
   uuid: string,
   now: Date,
-  symptom: Symptom,
-): UpdateSymptomAction => {
+  symptomKey: TKey,
+  symptom: SymptomsRecord[TKey]['values'],
+): UpdateSymptomAction<TKey> => {
   return {
     type: UPDATE_SYMPTOM,
     uuid,
     now,
+    symptomKey,
     symptom,
   };
 };

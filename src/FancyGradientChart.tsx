@@ -45,6 +45,7 @@ export interface GraphDataPoint {
 }
 
 const formatTick = (t: Date) => {
+  console.log(t, isToday(t));
   if (isToday(t)) {
     return 'TODAY';
   } else {
@@ -60,7 +61,6 @@ export const FancyGradientChart: React.FC<{
       standalone={true}
       minDomain={{y: 0}}
       maxDomain={{y: 3}}
-      domainPadding={[30, 0]}
       width={350}
       height={150}
       theme={theme}>
@@ -110,9 +110,13 @@ export const FancyGradientChart: React.FC<{
       />
       <VictoryLabel x={50} y={167} text={'MAR'} style={labelStyle} />
       <VictoryAxis
-        standalone={true}
         tickCount={data.length}
-        tickFormat={(t, index) => formatTick(data[index].date)}
+        tickFormat={(t, index) => {
+          if (index >= data.length) {
+            return '';
+          }
+          return formatTick(data[index].date);
+        }}
       />
     </VictoryChart>
   );

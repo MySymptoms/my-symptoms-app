@@ -10,8 +10,9 @@ import React, {ReactNode} from 'react';
 interface Props {
   showBackButton?: boolean;
   onPressLeft?: () => any;
-  title: string;
+  title?: string;
   left?: ReactNode;
+  center?: ReactNode;
   right?: ReactNode;
   onPressRight?: () => void;
 }
@@ -24,6 +25,7 @@ export const NavigationHeader: React.FC<Props> = ({
   showBackButton = false,
   title,
   left,
+  center,
   right,
 }) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
@@ -38,7 +40,8 @@ export const NavigationHeader: React.FC<Props> = ({
           <CircleButton onPress={onPressLeft}>{left}</CircleButton>
         )}
       </View>
-      <CenterTitleText>{title}</CenterTitleText>
+      {center ? <>{center}</> : <CenterTitleText>{title}</CenterTitleText>}
+
       <View>
         {right ? (
           <CircleButton onPress={onPressRight}>{right}</CircleButton>

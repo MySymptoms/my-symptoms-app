@@ -8,25 +8,30 @@ import {Colors} from './lib/colors';
 import {fontName} from './lib/vars';
 import {DoneButton} from './components/DoneButton';
 import {SelectionGroup} from './components/SelectionGroup';
-import styled from 'styled-components/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from './reducers/rootReducer';
 import {RootStackParamList} from 'App';
 import {RouteProp} from '@react-navigation/native';
-import {requestUpdateSymptomInReport, Symptom} from './reducers/reportsReducer';
+import {requestUpdateSymptomInReport} from './reducers/reportsReducer';
 import {isDefined} from './lib/util';
 import {FancyGradientChart} from './FancyGradientChart';
 import {createDataPoint} from './DetailedReportScreen';
 import {parseISO} from 'date-fns';
+import {sortBy} from 'lodash';
+import {SenseOfTasteSymptom, SymptomsRecord} from './reducers/symptoms';
 
-const useReportState = (currentReportDate: string) => {
+const useReportState = <TKey extends keyof SymptomsRecord>(
+  currentReportDate: string,
+  key: TKey,
+) => {
   const dispatch = useDispatch();
-  const onSave = (symptom: Symptom) => {
+  const onSave = (values: SymptomsRecord[TKey]['values']) => {
     dispatch(
-      requestUpdateSymptomInReport({
+      requestUpdateSymptomInReport<TKey>({
         date: currentReportDate,
         now: new Date(),
-        symptom,
+        symptomKey: key,
+        symptom: values,
       }),
     );
   };
@@ -39,31 +44,36 @@ interface Props {
   route: RouteProp<RootStackParamList, 'SenseOfTaste'>;
 }
 
-export const SenseOfTasteInputScreen: FC<Props> = ({route}) => {
+export const SenseOfTasteInputScreen: FC<Props> = ({route, navigation}) => {
   const {currentReportDate} = route.params;
 
-  const {onSave} = useReportState(currentReportDate);
+  const {onSave} = useReportState(currentReportDate, 'sense_of_taste');
 
   const data = useSelector((state: RootState) =>
-    Object.values(state.reports)
-      .map(report => {
-        const symptom = report.symptoms['senseOfTaste'];
-        if (symptom) {
-          return {
-            date: report.date,
-            score: symptom.values.have_you_lost_your_sense_of_taste ? 3 : 1,
-          };
-        } else {
-          return null;
-        }
-      })
-      .filter(isDefined),
+    sortBy(
+      Object.values(state.reports)
+        .map(report => {
+          console.log(report);
+          const symptom = report.symptoms.sense_of_taste;
+          if (symptom) {
+            return {
+              date: report.date,
+              score: symptom.values.lost_sense_of_taste === 'yes' ? 3 : 1,
+            };
+          } else {
+            return null;
+          }
+        })
+        .filter(isDefined),
+      r => r.date,
+    ),
   );
 
-  const [values, setValues] = useState<Symptom>({
-    symptom: 'senseOfTaste',
-    values: {},
-  });
+  console.log(data)
+
+  const [values, setValues] = useState<SenseOfTasteSymptom['values'] | null>(
+    null,
+  );
 
   return (
     <Background>
@@ -83,13 +93,16 @@ export const SenseOfTasteInputScreen: FC<Props> = ({route}) => {
       <SelectionGroup
         title="Have you lost your sense of taste?"
         onOptionSelected={option => {
-          setValues(s => ({
-            ...s,
-            values: {
-              ...s.values,
-              have_you_lost_your_sense_of_taste: option.title === 'yes',
-            },
-          }));
+          setValues(v =>
+            v
+              ? {
+                  ...v,
+                  lost_sense_of_taste: option.title as 'yes' | 'no',
+                }
+              : {
+                  lost_sense_of_taste: option.title as 'yes' | 'no',
+                },
+          );
         }}
         options={[
           {title: 'yes', color: Colors.buttonLineBad},
@@ -98,7 +111,15 @@ export const SenseOfTasteInputScreen: FC<Props> = ({route}) => {
       />
 
       <View style={styles.center}>
-        <DoneButton style={{marginTop: 50}} onPress={() => onSave(values)} />
+        <DoneButton
+          style={{marginTop: 50}}
+          onPress={() => {
+            if (values) {
+              onSave(values);
+            }
+            navigation.goBack();
+          }}
+        />
       </View>
     </Background>
   );

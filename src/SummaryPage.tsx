@@ -10,6 +10,9 @@ import PaperSheet from '../assets/paper_sheet.png';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../App';
+import {useSelector} from 'react-redux';
+import {selectUserEmoji} from './reducers/userReducer';
+import {UserEmojiField} from './components/UserEmojiField';
 
 const Row = styled.View`
   flex-direction: row;
@@ -33,7 +36,7 @@ const RowWithContentRight: React.FC<{leftText: string; right: ReactNode}> = ({
   right,
 }) => (
   <BlackBox style={{flexDirection: 'row', padding: 14, alignItems: 'center'}}>
-    <MyText style={{flex: 1, paddingLeft: 20}}>{leftText}</MyText>
+    <MyText style={{flex: 2, paddingLeft: 20}}>{leftText}</MyText>
     {right}
   </BlackBox>
 );
@@ -68,11 +71,18 @@ const SummaryViewColumn: React.FC = ({children}) => (
 
 export const SummaryPage = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const userEmoji = useSelector(selectUserEmoji);
   return (
     <Background style={{paddingHorizontal: 15}}>
       <NavigationHeader
         showBackButton
-        title={'TRACK MY SYMPTOMS'}
+        center={
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <MyText style={{fontSize: 14}}>HELLO ANONYMOUS </MyText>
+            <HalfSpace />
+            <UserEmojiField emoji={userEmoji} />
+          </View>
+        }
         right={<Image source={PaperSheet} />}
         onPressRight={() => navigation.navigate('DetailedReport')}
       />
@@ -96,7 +106,7 @@ export const SummaryPage = () => {
         leftText={'Fever'}
         right={
           <BlackBox
-            style={{flex: 1, backgroundColor: '#ffbc5c', alignItems: 'center'}}>
+            style={{flex: 2, backgroundColor: '#ffbc5c', alignItems: 'center'}}>
             <MyText style={{fontSize: 60, color: '#000', padding: 14}}>
               37.9
             </MyText>
@@ -108,7 +118,11 @@ export const SummaryPage = () => {
         <RowWithContentRight
           leftText={'Medical Conditions'}
           right={
-            <View style={{flex: 1, alignItems: 'center'}}>
+            <View
+              style={{
+                flex: 1,
+                alignItems: 'space-between',
+              }}>
               <BlackBox
                 style={{
                   borderRadius: 50,
