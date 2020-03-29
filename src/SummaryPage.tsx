@@ -33,7 +33,7 @@ const RowWithContentRight: React.FC<{leftText: string; right: ReactNode}> = ({
   right,
 }) => (
   <BlackBox style={{flexDirection: 'row', padding: 14, alignItems: 'center'}}>
-    <MyText style={{flex: 1, paddingLeft: 20}}>{leftText}</MyText>
+    <MyText style={{flex: 2, paddingLeft: 20}}>{leftText}</MyText>
     {right}
   </BlackBox>
 );
@@ -96,7 +96,7 @@ export const SummaryPage = () => {
         leftText={'Fever'}
         right={
           <BlackBox
-            style={{flex: 1, backgroundColor: '#ffbc5c', alignItems: 'center'}}>
+            style={{flex: 2, backgroundColor: '#ffbc5c', alignItems: 'center'}}>
             <MyText style={{fontSize: 60, color: '#000', padding: 14}}>
               37.9
             </MyText>
@@ -108,7 +108,11 @@ export const SummaryPage = () => {
         <RowWithContentRight
           leftText={'Medical Conditions'}
           right={
-            <View style={{flex: 1, alignItems: 'center'}}>
+            <View
+              style={{
+                flex: 1,
+                alignItems: 'space-between',
+              }}>
               <BlackBox
                 style={{
                   borderRadius: 50,
