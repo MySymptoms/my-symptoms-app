@@ -20,6 +20,7 @@ import {sortBy} from 'lodash';
 import {useReportState} from './hooks/useReportState';
 import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
 import {Row, PaddedContainer} from './components/Block';
+import {getNumberForReportAndSymptom} from './lib/symptomToNumber';
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList, 'SenseOfTaste'>;
@@ -42,7 +43,7 @@ export const SenseOfTasteInputScreen: FC<Props> = ({route}) => {
           if (symptom) {
             return {
               date: report.date,
-              score: symptom.values.description === 'normal' ? 1 : 3,
+              score: getNumberForReportAndSymptom(report, 'sense_of_taste'),
             };
           } else {
             return null;

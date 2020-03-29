@@ -3,44 +3,38 @@ import {Report} from 'src/reducers/reportsReducer';
 import {SymptomsRecord} from 'src/reducers/symptoms';
 
 type KeyGetterWhatever<T> = {
-  [K in keyof T]: (symptom: T[K]) => string | null;
+  [K in keyof T]: (symptom: T[K]) => number | null;
 };
 
 const map: KeyGetterWhatever<SymptomsRecord> = {
   fever: ({values: {degrees: value}}) => {
-    if (36.1 <= value && value <= 37.2) {
-      return Colors.stepOneColor;
-    } else if (value <= 38) {
-      return Colors.stepThreeColor;
-    } else {
-      return Colors.stepFiveColor;
-    }
+    return value;
   },
   dry_cough: ({values: {intensity}}) => {
     switch (intensity) {
       case 'none':
-        return Colors.stepOneColor;
+        return 1;
       case 'bearable':
-        return Colors.stepTwoColor;
+        return 2;
       case 'harsh':
-        return Colors.stepFourColor;
+        return 4;
       case 'physical_discomfort':
-        return Colors.stepFiveColor;
+        return 5;
       default:
         return null;
     }
   },
   no_symptoms: ({values: {checked}}) => {
-    return checked ? Colors.stepOneColor : Colors.stepFiveColor;
+    return checked ? 1 : 5;
   },
   sense_of_taste: ({values: {description}}) => {
     switch (description) {
       case 'normal':
-        return Colors.stepOneColor;
+        return 1;
       case 'less_than_usual':
-        return Colors.stepThreeColor;
+        return 3;
       case 'can_not_taste_anything':
-        return Colors.stepFiveColor;
+        return 5;
       default:
         return null;
     }
@@ -48,11 +42,11 @@ const map: KeyGetterWhatever<SymptomsRecord> = {
   sense_of_smell: ({values: {description}}) => {
     switch (description) {
       case 'normal':
-        return Colors.stepOneColor;
+        return 1;
       case 'less_than_usual':
-        return Colors.stepThreeColor;
+        return 3;
       case 'can_not_smell_anything':
-        return Colors.stepFiveColor;
+        return 5;
       default:
         return null;
     }
@@ -60,13 +54,13 @@ const map: KeyGetterWhatever<SymptomsRecord> = {
   shortness_of_breath: ({values: {feeling}}) => {
     switch (feeling) {
       case 'breathe_normally':
-        return Colors.stepOneColor;
+        return 1;
       case 'shortness_of_breath':
-        return Colors.stepTwoColor;
+        return 2;
       case 'tightness_in_my_chest':
-        return Colors.stepFourColor;
+        return 4;
       case 'cannot_get_enough_air':
-        return Colors.stepFiveColor;
+        return 5;
 
       default:
         return null;
@@ -75,57 +69,51 @@ const map: KeyGetterWhatever<SymptomsRecord> = {
   tiredness: ({values: {description}}) => {
     switch (description) {
       case 'as_usual':
-        return Colors.stepOneColor;
+        return 1;
       case 'tired_but_not_bedridden':
-        return Colors.stepTwoColor;
+        return 2;
       case 'mostly_bedridden':
-        return Colors.stepThreeColor;
+        return 3;
       case 'can_get_to_the_bathroom':
-        return Colors.stepFourColor;
+        return 4;
       case 'cannot_get_out_of_bed':
-        return Colors.stepFiveColor;
+        return 5;
       default:
         return null;
     }
   },
   aches_and_pain: ({values: {have_ache}}) => {
-    return have_ache ? Colors.stepFiveColor : Colors.stepOneColor;
+    return have_ache ? 5 : 1;
   },
   sore_throat: ({values: {feeling}}) => {
     switch (feeling) {
       case 'normal':
-        return Colors.stepOneColor;
+        return 1;
       case 'easy_to_gulp':
-        return Colors.stepTwoColor;
+        return 2;
       case 'scratchy':
-        return Colors.stepFourColor;
+        return 4;
       case 'difficult_to_swallow':
-        return Colors.stepFiveColor;
+        return 5;
       default:
         return null;
     }
   },
   diarrhoea: ({values: {presense}}) => {
-    return presense ? Colors.stepFiveColor : Colors.stepOneColor;
+    return presense ? 5 : 1;
   },
   nausea: ({values: {presense}}) => {
-    return presense ? Colors.stepFiveColor : Colors.stepOneColor;
+    return presense ? 5 : 1;
   },
   runny_nose: ({values: {presense}}) => {
-    return presense ? Colors.stepFiveColor : Colors.stepOneColor;
+    return presense ? 5 : 1;
   },
 };
 
-export const colorLookup = {
-  tiredness: {
-    values: {},
-  },
-};
-
-export function getColorForReportAndSymptom<TKey extends keyof SymptomsRecord>(
+export function getNumberForReportAndSymptom<TKey extends keyof SymptomsRecord>(
   report: Report | null,
   symptom: TKey,
-): string | null {
+): number | null {
   if (!report) {
     return null;
   }

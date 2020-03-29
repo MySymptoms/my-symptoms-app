@@ -3,7 +3,7 @@ import {FancyGradientChart, GraphDataPoint} from './FancyGradientChart';
 import {Background} from './components/Background';
 import {ScrollView} from 'react-native-gesture-handler';
 import {differenceInCalendarDays} from 'date-fns';
-import { PaddedContainer } from './components/Block';
+import {PaddedContainer} from './components/Block';
 
 export interface DetailedReportScreenProps {}
 
@@ -20,13 +20,38 @@ export const createDataPoint = (date: Date, point: number): GraphDataPoint => ({
   y: point,
 });
 
-export const DetailedReportScreen: React.FC<
-  DetailedReportScreenProps
-> = ({}) => {
+export const DetailedReportScreen: React.FC<DetailedReportScreenProps> = ({}) => {
   return (
     <Background style={{flex: 1}}>
       <PaddedContainer>
-
+        <FancyGradientChart
+          data={[
+            createDataPoint(getGraphDate(24), 1),
+            createDataPoint(getGraphDate(25), 2),
+            createDataPoint(getGraphDate(26), 3),
+            createDataPoint(getGraphDate(27), 4),
+            createDataPoint(getGraphDate(28), 5),
+          ]}
+        />
+        <FancyGradientChart
+          data={[
+            createDataPoint(getGraphDate(24), 3),
+            createDataPoint(getGraphDate(25), 4),
+            createDataPoint(getGraphDate(26), 5),
+          ]}
+        />
+        <FancyGradientChart
+          data={[
+            createDataPoint(getGraphDate(24), 1),
+            createDataPoint(getGraphDate(25), 2),
+            createDataPoint(getGraphDate(26), 3),
+            createDataPoint(getGraphDate(27), 1),
+            createDataPoint(getGraphDate(28), 5),
+            createDataPoint(getGraphDate(29), 4),
+            createDataPoint(getGraphDate(30), 3),
+            createDataPoint(getGraphDate(31), 1),
+          ]}
+        />
         <FancyGradientChart
           data={[
             createDataPoint(getGraphDate(24), 1),
