@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import styled from 'styled-components/native';
 import {Space} from './components/Block';
@@ -19,6 +19,7 @@ import {
 } from './components/OverviewSymptomButton';
 import {RootState} from './reducers/rootReducer';
 import {Report, selectReport} from './reducers/reportsReducer';
+import {useGeoLocation} from './hooks/useGeoLocation';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -43,9 +44,17 @@ function getColorForFever(report: Report | null): ColorState | null {
 }
 
 export const OverviewScreen: FC<Props> = ({navigation}) => {
+  const {getLatestLocation, requestPermission} = useGeoLocation();
+
   const [currentDate, setCurrentDate] = useState(formatDate(new Date()));
   const emoji = useSelector((state: RootState) => state.user.user_emoji);
   const report = useSelector(selectReport(currentDate));
+
+  useEffect(() => {
+    requestPermission().then(() => {
+      getLatestLocation();
+    });
+  }, [requestPermission]);
 
   return (
     <Background>

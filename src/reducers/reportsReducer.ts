@@ -4,6 +4,7 @@ import {ThunkAction} from 'redux-thunk';
 import {RootState} from './rootReducer';
 import {AnyAction} from 'redux';
 import {SymptomsRecord} from './symptoms';
+import {selectLocation} from './locationReducer';
 
 export const UPDATE_SYMPTOM = 'report/update-symptom';
 export const CREATE_REPORT = 'report/create';
@@ -124,24 +125,6 @@ export const reportsReducer = (
   }
 };
 
-export const requestCreateNewReport = ({
-  date,
-}: {
-  date: string;
-}): ThunkAction<any, RootState, undefined, AnyAction> => (
-  dispatch,
-  getState,
-) => {
-  const state = getState();
-  const {dateToReportId} = state; // TODO: Create location reducer for last known location
-
-  if (!(date in dateToReportId)) {
-    dispatch(
-      createNewReport(date, new Date(), {lat: 57.70887, long: 11.97456}),
-    );
-  }
-};
-
 export const requestUpdateSymptomInReport = <
   TKey extends keyof SymptomsRecord
 >({
@@ -159,14 +142,16 @@ export const requestUpdateSymptomInReport = <
   getState,
 ) => {
   const state = getState();
-  const {dateToReportId} = state; // TODO: Create location reducer for last known location
+  const {dateToReportId} = state;
+
+  const {lat, long} = selectLocation(state);
 
   let reportId = dateToReportId[date];
 
   if (!reportId) {
     const action = createNewReport(date, now, {
-      lat: 57.70887,
-      long: 11.97456,
+      lat,
+      long,
     });
     reportId = action.report_id;
     dispatch(action);
@@ -174,9 +159,6 @@ export const requestUpdateSymptomInReport = <
 
   dispatch(updateSymptomInReport<TKey>(reportId, now, symptomKey, symptom));
 };
-
-// dispatch(requestCreateNewReport());
-// dispatch(updateSymptom());
 
 export interface CreateReportAction {
   type: typeof CREATE_REPORT;
