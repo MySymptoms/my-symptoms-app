@@ -53,11 +53,12 @@ export const SenseOfTasteInputScreen: FC<Props> = ({route, navigation}) => {
     sortBy(
       Object.values(state.reports)
         .map(report => {
-          const symptom = report.symptoms['sense_of_taste'];
+          console.log(report);
+          const symptom = report.symptoms.sense_of_taste;
           if (symptom) {
             return {
               date: report.date,
-              score: symptom.values.lost_sense_of_taste ? 3 : 1,
+              score: symptom.values.lost_sense_of_taste === 'yes' ? 3 : 1,
             };
           } else {
             return null;
@@ -67,6 +68,8 @@ export const SenseOfTasteInputScreen: FC<Props> = ({route, navigation}) => {
       r => r.date,
     ),
   );
+
+  console.log(data)
 
   const [values, setValues] = useState<SenseOfTasteSymptom['values'] | null>(
     null,

@@ -81,7 +81,7 @@ const initialState: ReportsReducerState = {
 
 export const reportsReducer = (
   state: ReportsReducerState = initialState,
-  action: CreateReportAction | UpdateSymptomAction<any>,
+  action: CreateReportAction | UpdateSymptomAction<keyof SymptomsRecord>,
 ): ReportsReducerState => {
   switch (action.type) {
     case UPDATE_SYMPTOM: {
@@ -93,9 +93,9 @@ export const reportsReducer = (
           ...report,
           symptoms: {
             ...symptoms,
-            [action.symptom.symptom]: {
-              symptom: action.symptom.symptom,
-              values: action.symptom.values,
+            [action.symptomKey]: {
+              symptom: action.symptomKey,
+              values: action.symptom,
             },
           },
         },
