@@ -10,7 +10,7 @@ import React, {ReactNode} from 'react';
 interface Props {
   showBackButton?: boolean;
   onPressLeft?: () => any;
-  title?: string;
+  title?: string | React.ReactNode;
   left?: ReactNode;
   center?: ReactNode;
   right?: ReactNode;
