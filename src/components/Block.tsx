@@ -39,3 +39,11 @@ export const HeaderRow = styled.View`
   align-items: center;
   padding-top: 10px;
 `;
+
+export const PaddedContainer = styled.View`
+  padding: 0 15px;
+`;
+
+export const Row = styled.View`
+  flex-direction: row;
+`;
