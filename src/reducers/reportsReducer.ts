@@ -31,50 +31,7 @@ export interface Location {
 
 export type ReportsReducerState = Record<string, Report>;
 
-const initialState: ReportsReducerState = {
-  '7b8a8627-ee14-4912-b453-9131249f9937': {
-    report_id: '7b8a8627-ee14-4912-b453-9131249f9937',
-    date: '2020-03-28',
-    updated_at: '2020-03-28T13:14:00.11212+01:00',
-    coarse_location: {lat: 33, long: 23},
-    symptoms: {
-      no_symptoms: {
-        symptom: 'no_symptoms',
-        values: {
-          checked: true,
-        },
-      },
-      fever: {
-        // or null/undefined
-        symptom: 'fever',
-        values: {
-          degrees: 37.6, // celcius
-        },
-      },
-      dry_cough: {
-        symptom: 'dry_cough',
-        values: {
-          frequency: 'every_minute', // "few_times_an_hour", "few_times_a_day"
-          intensity: '',
-          disruption: '',
-        },
-      },
-      tiredness: {
-        symptom: 'tiredness',
-        values: {
-          description: 'as_usual',
-        },
-      },
-      shortness_of_breath: {
-        symptom: 'shortness_of_breath',
-        values: {
-          feeling: 'breathe_normally', // "shortness of breath", "tightness in my chest", "cannot get enough air"
-          fainting: false, // What did we say? remove this and add a dizzyness thing? Or only the nausea thing?
-        },
-      },
-    },
-  },
-};
+const initialState: ReportsReducerState = {};
 
 export const reportsReducer = (
   state: ReportsReducerState = initialState,
