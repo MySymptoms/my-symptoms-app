@@ -70,7 +70,6 @@ export const HorizontalStatusCalendar: FC<Props> = ({
           }
         }}
         renderItem={item => {
-          const selected = value === formatDate(item.date);
           const date = item.date.getDate();
 
           return (
