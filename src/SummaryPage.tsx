@@ -71,13 +71,12 @@ const SummaryViewColumn: React.FC = ({children}) => (
 
 export const SummaryPage = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-  const userEmoji = useSelector(selectUserEmoji);
   return (
     <Background
       header={
         <NavigationHeader
           showBackButton
-          center={<HelloUserHeader emoji={userEmoji} />}
+          center={<HelloUserHeader />}
           right={<Image source={PaperSheet} />}
           onPressRight={() => navigation.navigate('DetailedReport')}
         />

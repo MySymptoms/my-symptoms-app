@@ -9,6 +9,7 @@ import styled from 'styled-components/native';
 import {SegmentedControl} from './components/SegmentedControl';
 import map3x from './images/map3x.png';
 import {PaddedContainer, Space} from './components/Block';
+import {HelloUserHeader} from './components/HelloUserHeader';
 
 type Props = {
   navigation: StackNavigationProp<{}>;
@@ -42,7 +43,7 @@ export const AdditionalDataInputScreen: FC<Props> = ({navigation}) => {
 
   return (
     <Background
-      header={<NavigationHeader title={'HELLO ANONYMOUS'} showBackButton />}>
+      header={<NavigationHeader center={<HelloUserHeader />} showBackButton />}>
       <BlackBox>
         <Row style={styles.outerRow}>
           <Row>

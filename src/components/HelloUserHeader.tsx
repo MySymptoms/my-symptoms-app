@@ -3,12 +3,12 @@ import styled from 'styled-components/native';
 import {HalfSpace} from './Block';
 import {UserEmojiField} from './UserEmojiField';
 import {fontName} from '../lib/vars';
+import {selectUserEmoji} from '../reducers/userReducer';
+import {useSelector} from 'react-redux';
 
-interface Props {
-  emoji: string;
-}
+export const HelloUserHeader: FC = () => {
+  const emoji = useSelector(selectUserEmoji);
 
-export const HelloUserHeader: FC<Props> = ({emoji}) => {
   return (
     <Container>
       <MyText>HELLO ANONYMOUS </MyText>
