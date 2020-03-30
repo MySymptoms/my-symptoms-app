@@ -1,21 +1,21 @@
-import React, { FC } from 'react';
-import { Background } from './components/Background';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { Icon, Icons } from './lib/icons';
-import { NavigationHeader } from './NavigationHeader';
-import { StyleSheet, View } from 'react-native';
-import { Colors } from './lib/colors';
-import { fontName } from './lib/vars';
-import { DoneButton } from './components/DoneButton';
-import { SelectionGroup } from './components/SelectionGroup';
-import { Divider } from './components/Divider';
-import { TrackMySymptomHeader } from './components/TrackMySymtomHeader';
-import { useReportState } from './hooks/useReportState';
-import { RootStackParamList } from '../App';
-import { RouteProp } from '@react-navigation/native';
-import { PaddedContainer, Row } from './components/Block';
-import { useHistoricalDataForSymptom } from "./hooks/useHistoricalDataForSymptom";
-import { SafeGraph } from "./SafeGraph";
+import React, {FC} from 'react';
+import {Background} from './components/Background';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {Icon, Icons} from './lib/icons';
+import {NavigationHeader} from './NavigationHeader';
+import {StyleSheet, View} from 'react-native';
+import {Colors} from './lib/colors';
+import {fontName} from './lib/vars';
+import {DoneButton} from './components/DoneButton';
+import {SelectionGroup} from './components/SelectionGroup';
+import {Divider} from './components/Divider';
+import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
+import {useReportState} from './hooks/useReportState';
+import {RootStackParamList} from '../App';
+import {RouteProp} from '@react-navigation/native';
+import {PaddedContainer, Row} from './components/Block';
+import {useHistoricalDataForSymptom} from './hooks/useHistoricalDataForSymptom';
+import {SafeGraph} from './SafeGraph';
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList, 'DryCough'>;
@@ -42,56 +42,66 @@ export const DryCoughInputScreen: FC<Props> = ({route}) => {
       <PaddedContainer>
         <Row>
           <Icon style={styles.emojiStyle} source={Icons.Mask} />
-          <SafeGraph graphDataPoints={data}/>
+          <SafeGraph data={data} />
         </Row>
       </PaddedContainer>
-        <SelectionGroup
-          title="cough frequency"
-          onOptionSelected={option =>
-            setValues({
-              frequency: option?.dataValue as
-              | "none"
-                | 'every_minute'
-                | 'few_times_an_hour'
-                | 'few_times_a_day',
-            })
-          }
-          options={[
-            {title: 'none', dataValue: "none"},
-            {title: 'every minute', dataValue: 'every_minute'},
-            {title: 'few times an hour', dataValue: 'few_times_an_hour'},
-            {title: 'few times a day', dataValue: 'few_times_a_day'},
-          ]}
-        />
-        <Divider />
-        <SelectionGroup
-          title="intensity"
-          onOptionSelected={option => setValues({intensity: option?.dataValue as "none" | "bearable" | "harsh" | "physical_discomfort"})}
-          options={[
-            {title: 'none', color: Colors.stepOneColor, dataValue: 'none'},
-            {
-              title: 'bearable',
-              color: Colors.stepTwoColor,
-              dataValue: 'bearable',
-            },
-            {title: 'harsh', color: Colors.stepFourColor, dataValue: 'harsh'},
-            {
-              title: 'physical discomfort',
-              color: Colors.stepFiveColor,
-              dataValue: 'physical_discomfort',
-            },
-          ]}
-        />
-        <Divider />
-        <SelectionGroup
-          title="disruption"
-          onOptionSelected={option => setValues({disruption: option?.dataValue as "daytime" | "nighttime"})}
-          options={[
-            {title: 'daytime', dataValue: 'daytime'},
-            {title: 'nighttime', dataValue: 'nighttime'},
-          ]}
-        />
-        <PaddedContainer>
+      <SelectionGroup
+        title="cough frequency"
+        onOptionSelected={option =>
+          setValues({
+            frequency: option?.dataValue as
+              | 'none'
+              | 'every_minute'
+              | 'few_times_an_hour'
+              | 'few_times_a_day',
+          })
+        }
+        options={[
+          {title: 'none', dataValue: 'none'},
+          {title: 'every minute', dataValue: 'every_minute'},
+          {title: 'few times an hour', dataValue: 'few_times_an_hour'},
+          {title: 'few times a day', dataValue: 'few_times_a_day'},
+        ]}
+      />
+      <Divider />
+      <SelectionGroup
+        title="intensity"
+        onOptionSelected={option =>
+          setValues({
+            intensity: option?.dataValue as
+              | 'none'
+              | 'bearable'
+              | 'harsh'
+              | 'physical_discomfort',
+          })
+        }
+        options={[
+          {title: 'none', color: Colors.stepOneColor, dataValue: 'none'},
+          {
+            title: 'bearable',
+            color: Colors.stepTwoColor,
+            dataValue: 'bearable',
+          },
+          {title: 'harsh', color: Colors.stepFourColor, dataValue: 'harsh'},
+          {
+            title: 'physical discomfort',
+            color: Colors.stepFiveColor,
+            dataValue: 'physical_discomfort',
+          },
+        ]}
+      />
+      <Divider />
+      <SelectionGroup
+        title="disruption"
+        onOptionSelected={option =>
+          setValues({disruption: option?.dataValue as 'daytime' | 'nighttime'})
+        }
+        options={[
+          {title: 'daytime', dataValue: 'daytime'},
+          {title: 'nighttime', dataValue: 'nighttime'},
+        ]}
+      />
+      <PaddedContainer>
         <View style={styles.center}>
           <DoneButton style={{marginTop: 50}} onPress={() => onSave(values)} />
         </View>

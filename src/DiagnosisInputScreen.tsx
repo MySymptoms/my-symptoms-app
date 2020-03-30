@@ -3,10 +3,10 @@ import {Background} from './components/Background';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {Icon, Icons} from './lib/icons';
 import {NavigationHeader} from './NavigationHeader';
-import {View, StyleSheet, Text, Picker} from 'react-native';
+import {Picker, StyleSheet, Text, View} from 'react-native';
 import {fontName} from './lib/vars';
 import styled from 'styled-components/native';
-import {Space, PaddedContainer} from './components/Block';
+import {PaddedContainer, Space} from './components/Block';
 import {SelectionGroup} from './components/SelectionGroup';
 
 type Props = {

@@ -3,12 +3,12 @@ import {Background} from './components/Background';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {Icon, Icons} from './lib/icons';
 import {NavigationHeader} from './NavigationHeader';
-import {View, StyleSheet, Text, Image, Dimensions} from 'react-native';
+import {Dimensions, Image, StyleSheet, Text, View} from 'react-native';
 import {fontName} from './lib/vars';
 import styled from 'styled-components/native';
 import {SegmentedControl} from './components/SegmentedControl';
 import map3x from './images/map3x.png';
-import {Space, PaddedContainer} from './components/Block';
+import {PaddedContainer, Space} from './components/Block';
 
 type Props = {
   navigation: StackNavigationProp<{}>;

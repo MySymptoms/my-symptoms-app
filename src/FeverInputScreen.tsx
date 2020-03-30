@@ -23,6 +23,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useReportState} from './hooks/useReportState';
 import {SafeGraph} from './SafeGraph';
 import {useHistoricalDataForSymptom} from './hooks/useHistoricalDataForSymptom';
+import {getColorForTemperature} from './lib/symptomToColor';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Fever'>;
@@ -68,7 +69,12 @@ export const FeverInputScreen: FC<Props> = ({route}) => {
       <PaddedContainer>
         <View style={{flexDirection: 'row'}}>
           <Icon style={styles.emojiStyle} source={Icons.FaceWithThermometer} />
-          <SafeGraph graphDataPoints={data} isTemperature />
+          <SafeGraph
+            data={data}
+            getColor={getColorForTemperature}
+            minY={35}
+            maxY={42}
+          />
         </View>
         <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
           <SegmentedControl

@@ -1,10 +1,9 @@
 import * as React from 'react';
 import {FancyGradientChart, GraphDataPoint} from './FancyGradientChart';
 import {Background} from './components/Background';
-import {ScrollView} from 'react-native-gesture-handler';
 import {differenceInCalendarDays} from 'date-fns';
 import {PaddedContainer} from './components/Block';
-import { formatDate } from "./lib/util";
+import {formatDate} from './lib/util';
 
 export interface DetailedReportScreenProps {}
 

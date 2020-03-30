@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Switch} from 'react-native';
+import {Switch, Text, View} from 'react-native';
 
 interface Props {
   title: string;

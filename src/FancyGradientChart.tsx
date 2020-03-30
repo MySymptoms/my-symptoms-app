@@ -13,7 +13,6 @@ import {Colors} from './lib/colors';
 import {format, isToday, parseISO} from 'date-fns';
 import {fontName} from './lib/vars';
 import _ from 'lodash';
-import {getColorForTemperature} from './lib/symptomToColor';
 
 const labelStyle = {
   fill: '#9D9D9D',
@@ -58,19 +57,24 @@ const formatTick = (t: Date) => {
   }
 };
 
-export const FancyGradientChart: React.FC<{
-  isTemperature?: boolean;
+export interface FancyGradientChartProps {
+  getColor?: (value: number) => string;
   data: GraphDataPoint[];
-}> = ({data, isTemperature}) => {
-  const getColor = isTemperature
-    ? getColorForTemperature
-    : getColorForScaledValue;
+  minY?: number;
+  maxY?: number;
+}
 
+export const FancyGradientChart: React.FC<FancyGradientChartProps> = ({
+  data,
+  getColor = getColorForScaledValue,
+  maxY = 5,
+  minY = 0
+}) => {
   return (
     <VictoryChart
       scale={{x: 'time'}}
-      minDomain={{y: isTemperature ? 35 : 0}}
-      maxDomain={{y: isTemperature ? 42 : 5}}
+      minDomain={{y: minY }}
+      maxDomain={{y: maxY }}
       width={350}
       height={150}
       theme={theme}>

@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC} from 'react';
 import styled from 'styled-components/native';
 import {fontName} from './lib/vars';
 import SmoothPicker from 'react-native-smooth-picker';
@@ -10,7 +10,6 @@ import {
   isPast,
   isToday,
   parseISO,
-  add,
 } from 'date-fns';
 import {ViewStyle} from 'react-native';
 import {format} from 'date-fns/esm';

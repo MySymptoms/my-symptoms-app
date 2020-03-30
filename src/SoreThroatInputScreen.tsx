@@ -1,23 +1,20 @@
 import React, {FC} from 'react';
 import {Background} from './components/Background';
-import {StackNavigationProp} from '@react-navigation/stack';
 import {Icon, Icons} from './lib/icons';
 import {NavigationHeader} from './NavigationHeader';
-import {View, StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {Colors} from './lib/colors';
 import {fontName} from './lib/vars';
 import {DoneButton} from './components/DoneButton';
 import {SelectionGroup} from './components/SelectionGroup';
-import {FancyGradientChart} from './FancyGradientChart';
-import {createDataPoint, getGraphDate} from './DetailedReportScreen';
 import {Divider} from './components/Divider';
 import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
-import {Row, PaddedContainer} from './components/Block';
+import {PaddedContainer, Row} from './components/Block';
 import {RootStackParamList} from 'App';
 import {RouteProp} from '@react-navigation/native';
 import {useReportState} from './hooks/useReportState';
-import { useHistoricalDataForSymptom } from "./hooks/useHistoricalDataForSymptom";
-import { SafeGraph } from "./SafeGraph";
+import {useHistoricalDataForSymptom} from './hooks/useHistoricalDataForSymptom';
+import {SafeGraph} from './SafeGraph';
 
 type Props = {
   route: RouteProp<RootStackParamList, 'SoreThroat'>;
@@ -43,7 +40,7 @@ export const SoreThroatInputScreen: FC<Props> = ({route}) => {
       <PaddedContainer>
         <Row>
           <Icon style={styles.emojiStyle} source={Icons.Weary} />
-          <SafeGraph graphDataPoints={data}/>
+          <SafeGraph data={data} />
         </Row>
         <SelectionGroup
           title="describe the feeling"

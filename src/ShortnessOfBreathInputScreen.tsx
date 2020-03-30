@@ -2,22 +2,20 @@ import React, {FC} from 'react';
 import {Background} from './components/Background';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {Icon, Icons} from './lib/icons';
-import {Space, Row, PaddedContainer} from './components/Block';
-import {FancyGradientChart} from './FancyGradientChart';
+import {PaddedContainer, Row, Space} from './components/Block';
 import {StyleSheet, View} from 'react-native';
 import {Colors} from './lib/colors';
 import {fontName} from './lib/vars';
 import {DoneButton} from './components/DoneButton';
 import {SelectionGroup} from './components/SelectionGroup';
 import {NavigationHeader} from './NavigationHeader';
-import {createDataPoint, getGraphDate} from './DetailedReportScreen';
 import {Divider} from './components/Divider';
 import {useReportState} from './hooks/useReportState';
 import {RouteProp} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
-import { useHistoricalDataForSymptom } from "./hooks/useHistoricalDataForSymptom";
-import { SafeGraph } from "./SafeGraph";
+import {useHistoricalDataForSymptom} from './hooks/useHistoricalDataForSymptom';
+import {SafeGraph} from './SafeGraph';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'ShortnessOfBreath'>;
@@ -44,7 +42,7 @@ export const ShortnessOfBreathInputScreen: FC<Props> = ({route}) => {
       <PaddedContainer>
         <Row>
           <Icon style={styles.emojiStyle} source={Icons.Yawn} />
-          <SafeGraph graphDataPoints={data}/>
+          <SafeGraph data={data} />
         </Row>
         <SelectionGroup
           title="Describe the feeling"

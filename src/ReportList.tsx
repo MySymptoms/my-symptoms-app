@@ -1,7 +1,7 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
 import {RootState} from './reducers/rootReducer';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import {format, parseISO} from 'date-fns';
 
 export const ReportList = () => {

@@ -13,10 +13,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {NavigationHeader} from './NavigationHeader';
 import {SummaryViewIcon} from './components/SummaryViewIcon';
 import {formatDate} from './lib/util';
-import {
-  ColorState,
-  OverviewSymptomButton,
-} from './components/OverviewSymptomButton';
+import {OverviewSymptomButton} from './components/OverviewSymptomButton';
 import {RootState} from './reducers/rootReducer';
 import {selectReport} from './reducers/reportsReducer';
 import {useGeoLocation} from './hooks/useGeoLocation';

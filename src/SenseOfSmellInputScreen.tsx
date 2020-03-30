@@ -3,20 +3,18 @@ import {Background} from './components/Background';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {Icon, Icons} from './lib/icons';
 import {NavigationHeader} from './NavigationHeader';
-import {View, StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {Colors} from './lib/colors';
 import {fontName} from './lib/vars';
 import {DoneButton} from './components/DoneButton';
 import {SelectionGroup} from './components/SelectionGroup';
-import {FancyGradientChart} from './FancyGradientChart';
-import {createDataPoint, getGraphDate} from './DetailedReportScreen';
 import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
 import {RootStackParamList} from '../App';
 import {RouteProp} from '@react-navigation/native';
 import {useReportState} from './hooks/useReportState';
-import {Row, PaddedContainer} from './components/Block';
-import { useHistoricalDataForSymptom } from "./hooks/useHistoricalDataForSymptom";
-import { SafeGraph } from "./SafeGraph";
+import {PaddedContainer, Row} from './components/Block';
+import {useHistoricalDataForSymptom} from './hooks/useHistoricalDataForSymptom';
+import {SafeGraph} from './SafeGraph';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'SenseOfSmell'>;
@@ -43,7 +41,7 @@ export const SenseOfSmellInputScreen: FC<Props> = ({route}) => {
       <PaddedContainer>
         <Row>
           <Icon style={styles.emojiStyle} source={Icons.Nose} />
-          <SafeGraph graphDataPoints={data} />
+          <SafeGraph data={data} />
         </Row>
         <SelectionGroup
           title="have you lost your sense of smell?"
