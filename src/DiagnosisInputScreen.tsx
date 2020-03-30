@@ -8,6 +8,7 @@ import {fontName} from './lib/vars';
 import styled from 'styled-components/native';
 import {PaddedContainer, Space} from './components/Block';
 import {SelectionGroup} from './components/SelectionGroup';
+import {ShareDataButton} from './components/ShareDataButton';
 
 type Props = {
   navigation: StackNavigationProp<{}>;
@@ -84,9 +85,7 @@ export const DiagnosisInputScreen: FC<Props> = ({navigation}) => {
       <Space />
       <Space />
       <View style={styles.center}>
-        <ShareButton>
-          <ShareButtonText>Share data anonymously</ShareButtonText>
-        </ShareButton>
+        <ShareDataButton />
       </View>
     </Background>
   );

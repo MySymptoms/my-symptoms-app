@@ -5,7 +5,7 @@ export const CheckIcon: React.FC<SvgProps> = props => (
   <Svg width={30} height={30} viewBox="0 0 30 23" fill="none" {...props}>
     <Path
       d="M2.593 13.037l7.259 7.26 17.63-17.63"
-      stroke="#fff"
+      stroke={props.stroke || '#fff'}
       strokeWidth={5}
       strokeLinecap="round"
       strokeLinejoin="round"

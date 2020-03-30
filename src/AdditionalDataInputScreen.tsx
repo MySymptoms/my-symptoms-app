@@ -10,6 +10,7 @@ import {SegmentedControl} from './components/SegmentedControl';
 import map3x from './images/map3x.png';
 import {PaddedContainer, Space} from './components/Block';
 import {HelloUserHeader} from './components/HelloUserHeader';
+import {ShareDataButton} from './components/ShareDataButton';
 
 type Props = {
   navigation: StackNavigationProp<{}>;
@@ -108,9 +109,7 @@ export const AdditionalDataInputScreen: FC<Props> = ({navigation}) => {
             illustrates what symptoms actually lead to Covid-19 💛
           </ShareText>
           <Space />
-          <ShareButton>
-            <ShareButtonText>Share data anonymously</ShareButtonText>
-          </ShareButton>
+          <ShareDataButton />
           <Space />
           <Row>
             <View style={styles.peopleSharedBorder}>
