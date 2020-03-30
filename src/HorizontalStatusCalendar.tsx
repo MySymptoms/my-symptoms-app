@@ -1,13 +1,12 @@
 import React, {FC} from 'react';
 import styled from 'styled-components/native';
 import {fontName} from './lib/vars';
-import SmoothPicker from 'react-native-smooth-picker';
 import {Colors} from './lib/colors';
 import {
   addDays,
   eachDayOfInterval,
-  isFuture,
-  isPast,
+  endOfDay,
+  isAfter,
   isToday,
   parseISO,
 } from 'date-fns';
@@ -17,6 +16,7 @@ import {formatDate} from './lib/util';
 import {useSelector} from 'react-redux';
 import {selectDateToReportId} from './reducers/dateToReportIdReducer';
 import _ from 'lodash';
+import HorizontalPicker from './HorizontalPicker';
 
 interface DayEntry {
   date: Date;
@@ -50,40 +50,44 @@ export const HorizontalStatusCalendar: FC<Props> = ({
       hasData: daysWithReports.includes(formatDate(date)),
     };
   });
+  const dateValue = parseISO(value);
 
   return (
     <HorizontalView {...style}>
-      <MonthText>{format(parseISO(value), 'MMMM')}</MonthText>
-      <SmoothPicker
-        magnet
-        horizontal
-        scrollAnimation
-        keyExtractor={(dayEntry: DayEntry) => String(dayEntry.date)}
-        initialScrollToIndex={dateSpan.length - padDays - 1}
-        data={data}
-        onSelected={({item}: {item: DayEntry}) => {
-          if (isFuture(item.date) && !isToday(item.date)) {
-            return;
+      <MonthText>{format(dateValue, 'MMMM')}</MonthText>
+      <HorizontalPicker
+        items={data}
+        itemWidth={40}
+        visibleItemCount={20}
+        firstIndex={0}
+        lastIndex={data.findIndex(item =>
+          isAfter(item.date, endOfDay(new Date())),
+        )}
+        initialItem={data.find(item => value === formatDate(item.date))}
+        onItemSelected={item => {
+          if (item && !isAfter(item.date, endOfDay(new Date()))) {
+            onChange(formatDate(item.date));
           }
-          onChange(formatDate(item.date));
         }}
-        renderItem={({item, index}: {item: DayEntry; index: number}) => {
-          let DateTextComp = DateText;
-          if (formatDate(parseISO(value)) === formatDate(item.date)) {
-            DateTextComp = SelectedDateText;
-          } else if (isFuture(item.date) && !isToday(item.date)) {
-            DateTextComp = FutureDateText;
-          }
+        renderItem={item => {
+          const selected = value === formatDate(item.date);
+          const date = item.date.getDate();
+
           return (
-            <VeritalCenterAlignedView key={index}>
-              <DateTextComp>{item.date.getDate()}</DateTextComp>
-              {isPast(item.date) && !isToday(item.date) && (
+            <VerticalCenterAlignedView>
+              {isAfter(item.date, endOfDay(new Date())) ? (
+                <FutureDateText>{date}</FutureDateText>
+              ) : (
+                <SelectedDateText>{date}</SelectedDateText>
+              )}
+              {isToday(item.date) ? (
+                <UnderScore />
+              ) : (
                 <StatusDot
                   color={item.hasData ? Colors.statusOn : Colors.statusOff}
                 />
               )}
-              {isToday(item.date) && <UnderScore />}
-            </VeritalCenterAlignedView>
+            </VerticalCenterAlignedView>
           );
         }}
       />
@@ -111,7 +115,6 @@ const DateText = styled.Text`
 const FutureDateText = styled(DateText)`
   font-style: normal;
   font-weight: normal;
-  color: ${Colors.deactivatedText};
   font-family: ${fontName};
 `;
 
@@ -131,7 +134,7 @@ const HorizontalView = styled.View`
   align-items: center;
 `;
 
-const VeritalCenterAlignedView = styled.View`
+const VerticalCenterAlignedView = styled.View`
   align-items: center;
   padding-right: 5px;
   padding-left: 5px;
