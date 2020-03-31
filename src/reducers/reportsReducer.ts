@@ -41,6 +41,31 @@ export const reportsReducer = (
     case UPDATE_SYMPTOM: {
       const report = state[action.uuid];
       const symptoms = state[action.uuid].symptoms;
+
+      if (action.symptomKey === 'no_symptoms' && action.symptom.checked) {
+        return {
+          ...state,
+          [action.uuid]: {
+            ...report,
+            updated_at: formatISO(action.now),
+            symptoms: {
+              dry_cough: null,
+              fever: null,
+              no_symptoms: {symptom: 'no_symptoms', values: {checked: true}},
+              shortness_of_breath: null,
+              tiredness: null,
+              sense_of_taste: null,
+              aches_and_pain: null,
+              diarrhoea: null,
+              nausea: null,
+              runny_nose: null,
+              sense_of_smell: null,
+              sore_throat: null,
+            },
+          },
+        };
+      }
+
       return {
         ...state,
         [action.uuid]: {
@@ -52,6 +77,7 @@ export const reportsReducer = (
               symptom: action.symptomKey,
               values: action.symptom,
             },
+            no_symptoms: null,
           },
         },
       };

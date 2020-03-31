@@ -6,7 +6,7 @@ import {fontName} from './lib/vars';
 import {HorizontalStatusCalendar} from './HorizontalStatusCalendar';
 import {Icon, Icons} from './lib/icons';
 import {Colors} from './lib/colors';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {RootStackParamList} from '../App';
 import {Background} from './components/Background';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -15,11 +15,20 @@ import {SummaryViewIcon} from './components/SummaryViewIcon';
 import {formatDate} from './lib/util';
 import {OverviewSymptomButton} from './components/OverviewSymptomButton';
 import {RootState} from './reducers/rootReducer';
-import {selectReport} from './reducers/reportsReducer';
+import {
+  selectReport,
+  requestUpdateSymptomInReport,
+} from './reducers/reportsReducer';
 import {useGeoLocation} from './hooks/useGeoLocation';
 import {getColorForReportAndSymptom} from './lib/symptomToColor';
 import {useReportState} from './hooks/useReportState';
 import {HeartBeatIcon} from './components/HeartBeatIcon';
+import Dialog, {
+  DialogContent,
+  DialogFooter,
+  DialogButton,
+} from 'react-native-popup-dialog';
+import _ from 'lodash';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -187,29 +196,83 @@ interface NoSymptomsTodayButtonProps {
 const NoSymptomsTodayButton: FC<NoSymptomsTodayButtonProps> = ({
   currentDate,
 }) => {
-  const {setValues, values, onSave} = useReportState(
-    currentDate,
-    'no_symptoms',
-  );
+  const dipatch = useDispatch();
+  const [dialogVisible, setDialogVisible] = useState(false);
+  const report = useSelector(selectReport(currentDate));
+
+  const noSymptoms = !!report?.symptoms.no_symptoms?.values.checked;
 
   return (
-    <TouchableOpacity
-      onPress={() => {
-        setValues({checked: !values?.checked});
-        onSave(values, false);
-      }}>
-      <NoSymtoms selected={!!values?.checked}>
-        {values?.checked && (
-          <HeartBeatIcon
-            stroke={Colors.stepOneColor}
-            style={{position: 'absolute', top: 5, right: 14}}
+    <>
+      <Dialog
+        dialogStyle={styles.dialogStyle}
+        dialogTitle={
+          <Text style={styles.dialogTitleStyle}>Remove symptoms?</Text>
+        }
+        visible={dialogVisible}
+        onTouchOutside={() => {
+          setDialogVisible(false);
+        }}>
+        <DialogContent>
+          <Text style={styles.dialogContent}>
+            This will clear your reported symptoms for this day. Are you sure?
+          </Text>
+        </DialogContent>
+        <DialogFooter style={styles.dialogFooter}>
+          <DialogButton
+            textStyle={styles.dialogButtonText}
+            style={styles.dialogButton}
+            text="CANCEL"
+            onPress={() => {
+              setDialogVisible(false);
+            }}
           />
-        )}
-        <Icon source={Icons.Flex} />
-        <Space />
-        <Text style={styles.emojiButtonText}>No symptoms today</Text>
-      </NoSymtoms>
-    </TouchableOpacity>
+          <DialogButton
+            textStyle={styles.dialogButtonText}
+            style={styles.dialogButton}
+            text="OK"
+            onPress={() => {
+              dipatch(
+                requestUpdateSymptomInReport({
+                  date: currentDate,
+                  now: new Date(),
+                  symptomKey: 'no_symptoms',
+                  symptom: {checked: true},
+                }),
+              );
+              setDialogVisible(false);
+            }}
+          />
+        </DialogFooter>
+      </Dialog>
+      <TouchableOpacity
+        onPress={() => {
+          if (!noSymptoms) {
+            setDialogVisible(true);
+          } else {
+            dipatch(
+              requestUpdateSymptomInReport({
+                date: currentDate,
+                now: new Date(),
+                symptomKey: 'no_symptoms',
+                symptom: {checked: false},
+              }),
+            );
+          }
+        }}>
+        <NoSymtoms selected={noSymptoms}>
+          {noSymptoms && (
+            <HeartBeatIcon
+              stroke={Colors.stepOneColor}
+              style={{position: 'absolute', top: 5, right: 14}}
+            />
+          )}
+          <Icon source={Icons.Flex} />
+          <Space />
+          <Text style={styles.emojiButtonText}>No symptoms today</Text>
+        </NoSymtoms>
+      </TouchableOpacity>
+    </>
   );
 };
 
@@ -262,4 +325,31 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     backgroundColor: 'transparent',
   },
+  dialogStyle: {
+    color: 'white',
+    backgroundColor: Colors.buttonBackground,
+    padding: 20,
+    margin: 20,
+  },
+  dialogTitleStyle: {
+    color: Colors.sectionHeader,
+    fontFamily: fontName,
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  dialogContent: {
+    color: Colors.sectionHeader,
+  },
+  dialogButton: {
+    borderWidth: 3,
+    borderRadius: 4,
+    marginLeft: 3,
+    marginRight: 3,
+    elevation: 2,
+  },
+  dialogButtonText: {
+    color: Colors.sectionHeader,
+  },
+  dialogFooter: {},
 });
