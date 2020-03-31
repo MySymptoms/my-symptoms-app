@@ -57,7 +57,7 @@ export const HorizontalStatusCalendar: FC<Props> = ({
       <MonthText>{format(dateValue, 'MMMM')}</MonthText>
       <HorizontalPicker
         items={data}
-        itemWidth={40}
+        itemWidth={50}
         visibleItemCount={20}
         firstIndex={0}
         lastIndex={data.findIndex(item =>
@@ -137,6 +137,7 @@ const VerticalCenterAlignedView = styled.View`
   align-items: center;
   padding-right: 5px;
   padding-left: 5px;
+  height: 45px;
 `;
 
 const MonthText = styled.Text`
