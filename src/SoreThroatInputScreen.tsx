@@ -57,7 +57,7 @@ export const SoreThroatInputScreen: FC<Props> = ({route}) => {
             {
               title: 'normal',
               color: Colors.stepOneColor,
-              dataValue: 'easy_to_gulp',
+              dataValue: 'normal',
             },
             {
               title: 'easy to gulp',
