@@ -1,4 +1,4 @@
-Backend for mycorona
+Backend for mysymptoms
 
 # Installation:
 make dep-locally
@@ -9,6 +9,7 @@ make run
 ## Endpoints
 ### Add reports
 POST /api/v1/reports
+
 Payload: 
 ```
 {
@@ -109,4 +110,4 @@ Payload:
 
 
 ## Get reports by user_id
-GET /api/v1/report/user_id/<uuid>
+GET /api/v1/report/user_id/\<uuid\>
