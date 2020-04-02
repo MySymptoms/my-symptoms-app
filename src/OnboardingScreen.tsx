@@ -15,15 +15,11 @@ import {
   selectBirthYear,
   selectRecentTravels,
   selectPreExistingAilment,
-  setBirthYear as reducerSetBirthYear,
   setHasTravelledRecently,
   setPreExistingAilments,
 } from './reducers/userReducer';
 import {useNavigation} from '@react-navigation/native';
-import {RootStackParamList} from 'App';
-import {StackNavigationProp} from '@react-navigation/stack';
-
-const currentYear = getYear(new Date());
+import {BirthYearInput} from './components/BirthYearInput';
 
 export const OnboardingScreen = () => {
   const navigation = useNavigation();
@@ -35,26 +31,7 @@ export const OnboardingScreen = () => {
 
   return (
     <Background header={<NavigationHeader center={<HelloUserHeader />} />}>
-      <BoxInput
-        icon={Icons.Baby}
-        text="What year were you born?"
-        rightComponent={
-          <TextInput
-            value={birthYear}
-            onChangeText={setBirthYear}
-            onBlur={() => {
-              if (parseInt(birthYear) < 1900) {
-                setBirthYear('1900');
-              } else if (parseInt(birthYear) > currentYear) {
-                setBirthYear(currentYear.toString());
-              }
-            }}
-            underlineColorAndroid="transparent"
-            style={styles.year}
-            keyboardType="numeric"
-          />
-        }
-      />
+      <BirthYearInput />
       <Space />
       <BoxInput
         icon={Icons.PlaneLanding}
@@ -106,7 +83,6 @@ export const OnboardingScreen = () => {
         <DoneButton
           text="submit"
           onPress={() => {
-            dispatch(reducerSetBirthYear(parseInt(birthYear)));
             dispatch(setHasTravelledRecently(hasTraveled));
             dispatch(setPreExistingAilments(conditions));
             navigation.navigate('Overview');
@@ -119,12 +95,6 @@ export const OnboardingScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  year: {
-    fontSize: 26,
-    color: 'white',
-    alignSelf: 'flex-end',
-    fontFamily: fontName,
-  },
   conditionsText: {
     color: 'white',
   },

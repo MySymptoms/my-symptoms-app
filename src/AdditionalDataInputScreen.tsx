@@ -19,6 +19,7 @@ import {PaddedContainer, Space} from './components/Block';
 import {HelloUserHeader} from './components/HelloUserHeader';
 import {ShareDataButton} from './components/ShareDataButton';
 import _ from 'lodash';
+import {BirthYearInput} from './components/BirthYearInput';
 
 type Props = {
   navigation: StackNavigationProp<{}>;
@@ -53,22 +54,7 @@ export const AdditionalDataInputScreen: FC<Props> = ({navigation}) => {
   return (
     <Background
       header={<NavigationHeader center={<HelloUserHeader />} showBackButton />}>
-      <BlackBox>
-        <Row style={styles.outerRow}>
-          <Row>
-            <Icon source={Icons.Baby} style={styles.emojiStyle} />
-            <BoxText>What year were you born?</BoxText>
-          </Row>
-
-          <TextInput
-            value="1990"
-            onChangeText={() => {}}
-            underlineColorAndroid="transparent"
-            style={styles.year}
-            keyboardType="numeric"
-          />
-        </Row>
-      </BlackBox>
+      <BirthYearInput />
       <Space />
       <BlackBox>
         <Row style={styles.outerRow}>
