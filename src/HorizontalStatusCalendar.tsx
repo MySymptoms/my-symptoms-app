@@ -36,9 +36,12 @@ export const HorizontalStatusCalendar: FC<Props> = ({
   value,
   onChange,
 }) => {
-  const daysWithReports = useSelector(selectDateToReportId).sort();
-  const firstDateStr =
-    _.first(daysWithReports) || formatDate(addDays(new Date(), -padDays));
+  const daysWithReports = _.sortBy(
+    useSelector(selectDateToReportId),
+    _.identity,
+  );
+  const firstDateStr = _.first(daysWithReports) || formatDate(new Date());
+
   const dateSpan = eachDayOfInterval({
     start: addDays(parseISO(firstDateStr), -padDays),
     end: addDays(new Date(), padDays),
