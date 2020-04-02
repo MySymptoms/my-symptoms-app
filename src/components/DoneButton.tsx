@@ -7,10 +7,17 @@ import {fontName} from '../lib/vars';
 
 interface Props {
   onPress: () => void;
+  text?: string;
   style?: ViewStyle;
+  showLine?: boolean;
 }
 
-export const DoneButton: FC<Props> = ({style, onPress}) => {
+export const DoneButton: FC<Props> = ({
+  style,
+  onPress,
+  text = 'done',
+  showLine = true,
+}) => {
   return (
     <TouchableOpacity
       style={[styles.touchableOpacity, style]}
@@ -20,8 +27,8 @@ export const DoneButton: FC<Props> = ({style, onPress}) => {
         stops={[0, 1]}
         center={[100, 100]}
         radius={200}>
-        <TitleText>done</TitleText>
-        <Line />
+        <TitleText>{text}</TitleText>
+        {showLine && <Line />}
       </Container>
     </TouchableOpacity>
   );

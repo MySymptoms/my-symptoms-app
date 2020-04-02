@@ -38,12 +38,12 @@ export function useReportState<TKey extends keyof SymptomsRecord>(
         }),
       );
     }
-    if (goBack) {
-      setTimeout(() => {
-        navigation.goBack();
-      }, 2000)
+    // if (goBack) {
+    //   setTimeout(() => {
+    navigation.goBack();
+    //   }, 2000)
 
-    }
+    // }
   };
 
   const [values, setValues] = useState<Partial<

@@ -29,17 +29,21 @@ export const NavigationHeader: React.FC<Props> = ({
   right,
 }) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  let leftComponent = <CircleButtonPlaceHolder />;
+
+  if (showBackButton) {
+    leftComponent = (
+      <CircleButton onPress={() => navigation.goBack()}>
+        <BackIcon />
+      </CircleButton>
+    );
+  } else if (left) {
+    leftComponent = <CircleButton onPress={onPressLeft}>{left}</CircleButton>;
+  }
+
   return (
     <HeaderRow>
-      <View>
-        {showBackButton ? (
-          <CircleButton onPress={() => navigation.goBack()}>
-            <BackIcon />
-          </CircleButton>
-        ) : (
-          <CircleButton onPress={onPressLeft}>{left}</CircleButton>
-        )}
-      </View>
+      <View>{leftComponent}</View>
       {center ? <>{center}</> : <CenterTitleText>{title}</CenterTitleText>}
 
       <View>

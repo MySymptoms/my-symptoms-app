@@ -12,7 +12,7 @@ import React from 'react';
 import {StatusBar, View} from 'react-native';
 import {applyMiddleware, compose, createStore} from 'redux';
 import thunk from 'redux-thunk';
-import rootReducer from './src/reducers/rootReducer';
+import rootReducer, {RootState} from './src/reducers/rootReducer';
 import {Provider} from 'react-redux';
 import {NavigationContainer} from '@react-navigation/native';
 import {OverviewScreen} from './src/OverviewScreen';
@@ -36,6 +36,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {PersistConfig, persistReducer, persistStore} from 'redux-persist';
 import {AdditionalDataInputScreen} from './src/AdditionalDataInputScreen';
 import {DiagnosisInputScreen} from './src/DiagnosisInputScreen';
+import {OnboardingScreen} from './src/OnboardingScreen';
+import {selectBirthYear} from './src/reducers/userReducer';
 
 // TS declaration for making redux devtools extension stop complaining in createStore below.
 declare global {
@@ -62,10 +64,11 @@ const store = createStore(
 );
 
 const persistor = persistStore(store);
-
+persistor.purge();
 const Stack = createStackNavigator();
 
 export type RootStackParamList = {
+  Onboarding: undefined;
   Overview: undefined;
   Fever: {currentReportDate: string};
   DryCough: {currentReportDate: string};
@@ -87,6 +90,9 @@ export type RootStackParamList = {
 
 const App = () => {
   const insets = useSafeArea();
+  const state: RootState = store.getState();
+  const birthYear = selectBirthYear(state);
+
   return (
     <View
       style={{
@@ -99,7 +105,10 @@ const App = () => {
       <Provider store={store}>
         <StatusBar barStyle="light-content" />
         <NavigationContainer>
-          <Stack.Navigator headerMode="none">
+          <Stack.Navigator
+            headerMode="none"
+            initialRouteName={birthYear === null ? 'Onboarding' : 'Overview'}>
+            <Stack.Screen name={'Onboarding'} component={OnboardingScreen} />
             <Stack.Screen name={'Overview'} component={OverviewScreen} />
             <Stack.Screen name={'Fever'} component={FeverInputScreen} />
             <Stack.Screen name={'DryCough'} component={DryCoughInputScreen} />

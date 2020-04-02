@@ -3,7 +3,14 @@ import {Background} from './components/Background';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {Icon, Icons} from './lib/icons';
 import {NavigationHeader} from './NavigationHeader';
-import {Dimensions, Image, StyleSheet, Text, View} from 'react-native';
+import {
+  Dimensions,
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+} from 'react-native';
 import {fontName} from './lib/vars';
 import styled from 'styled-components/native';
 import {SegmentedControl} from './components/SegmentedControl';
@@ -11,6 +18,7 @@ import map3x from './images/map3x.png';
 import {PaddedContainer, Space} from './components/Block';
 import {HelloUserHeader} from './components/HelloUserHeader';
 import {ShareDataButton} from './components/ShareDataButton';
+import _ from 'lodash';
 
 type Props = {
   navigation: StackNavigationProp<{}>;
@@ -51,7 +59,14 @@ export const AdditionalDataInputScreen: FC<Props> = ({navigation}) => {
             <Icon source={Icons.Baby} style={styles.emojiStyle} />
             <BoxText>What year were you born?</BoxText>
           </Row>
-          <Text style={styles.year}>1984</Text>
+
+          <TextInput
+            value="1990"
+            onChangeText={() => {}}
+            underlineColorAndroid="transparent"
+            style={styles.year}
+            keyboardType="numeric"
+          />
         </Row>
       </BlackBox>
       <Space />
@@ -169,6 +184,7 @@ const styles = StyleSheet.create({
     fontSize: 26,
     color: 'white',
     alignSelf: 'flex-end',
+    fontFamily: fontName,
   },
   outerRow: {
     justifyContent: 'space-between',
