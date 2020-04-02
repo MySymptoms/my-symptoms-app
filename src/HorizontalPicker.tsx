@@ -2,14 +2,14 @@
 
 import React, {Component} from 'react';
 import styled from 'styled-components/native';
-import Carousel from 'react-native-snap-carousel';
+import Carousel, { CarouselStatic } from 'react-native-snap-carousel';
 import {TouchableOpacity} from 'react-native';
 
 const Container = styled.View`
   height: 40px;
 `;
 
-const ItemWrapper = styled(TouchableOpacity)`
+const ItemWrapper = styled(TouchableOpacity)<{ width: number }>`
   background-color: transparent;
   width: ${p => p.width}px;
   height: ${p => p.width}px;
@@ -29,7 +29,7 @@ type Props<T> = {
 };
 
 export default class HorizontalPicker<T> extends Component<Props<T>> {
-  carouselRef = null;
+  carouselRef: CarouselStatic<T> | null = null;
 
   static defaultProps = {
     itemWidth: 60,
@@ -68,7 +68,7 @@ export default class HorizontalPicker<T> extends Component<Props<T>> {
     const {items, initialItem, itemWidth, visibleItemCount} = this.props;
     return (
       <Container>
-        <Carousel
+        <Carousel<T>
           ref={ref => {
             this.carouselRef = ref;
           }}
