@@ -8,6 +8,11 @@ import {selectLocation} from './locationReducer';
 
 export const UPDATE_SYMPTOM = 'report/update-symptom';
 export const CREATE_REPORT = 'report/create';
+export const REMOVE_REPORT = 'report/remove';
+
+const isEmptyReport = (report: Report): boolean => {
+  return Object.values(report.symptoms).every(s => s === null);
+};
 
 type Nullable<T> = {[P in keyof T]: T[P] | null};
 
@@ -35,7 +40,10 @@ const initialState: ReportsReducerState = {};
 
 export const reportsReducer = (
   state: ReportsReducerState = initialState,
-  action: CreateReportAction | UpdateSymptomAction<keyof SymptomsRecord>,
+  action:
+    | CreateReportAction
+    | RemoveReportAction
+    | UpdateSymptomAction<keyof SymptomsRecord>,
 ): ReportsReducerState => {
   switch (action.type) {
     case UPDATE_SYMPTOM: {
@@ -107,6 +115,13 @@ export const reportsReducer = (
         },
       };
     }
+    case REMOVE_REPORT: {
+      const nextState = {
+        ...state,
+      };
+      delete nextState[action.report_id];
+      return nextState;
+    }
     default:
       return state;
   }
@@ -145,6 +160,24 @@ export const requestUpdateSymptomInReport = <
   }
 
   dispatch(updateSymptomInReport<TKey>(reportId, now, symptomKey, symptom));
+  {
+    // Block to reuse variable names
+    const stateAfterSymtomUpdate = getState();
+    let reportId = dateToReportId[date];
+    const report = selectReport(date)(stateAfterSymtomUpdate);
+    if (report !== null && isEmptyReport(report)) {
+      dispatch(removeReport(reportId));
+    }
+  }
+};
+
+export interface RemoveReportAction {
+  type: typeof REMOVE_REPORT;
+  report_id: string;
+}
+
+export const removeReport = (report_id: string): RemoveReportAction => {
+  return {type: REMOVE_REPORT, report_id};
 };
 
 export interface CreateReportAction {
@@ -194,7 +227,7 @@ export const updateSymptomInReport = <TKey extends keyof SymptomsRecord>(
 
 export const selectReport = (currentReportDate: string) => (
   state: RootState,
-) => {
+): Report | null => {
   const reportId = state.dateToReportId[currentReportDate];
   if (reportId) {
     return state.reports[reportId];
