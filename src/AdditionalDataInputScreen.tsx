@@ -21,6 +21,7 @@ import {ShareDataButton} from './components/ShareDataButton';
 import _ from 'lodash';
 import {BirthYearInput} from './components/BirthYearInput';
 import {BeenTravellingInput} from './components/BeenTravellingInput';
+import {PreExistingAilmentsInput} from './components/PreExistingAilmentsinput';
 
 type Props = {
   navigation: StackNavigationProp<{}>;
@@ -59,22 +60,7 @@ export const AdditionalDataInputScreen: FC<Props> = ({navigation}) => {
       <Space />
       <BeenTravellingInput />
       <Space />
-      <BlackBox>
-        <Row style={styles.outerRow}>
-          <Row>
-            <Icon source={Icons.Pill} style={styles.emojiStyle} />
-            <BoxText>Do you have any medical preconditions?</BoxText>
-          </Row>
-          <SegmentedControl
-            firstOption="YES"
-            secondOption="NO"
-            selectedIndex={hasCondition ? 0 : 1}
-            onTabPress={() => {
-              setHasCondition(!hasCondition);
-            }}
-          />
-        </Row>
-      </BlackBox>
+      <PreExistingAilmentsInput />
       <Space />
       <Space />
       <PaddedContainer>
