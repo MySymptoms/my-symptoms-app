@@ -20,6 +20,7 @@ import {HelloUserHeader} from './components/HelloUserHeader';
 import {ShareDataButton} from './components/ShareDataButton';
 import _ from 'lodash';
 import {BirthYearInput} from './components/BirthYearInput';
+import {BeenTravellingInput} from './components/BeenTravellingInput';
 
 type Props = {
   navigation: StackNavigationProp<{}>;
@@ -56,22 +57,7 @@ export const AdditionalDataInputScreen: FC<Props> = ({navigation}) => {
       header={<NavigationHeader center={<HelloUserHeader />} showBackButton />}>
       <BirthYearInput />
       <Space />
-      <BlackBox>
-        <Row style={styles.outerRow}>
-          <Row>
-            <Icon source={Icons.PlaneLanding} style={styles.emojiStyle} />
-            <BoxText>Have you recently retruned from a foreign land?</BoxText>
-          </Row>
-          <SegmentedControl
-            firstOption="YES"
-            secondOption="NO"
-            selectedIndex={hasTraveled ? 0 : 1}
-            onTabPress={() => {
-              setHasTraveled(!hasTraveled);
-            }}
-          />
-        </Row>
-      </BlackBox>
+      <BeenTravellingInput />
       <Space />
       <BlackBox>
         <Row style={styles.outerRow}>
