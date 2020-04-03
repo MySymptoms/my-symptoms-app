@@ -16,16 +16,17 @@ export const PreExistingAilmentsInput = () => {
 
   const [hasCondition, setHasCondition] = useState(!!storedPreExistingAilments);
   const [conditions, setConditions] = useState(storedPreExistingAilments);
+  // const debouncedDispatch = _.debounce(
+  //   () => dispatch(setPreExistingAilments(conditions)),
+  //   1000,
+  // );
 
   useEffect(() => {
-    const debounced = _.debounce(
-      () => dispatch(setPreExistingAilments(conditions)),
-      1000,
-    );
-    debounced();
-    return () => {
-      debounced.cancel();
-    };
+    dispatch(setPreExistingAilments(conditions));
+    // debouncedDispatch();
+    // return () => {
+    //   debouncedDispatch.cancel();
+    // };
   }, [conditions]);
 
   return (
@@ -48,6 +49,7 @@ export const PreExistingAilmentsInput = () => {
       showExpandingBottomComponent={hasCondition}
       expandingBottomComponent={
         <TextInput
+          multiline
           style={styles.conditionsText}
           placeholder="List them here"
           placeholderTextColor="#C4C4C4"
