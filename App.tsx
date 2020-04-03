@@ -64,7 +64,6 @@ const store = createStore(
 );
 
 const persistor = persistStore(store);
-persistor.purge();
 const Stack = createStackNavigator();
 
 export type RootStackParamList = {
