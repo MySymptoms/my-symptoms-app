@@ -14,16 +14,17 @@ import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
 import {RootStackParamList} from '../App';
 import {RouteProp} from '@react-navigation/native';
 import {PaddedContainer, Space} from './components/Block';
-import {
-  selectTemperatureUnit,
-  setTemperatureUnit,
-  TemperatureUnit,
-} from './reducers/userReducer';
-import {useDispatch, useSelector} from 'react-redux';
+import {setTemperatureUnit, TemperatureUnit} from './reducers/userReducer';
+import {useDispatch} from 'react-redux';
 import {useReportState} from './hooks/useReportState';
 import {SafeGraph} from './SafeGraph';
 import {useHistoricalDataForSymptom} from './hooks/useHistoricalDataForSymptom';
 import {getColorForTemperature} from './lib/symptomToColor';
+import {
+  convertToCelsius,
+  convertToFahrenheit,
+  useTemperatureConvertedToUserPreference,
+} from './hooks/useTemperatureConvertedToUserPreference';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Fever'>;
@@ -31,9 +32,6 @@ type Props = {
 };
 
 const temperatureUnits: TemperatureUnit[] = ['celsius', 'fahrenheit'];
-
-const convertToFahrenheit = (temperature: number) => (temperature * 9) / 5 + 32;
-const convertToCelsius = (temperature: number) => ((temperature - 32) * 5) / 9;
 
 export const FeverInputScreen: FC<Props> = ({route}) => {
   const isEditing = useRef(false);
@@ -43,16 +41,14 @@ export const FeverInputScreen: FC<Props> = ({route}) => {
     'fever',
   );
 
-  const temperatureUnit = useSelector(selectTemperatureUnit);
-
   const temperatureInCelsius = values && values.degrees ? values.degrees : 36.7;
-  const [textValue, setTextValue] = useState(
-    String(
-      temperatureUnit === 'fahrenheit'
-        ? convertToFahrenheit(temperatureInCelsius)
-        : temperatureInCelsius,
-    ),
-  );
+
+  const {
+    temperatureUnit,
+    convertedTemperature,
+  } = useTemperatureConvertedToUserPreference(temperatureInCelsius);
+
+  const [textValue, setTextValue] = useState(String(convertedTemperature));
 
   const dispatch = useDispatch();
 

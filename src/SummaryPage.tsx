@@ -11,10 +11,11 @@ import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../App';
 import {useSelector} from 'react-redux';
-import {selectTemperatureUnit, selectUser} from './reducers/userReducer';
+import {selectUser} from './reducers/userReducer';
 import {HelloUserHeader} from './components/HelloUserHeader';
 import {useHistoricalDataForSymptom} from './hooks/useHistoricalDataForSymptom';
 import _ from 'lodash';
+import {useTemperatureConvertedToUserPreference} from './hooks/useTemperatureConvertedToUserPreference';
 
 const Row = styled.View`
   flex-direction: row;
@@ -75,8 +76,16 @@ export const SummaryPage = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const user = useSelector(selectUser);
-  const temperatureUnit = useSelector(selectTemperatureUnit);
   const fever = _.last(useHistoricalDataForSymptom('fever'));
+
+  const temperatureInCelsius = fever ? fever.y : 0;
+
+  const temperatureIsNaN = fever === undefined;
+
+  const {
+    temperatureUnit,
+    convertedTemperature,
+  } = useTemperatureConvertedToUserPreference(temperatureInCelsius);
 
   return (
     <Background
@@ -122,7 +131,9 @@ export const SummaryPage = () => {
                 alignItems: 'center',
               }}>
               <MyText style={{fontSize: 60, color: '#000', padding: 14}}>
-                {fever ? fever.y : 'N/A'}
+                {temperatureIsNaN
+                  ? 'N/A'
+                  : Math.round(convertedTemperature * 10) / 10}
               </MyText>
             </BlackBox>
           }
