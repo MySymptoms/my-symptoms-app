@@ -83,28 +83,30 @@ export const userReducer = (
   }
 };
 
+export const selectUser = (state: RootState): UserReducerState => state.user;
+
 export const selectUserEmoji = (state: RootState) => {
-  return state.user.user_emoji;
+  return selectUser(state).user_emoji;
 };
 
 export const selectTemperatureUnit = (state: RootState): TemperatureUnit => {
-  return state.user.temperatureUnit;
+  return selectUser(state).temperatureUnit;
 };
 
 export const selectShareData = (state: RootState): boolean => {
-  return state.user.shareData;
+  return selectUser(state).shareData;
 };
 
 export const selectBirthYear = (state: RootState): number | null => {
-  return state.user.birthYear;
+  return selectUser(state).birthYear;
 };
 
 export const selectRecentTravels = (state: RootState): boolean | null => {
-  return state.user.recentTravels;
+  return selectUser(state).recentTravels;
 };
 
 export const selectPreExistingAilment = (state: RootState): string | null => {
-  return state.user.preExistingAilments;
+  return selectUser(state).preExistingAilments;
 };
 
 interface SetTemperatureUnitAction {

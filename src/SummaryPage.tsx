@@ -11,8 +11,10 @@ import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../App';
 import {useSelector} from 'react-redux';
-import {selectUserEmoji} from './reducers/userReducer';
+import {selectTemperatureUnit, selectUser} from './reducers/userReducer';
 import {HelloUserHeader} from './components/HelloUserHeader';
+import {useHistoricalDataForSymptom} from './hooks/useHistoricalDataForSymptom';
+import _ from 'lodash';
 
 const Row = styled.View`
   flex-direction: row;
@@ -71,6 +73,11 @@ const SummaryViewColumn: React.FC = ({children}) => (
 
 export const SummaryPage = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
+  const user = useSelector(selectUser);
+  const temperatureUnit = useSelector(selectTemperatureUnit);
+  const fever = _.last(useHistoricalDataForSymptom('fever'));
+
   return (
     <Background
       header={
@@ -85,14 +92,22 @@ export const SummaryPage = () => {
         <Row>
           <SummaryViewColumn>
             <MyText style={{fontSize: 36}}>Age</MyText>
-            <MyText style={{fontSize: 60, color: '#fff'}}>55</MyText>
+            <MyText style={{fontSize: 60, color: '#fff'}}>
+              {user.birthYear != null
+                ? new Date().getUTCFullYear() - user.birthYear
+                : 'N/A'}
+            </MyText>
           </SummaryViewColumn>
           <Space />
           <SummaryViewColumn>
             <MyText>Travelled</MyText>
             <BlackBox
               style={{borderRadius: 50, padding: 10, backgroundColor: '#000'}}>
-              <CheckIcon />
+              {user.recentTravels === true ? (
+                <CheckIcon width={30} height={30} />
+              ) : (
+                <View style={{width: 30, height: 30}} />
+              )}
             </BlackBox>
           </SummaryViewColumn>
         </Row>
@@ -107,7 +122,7 @@ export const SummaryPage = () => {
                 alignItems: 'center',
               }}>
               <MyText style={{fontSize: 60, color: '#000', padding: 14}}>
-                37.9
+                {fever ? fever.y : 'N/A'}
               </MyText>
             </BlackBox>
           }
@@ -120,27 +135,30 @@ export const SummaryPage = () => {
               <View
                 style={{
                   flex: 1,
-                  alignItems: 'space-between',
                 }}>
-                <BlackBox
-                  style={{
-                    borderRadius: 50,
-                    padding: 20,
-                    backgroundColor: '#000',
-                  }}>
-                  <CheckIcon height={50} width={50} />
-                </BlackBox>
+                {user.preExistingAilments != null ? (
+                  <BlackBox
+                    style={{
+                      borderRadius: 50,
+                      padding: 20,
+                      backgroundColor: '#000',
+                    }}>
+                    <CheckIcon height={50} width={50} />
+                    <View style={{width: 50, height: 50}} />
+                  </BlackBox>
+                ) : (
+                  <View style={{width: 90, height: 90}} />
+                )}
               </View>
             }
           />
-          <HalfSpace />
-          <SummaryViewListItem text="Asthma" />
-          <HalfSpace />
-          <SummaryViewListItem text="Heart conditions" />
-          <HalfSpace />
-          <SummaryViewListItem text="Immunocompromised" />
-          <HalfSpace />
-          <SummaryViewListItem text="Diabetes" />
+          {user.preExistingAilments != null &&
+            user.preExistingAilments.split('\n').map((symptom, index) => (
+              <React.Fragment key={index}>
+                <HalfSpace />
+                <SummaryViewListItem text={symptom} />
+              </React.Fragment>
+            ))}
         </View>
       </View>
     </Background>

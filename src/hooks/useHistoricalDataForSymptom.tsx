@@ -7,7 +7,7 @@ import {Report} from '../reducers/reportsReducer';
 import {SymptomsRecord} from '../reducers/symptoms';
 import {createDataPoint} from '../DetailedReportScreen';
 import {parseISO} from 'date-fns';
-import { GraphDataPoint } from "../FancyGradientChart";
+import {GraphDataPoint} from '../FancyGradientChart';
 
 export const useHistoricalDataForSymptom = <T extends keyof SymptomsRecord>(
   key: T,
