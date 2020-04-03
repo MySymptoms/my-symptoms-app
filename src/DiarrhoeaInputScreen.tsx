@@ -6,7 +6,7 @@ import {StyleSheet, View} from 'react-native';
 import {Colors} from './lib/colors';
 import {fontName} from './lib/vars';
 import {DoneButton} from './components/DoneButton';
-import {SelectionGroup} from './components/SelectionGroup';
+import {SelectionGroup, Option} from './components/SelectionGroup';
 import {Divider} from './components/Divider';
 import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
 import {PaddedContainer, Row} from './components/Block';
@@ -44,6 +44,9 @@ export const DiarrhoeaInputScreen: FC<Props> = ({route}) => {
         </Row>
         <SelectionGroup
           title="do you have diarrhoea?"
+          initialOption={(option: Option) =>
+            option.dataValue === values?.presense
+          }
           onOptionSelected={option => {
             switch (option?.dataValue) {
               case 'yes':
@@ -56,11 +59,11 @@ export const DiarrhoeaInputScreen: FC<Props> = ({route}) => {
                 setValues({presense: undefined});
                 break;
             }
-            setValues({presense: option?.dataValue === 'yes'});
+            setValues({presense: option?.dataValue});
           }}
           options={[
-            {title: 'yes', color: Colors.stepFiveColor, dataValue: 'yes'},
-            {title: 'no', color: Colors.stepOneColor, dataValue: 'no'},
+            {title: 'yes', color: Colors.stepFiveColor, dataValue: true},
+            {title: 'no', color: Colors.stepOneColor, dataValue: false},
           ]}
         />
         <Divider />

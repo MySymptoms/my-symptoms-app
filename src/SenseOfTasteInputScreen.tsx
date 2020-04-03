@@ -7,7 +7,7 @@ import {StyleSheet, View} from 'react-native';
 import {Colors} from './lib/colors';
 import {fontName} from './lib/vars';
 import {DoneButton} from './components/DoneButton';
-import {SelectionGroup} from './components/SelectionGroup';
+import {SelectionGroup, Option} from './components/SelectionGroup';
 import {RootStackParamList} from 'App';
 import {RouteProp} from '@react-navigation/native';
 import {useReportState} from './hooks/useReportState';
@@ -46,6 +46,9 @@ export const SenseOfTasteInputScreen: FC<Props> = ({route}) => {
         </Row>
         <SelectionGroup
           title="How's your sense of taste?"
+          initialOption={(option: Option) =>
+            option.dataValue === values?.description
+          }
           onOptionSelected={option =>
             setValues({
               description: option?.dataValue as

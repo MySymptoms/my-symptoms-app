@@ -6,7 +6,7 @@ import {StyleSheet, View} from 'react-native';
 import {Colors} from './lib/colors';
 import {fontName} from './lib/vars';
 import {DoneButton} from './components/DoneButton';
-import {SelectionGroup} from './components/SelectionGroup';
+import {SelectionGroup, Option} from './components/SelectionGroup';
 import {Divider} from './components/Divider';
 import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
 import {RootStackParamList} from '../App';
@@ -44,6 +44,9 @@ export const RunnyNoseInputScreen: FC<Props> = ({route}) => {
         </Row>
         <SelectionGroup
           title="do you have a runny nose?"
+          initialOption={(option: Option) =>
+            option.dataValue === values?.presense
+          }
           onOptionSelected={option => {
             setValues({
               presense:
@@ -58,6 +61,9 @@ export const RunnyNoseInputScreen: FC<Props> = ({route}) => {
         <Divider />
         <SelectionGroup
           title="frequency"
+          initialOption={(option: Option) =>
+            option.dataValue === values?.frequency
+          }
           onOptionSelected={option => {
             setValues({
               frequency: option?.dataValue as

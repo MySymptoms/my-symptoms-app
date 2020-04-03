@@ -7,7 +7,7 @@ import {StyleSheet, View} from 'react-native';
 import {Colors} from './lib/colors';
 import {fontName} from './lib/vars';
 import {DoneButton} from './components/DoneButton';
-import {SelectionGroup} from './components/SelectionGroup';
+import {SelectionGroup, Option} from './components/SelectionGroup';
 import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
 import {useReportState} from './hooks/useReportState';
 import {RootStackParamList} from '../App';
@@ -45,6 +45,9 @@ export const TirednessInputScreen: FC<Props> = ({route}) => {
         </Row>
         <SelectionGroup
           title="are you tired?"
+          initialOption={(option: Option) =>
+            option.dataValue === values?.description
+          }
           onOptionSelected={option =>
             setValues({
               description: option?.dataValue as

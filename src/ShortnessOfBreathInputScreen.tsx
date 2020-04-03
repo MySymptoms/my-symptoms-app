@@ -7,7 +7,7 @@ import {StyleSheet, View} from 'react-native';
 import {Colors} from './lib/colors';
 import {fontName} from './lib/vars';
 import {DoneButton} from './components/DoneButton';
-import {SelectionGroup} from './components/SelectionGroup';
+import {SelectionGroup, Option} from './components/SelectionGroup';
 import {NavigationHeader} from './NavigationHeader';
 import {Divider} from './components/Divider';
 import {useReportState} from './hooks/useReportState';
@@ -46,6 +46,9 @@ export const ShortnessOfBreathInputScreen: FC<Props> = ({route}) => {
         </Row>
         <SelectionGroup
           title="Describe the feeling"
+          initialOption={(option: Option) =>
+            option.dataValue === values?.feeling
+          }
           onOptionSelected={option =>
             setValues({
               feeling: option?.dataValue as
@@ -81,6 +84,9 @@ export const ShortnessOfBreathInputScreen: FC<Props> = ({route}) => {
         <Divider />
         <SelectionGroup
           title="do you also feel"
+          initialOption={(option: Option) =>
+            option.dataValue === values?.do_you_also_feel
+          }
           onOptionSelected={option =>
             setValues({do_you_also_feel: option?.dataValue as 'fainting'})
           }
@@ -89,6 +95,9 @@ export const ShortnessOfBreathInputScreen: FC<Props> = ({route}) => {
         <Divider />
         <SelectionGroup
           title="frequency"
+          initialOption={(option: Option) =>
+            option.dataValue === values?.frequency
+          }
           onOptionSelected={option => {
             setValues({
               frequency: option?.dataValue as

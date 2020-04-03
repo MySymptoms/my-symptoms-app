@@ -6,24 +6,36 @@ import {Space} from './Block';
 import {Colors} from '../lib/colors';
 import {fontName} from '../lib/vars';
 
-interface Option {
+export interface Option {
   title: string;
   color?: string;
   dataValue: any;
 }
 
+type InitialOptionSelector = (option: Option) => boolean;
+
 interface Props {
   title: string;
   options: Option[];
+  initialOption?: number | InitialOptionSelector;
   onOptionSelected: (option: Option | null, index: number) => void;
 }
 
 export const SelectionGroup: FC<Props> = ({
   title,
   options,
+  initialOption,
   onOptionSelected,
 }) => {
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  let initOption = null;
+  if (initialOption && typeof initialOption !== 'number') {
+    const foundIndex = options.findIndex(option => initialOption(option));
+    if (foundIndex !== -1) {
+      initOption = foundIndex;
+    }
+  }
+
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(initOption);
 
   return (
     <View>
@@ -65,7 +77,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontSize: 18,
     lineHeight: 23,
-    paddingLeft: 10
+    paddingLeft: 10,
   },
   horizontal: {flexDirection: 'row'},
 });

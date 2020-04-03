@@ -16,6 +16,7 @@ import {RouteProp} from '@react-navigation/native';
 import {PaddedContainer, Row} from './components/Block';
 import {useHistoricalDataForSymptom} from './hooks/useHistoricalDataForSymptom';
 import {SafeGraph} from './SafeGraph';
+import {Option} from './components/SelectionGroup';
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList, 'DryCough'>;
@@ -47,6 +48,7 @@ export const DryCoughInputScreen: FC<Props> = ({route}) => {
       </PaddedContainer>
       <SelectionGroup
         title="cough frequency"
+        initialOption={(option: Option) => option.title === values?.frequency}
         onOptionSelected={option =>
           setValues({
             frequency: option?.dataValue as
@@ -66,6 +68,7 @@ export const DryCoughInputScreen: FC<Props> = ({route}) => {
       <Divider />
       <SelectionGroup
         title="intensity"
+        initialOption={(option: Option) => option.title === values?.intensity}
         onOptionSelected={option =>
           setValues({
             intensity: option?.dataValue as
@@ -93,6 +96,7 @@ export const DryCoughInputScreen: FC<Props> = ({route}) => {
       <Divider />
       <SelectionGroup
         title="disruption"
+        initialOption={(option: Option) => option.title === values?.disruption}
         onOptionSelected={option =>
           setValues({disruption: option?.dataValue as 'daytime' | 'nighttime'})
         }

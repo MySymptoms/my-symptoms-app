@@ -6,7 +6,7 @@ import {StyleSheet, View} from 'react-native';
 import {Colors} from './lib/colors';
 import {fontName} from './lib/vars';
 import {DoneButton} from './components/DoneButton';
-import {SelectionGroup} from './components/SelectionGroup';
+import {SelectionGroup, Option} from './components/SelectionGroup';
 import {Divider} from './components/Divider';
 import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
 import {PaddedContainer, Row} from './components/Block';
@@ -44,6 +44,9 @@ export const SoreThroatInputScreen: FC<Props> = ({route}) => {
         </Row>
         <SelectionGroup
           title="describe the feeling"
+          initialOption={(option: Option) =>
+            option.dataValue === values?.feeling
+          }
           onOptionSelected={option => {
             setValues({
               feeling: option?.dataValue as
@@ -79,8 +82,11 @@ export const SoreThroatInputScreen: FC<Props> = ({route}) => {
         <Divider />
         <SelectionGroup
           title="how does the back throat look?"
+          initialOption={(option: Option) =>
+            option.dataValue === values?.throat_color
+          }
           onOptionSelected={option => {
-            setValues({});
+            setValues({throat_color: option?.dataValue});
           }}
           options={[
             {title: 'not inflamed', dataValue: 'not_inflamed'},

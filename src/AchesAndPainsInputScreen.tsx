@@ -5,7 +5,7 @@ import {StyleSheet, View} from 'react-native';
 import {Colors} from './lib/colors';
 import {fontName} from './lib/vars';
 import {DoneButton} from './components/DoneButton';
-import {SelectionGroup} from './components/SelectionGroup';
+import {SelectionGroup, Option} from './components/SelectionGroup';
 import {NavigationHeader} from './NavigationHeader';
 import {Divider} from './components/Divider';
 import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
@@ -44,17 +44,23 @@ export const AchesAndPainInputScreen: FC<Props> = ({route}) => {
         </Row>
         <SelectionGroup
           title="Do you have body ache?"
+          initialOption={(option: Option) =>
+            option.dataValue === values?.have_ache
+          }
           onOptionSelected={option => {
-            setValues({have_ache: option?.dataValue === 'yes'});
+            setValues({have_ache: option?.dataValue});
           }}
           options={[
-            {title: 'yes', color: '#FF7A7A', dataValue: 'yes'},
-            {title: 'no', color: '#8cf081', dataValue: 'no'},
+            {title: 'yes', color: '#FF7A7A', dataValue: true},
+            {title: 'no', color: '#8cf081', dataValue: false},
           ]}
         />
         <Divider />
         <SelectionGroup
           title="frequency"
+          initialOption={(option: Option) =>
+            option.dataValue === values?.frequency
+          }
           onOptionSelected={option => {
             setValues({
               frequency: option?.dataValue as
