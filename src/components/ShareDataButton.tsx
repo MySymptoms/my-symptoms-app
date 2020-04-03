@@ -20,9 +20,9 @@ export const ShareDataButton: FC = () => {
       <ShareButtonText>Share data anonymously</ShareButtonText>
       <Space />
       {shareData ? (
-        <CheckIcon stroke={Colors.stepOneColor} />
+        <CheckIcon stroke={Colors.buttonBackgroundActive} />
       ) : (
-        <CrossIcon stroke={Colors.stepFiveColor} />
+        <CrossIcon fill={Colors.buttonBackgroundActive} />
       )}
     </ShareButton>
   );

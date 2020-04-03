@@ -94,6 +94,7 @@ export const AdditionalDataInputScreen: FC<Props> = ({navigation}) => {
             </Text>
           </Row>
         </View>
+        <Space/>
       </PaddedContainer>
     </Background>
   );
