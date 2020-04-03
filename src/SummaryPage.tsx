@@ -16,6 +16,7 @@ import {HelloUserHeader} from './components/HelloUserHeader';
 import {useHistoricalDataForSymptom} from './hooks/useHistoricalDataForSymptom';
 import _ from 'lodash';
 import {useTemperatureConvertedToUserPreference} from './hooks/useTemperatureConvertedToUserPreference';
+import {CrossIcon} from './components/CrossIcon';
 
 const Row = styled.View`
   flex-direction: row;
@@ -115,7 +116,7 @@ export const SummaryPage = () => {
               {user.recentTravels === true ? (
                 <CheckIcon width={30} height={30} />
               ) : (
-                <View style={{width: 30, height: 30}} />
+                <CrossIcon width={30} height={30} />
               )}
             </BlackBox>
           </SummaryViewColumn>
@@ -143,24 +144,21 @@ export const SummaryPage = () => {
           <RowWithContentRight
             leftText={'Medical Conditions'}
             right={
-              <View
+              <BlackBox
                 style={{
-                  flex: 1,
+                  width: 90,
+                  height: 90,
+                  borderRadius: 50,
+                  padding: 20,
+                  backgroundColor: '#000',
                 }}>
                 {user.preExistingAilments != null ? (
-                  <BlackBox
-                    style={{
-                      borderRadius: 50,
-                      padding: 20,
-                      backgroundColor: '#000',
-                    }}>
-                    <CheckIcon height={50} width={50} />
-                    <View style={{width: 50, height: 50}} />
-                  </BlackBox>
+                  <CheckIcon height={50} width={50} />
                 ) : (
-                  <View style={{width: 90, height: 90}} />
+                  <CrossIcon height={50} width={50} />
                 )}
-              </View>
+                <View style={{width: 50, height: 50}} />
+              </BlackBox>
             }
           />
           {user.preExistingAilments != null &&
