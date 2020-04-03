@@ -1,30 +1,30 @@
-import React, {FC, useRef, useState} from 'react';
-import {Background} from './components/Background';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {Icon, Icons} from './lib/icons';
-import {TextInput} from 'react-native-gesture-handler';
-import {StyleSheet, View} from 'react-native';
-import {Colors} from './lib/colors';
-import {fontName} from './lib/vars';
-import {DoneButton} from './components/DoneButton';
-import {SegmentedControl} from './components/SegmentedControl';
-import RadialGradient from 'react-native-radial-gradient';
-import {NavigationHeader} from './NavigationHeader';
-import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
-import {RootStackParamList} from '../App';
 import {RouteProp} from '@react-navigation/native';
-import {PaddedContainer, Space} from './components/Block';
-import {setTemperatureUnit, TemperatureUnit} from './reducers/userReducer';
+import {StackNavigationProp} from '@react-navigation/stack';
+import React, {FC, useRef, useState} from 'react';
+import {StyleSheet, View} from 'react-native';
+import {TextInput} from 'react-native-gesture-handler';
+import RadialGradient from 'react-native-radial-gradient';
 import {useDispatch} from 'react-redux';
-import {useReportState} from './hooks/useReportState';
-import {SafeGraph} from './SafeGraph';
-import {useHistoricalDataForSymptom} from './hooks/useHistoricalDataForSymptom';
-import {getColorForTemperature} from './lib/symptomToColor';
+import {RootStackParamList} from '../../App';
+import {Background} from '../components/Background';
+import {DoneButton} from '../components/DoneButton';
+import {SegmentedControl} from '../components/SegmentedControl';
+import {TrackMySymptomHeader} from '../components/TrackMySymtomHeader';
+import {Colors} from '../lib/colors';
+import {Icon, Icons} from '../lib/icons';
+import {fontName} from '../lib/vars';
+import {NavigationHeader} from '../NavigationHeader';
+import {PaddedContainer, Space} from '../components/Block';
+import {useHistoricalDataForSymptom} from '../hooks/useHistoricalDataForSymptom';
+import {useReportState} from '../hooks/useReportState';
 import {
   convertToCelsius,
   convertToFahrenheit,
   useTemperatureConvertedToUserPreference,
-} from './hooks/useTemperatureConvertedToUserPreference';
+} from '../hooks/useTemperatureConvertedToUserPreference';
+import {getColorForTemperature} from '../lib/symptomToColor';
+import {setTemperatureUnit, TemperatureUnit} from '../reducers/userReducer';
+import {SafeGraph} from '../SafeGraph';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Fever'>;

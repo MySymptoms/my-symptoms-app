@@ -1,20 +1,20 @@
 import React, {FC} from 'react';
-import {Background} from './components/Background';
-import {Icon, Icons} from './lib/icons';
-import {NavigationHeader} from './NavigationHeader';
+import {Background} from '../components/Background';
+import {Icon, Icons} from '../lib/icons';
+import {NavigationHeader} from '../NavigationHeader';
 import {StyleSheet, View} from 'react-native';
-import {Colors} from './lib/colors';
-import {fontName} from './lib/vars';
-import {DoneButton} from './components/DoneButton';
-import {SelectionGroup, Option} from './components/SelectionGroup';
-import {Divider} from './components/Divider';
-import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
-import {PaddedContainer} from './components/Block';
-import {RootStackParamList} from 'App';
+import {Colors} from '../lib/colors';
+import {fontName} from '../lib/vars';
+import {DoneButton} from '../components/DoneButton';
+import {SelectionGroup, Option} from '../components/SelectionGroup';
+import {Divider} from '../components/Divider';
+import {TrackMySymptomHeader} from '../components/TrackMySymtomHeader';
+import {PaddedContainer} from '../components/Block';
+import {RootStackParamList} from '../../App';
 import {RouteProp} from '@react-navigation/native';
-import {useReportState} from './hooks/useReportState';
-import {useHistoricalDataForSymptom} from './hooks/useHistoricalDataForSymptom';
-import {SafeGraph} from './SafeGraph';
+import {useReportState} from '../hooks/useReportState';
+import {useHistoricalDataForSymptom} from '../hooks/useHistoricalDataForSymptom';
+import {SafeGraph} from '../SafeGraph';
 
 type Props = {
   route: RouteProp<RootStackParamList, 'Nausea'>;
@@ -44,13 +44,12 @@ export const NauseaInputScreen: FC<Props> = ({route}) => {
         </View>
         <SelectionGroup
           title="do you have nausea?"
-          initialOption={(option: Option) =>
-            option.dataValue === values?.presense
-          }
+          selectedDataValue={values?.presense}
           onOptionSelected={option => {
             setValues({
               presense:
                 option?.dataValue !== null ? option?.dataValue : undefined,
+              frequency: option?.dataValue ? values?.frequency : undefined,
             });
           }}
           options={[
@@ -59,17 +58,13 @@ export const NauseaInputScreen: FC<Props> = ({route}) => {
           ]}
         />
         <Divider />
-        <SelectionGroup
+        <SelectionGroup<'not_often' | 'often' | 'very_often'>
           title="frequency"
-          initialOption={(option: Option) =>
-            option.dataValue === values?.frequency
-          }
+          selectedDataValue={values?.frequency}
           onOptionSelected={option => {
             setValues({
-              frequency: option?.dataValue as
-                | 'not_often'
-                | 'often'
-                | 'very_often',
+              presense: option ? true : undefined,
+              frequency: option?.dataValue,
             });
           }}
           options={[

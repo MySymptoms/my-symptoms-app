@@ -1,65 +1,55 @@
 import React, {FC} from 'react';
-import {Background} from './components/Background';
-import {Icon, Icons} from './lib/icons';
-import {NavigationHeader} from './NavigationHeader';
+import {Background} from '../components/Background';
+import {Icon, Icons} from '../lib/icons';
+import {NavigationHeader} from '../NavigationHeader';
 import {StyleSheet, View} from 'react-native';
-import {Colors} from './lib/colors';
-import {fontName} from './lib/vars';
-import {DoneButton} from './components/DoneButton';
-import {SelectionGroup, Option} from './components/SelectionGroup';
-import {Divider} from './components/Divider';
-import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
-import {PaddedContainer, Row} from './components/Block';
-import {RootStackParamList} from 'App';
+import {Colors} from '../lib/colors';
+import {fontName} from '../lib/vars';
+import {DoneButton} from '../components/DoneButton';
+import {SelectionGroup, Option} from '../components/SelectionGroup';
+import {Divider} from '../components/Divider';
+import {TrackMySymptomHeader} from '../components/TrackMySymtomHeader';
+import {RootStackParamList} from '../../App';
 import {RouteProp} from '@react-navigation/native';
-import {useReportState} from './hooks/useReportState';
-import {useHistoricalDataForSymptom} from './hooks/useHistoricalDataForSymptom';
-import {SafeGraph} from './SafeGraph';
+import {PaddedContainer, Row} from '../components/Block';
+import {useReportState} from '../hooks/useReportState';
+import {useHistoricalDataForSymptom} from '../hooks/useHistoricalDataForSymptom';
+import {SafeGraph} from '../SafeGraph';
 
 type Props = {
-  route: RouteProp<RootStackParamList, 'Diarrhoea'>;
+  route: RouteProp<RootStackParamList, 'RunnyNose'>;
 };
 
-export const DiarrhoeaInputScreen: FC<Props> = ({route}) => {
+export const RunnyNoseInputScreen: FC<Props> = ({route}) => {
   const {currentReportDate} = route.params;
   const {setValues, values, onSave} = useReportState(
     currentReportDate,
-    'diarrhoea',
+    'runny_nose',
   );
 
-  const data = useHistoricalDataForSymptom('diarrhoea');
+  const data = useHistoricalDataForSymptom('runny_nose');
 
   return (
     <Background
       header={
         <NavigationHeader
-          center={<TrackMySymptomHeader symptomName="diarrhoea" />}
+          center={<TrackMySymptomHeader symptomName="runny nose" />}
           showBackButton
         />
       }>
       <PaddedContainer>
         <Row>
-          <Icon style={styles.emojiStyle} source={Icons.Toilet} />
+          <Icon style={styles.emojiStyle} source={Icons.Sneezing} />
           <SafeGraph data={data} />
         </Row>
         <SelectionGroup
-          title="do you have diarrhoea?"
-          initialOption={(option: Option) =>
-            option.dataValue === values?.presense
-          }
+          title="do you have a runny nose?"
+          selectedDataValue={values?.presense}
           onOptionSelected={option => {
-            switch (option?.dataValue) {
-              case 'yes':
-                setValues({presense: true});
-                break;
-              case 'no':
-                setValues({presense: false});
-                break;
-              default:
-                setValues({presense: undefined});
-                break;
-            }
-            setValues({presense: option?.dataValue});
+            setValues({
+              presense: option?.dataValue,
+              frequency: option?.dataValue ? values?.frequency : undefined,
+            });
           }}
           options={[
             {title: 'yes', color: Colors.stepFiveColor, dataValue: true},
@@ -67,14 +57,13 @@ export const DiarrhoeaInputScreen: FC<Props> = ({route}) => {
           ]}
         />
         <Divider />
-        <SelectionGroup
+        <SelectionGroup<'not_often' | 'often' | 'very_often'>
           title="frequency"
+          selectedDataValue={values?.frequency}
           onOptionSelected={option => {
             setValues({
-              frequency: option?.dataValue as
-                | 'not_often'
-                | 'often'
-                | 'very_often',
+              presense: option ? true : undefined,
+              frequency: option?.dataValue,
             });
           }}
           options={[

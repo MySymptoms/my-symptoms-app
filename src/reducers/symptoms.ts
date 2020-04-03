@@ -13,9 +13,13 @@ export interface FeverSymptom extends BaseSymptom {
 export interface DryCoughSymptom extends BaseSymptom {
   symptom: 'dry_cough';
   values: {
-    frequency: 'every_minute' | 'few_times_an_hour' | 'few_times_a_day';
-    intensity: string;
-    disruption: string;
+    frequency:
+      | 'none'
+      | 'every_minute'
+      | 'few_times_an_hour'
+      | 'few_times_a_day';
+    intensity: 'none' | 'bearable' | 'harsh' | 'physical_discomfort';
+    disruption: 'daytime' | 'nighttime';
   };
 }
 

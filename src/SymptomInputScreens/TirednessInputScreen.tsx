@@ -1,20 +1,20 @@
 import React, {FC} from 'react';
-import {Background} from './components/Background';
+import {Background} from '../components/Background';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {Icon, Icons} from './lib/icons';
-import {NavigationHeader} from './NavigationHeader';
+import {Icon, Icons} from '../lib/icons';
+import {NavigationHeader} from '../NavigationHeader';
 import {StyleSheet, View} from 'react-native';
-import {Colors} from './lib/colors';
-import {fontName} from './lib/vars';
-import {DoneButton} from './components/DoneButton';
-import {SelectionGroup, Option} from './components/SelectionGroup';
-import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
-import {useReportState} from './hooks/useReportState';
-import {RootStackParamList} from '../App';
+import {Colors} from '../lib/colors';
+import {fontName} from '../lib/vars';
+import {DoneButton} from '../components/DoneButton';
+import {SelectionGroup, Option} from '../components/SelectionGroup';
+import {TrackMySymptomHeader} from '../components/TrackMySymtomHeader';
+import {useReportState} from '../hooks/useReportState';
+import {RootStackParamList} from '../../App';
 import {RouteProp} from '@react-navigation/native';
-import {PaddedContainer, Row} from './components/Block';
-import {useHistoricalDataForSymptom} from './hooks/useHistoricalDataForSymptom';
-import {SafeGraph} from './SafeGraph';
+import {PaddedContainer, Row} from '../components/Block';
+import {useHistoricalDataForSymptom} from '../hooks/useHistoricalDataForSymptom';
+import {SafeGraph} from '../SafeGraph';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Tiredness'>;
@@ -43,19 +43,18 @@ export const TirednessInputScreen: FC<Props> = ({route}) => {
           <Icon style={styles.emojiStyle} source={Icons.Bed} />
           <SafeGraph data={data} />
         </Row>
-        <SelectionGroup
+        <SelectionGroup<
+          | 'as_usual'
+          | 'tired_but_not_bedridden'
+          | 'mostly_bedridden'
+          | 'can_get_to_the_bathroom'
+          | 'cannot_get_out_of_bed'
+        >
           title="are you tired?"
-          initialOption={(option: Option) =>
-            option.dataValue === values?.description
-          }
+          selectedDataValue={values?.description}
           onOptionSelected={option =>
             setValues({
-              description: option?.dataValue as
-                | 'as_usual'
-                | 'tired_but_not_bedridden'
-                | 'mostly_bedridden'
-                | 'can_get_to_the_bathroom'
-                | 'cannot_get_out_of_bed',
+              description: option?.dataValue,
             })
           }
           options={[

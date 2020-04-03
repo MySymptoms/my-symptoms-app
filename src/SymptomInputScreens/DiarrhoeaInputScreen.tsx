@@ -1,56 +1,54 @@
 import React, {FC} from 'react';
-import {Background} from './components/Background';
-import {Icon, Icons} from './lib/icons';
-import {NavigationHeader} from './NavigationHeader';
+import {Background} from '../components/Background';
+import {Icon, Icons} from '../lib/icons';
+import {NavigationHeader} from '../NavigationHeader';
 import {StyleSheet, View} from 'react-native';
-import {Colors} from './lib/colors';
-import {fontName} from './lib/vars';
-import {DoneButton} from './components/DoneButton';
-import {SelectionGroup, Option} from './components/SelectionGroup';
-import {Divider} from './components/Divider';
-import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
-import {RootStackParamList} from '../App';
+import {Colors} from '../lib/colors';
+import {fontName} from '../lib/vars';
+import {DoneButton} from '../components/DoneButton';
+import {SelectionGroup, Option} from '../components/SelectionGroup';
+import {Divider} from '../components/Divider';
+import {TrackMySymptomHeader} from '../components/TrackMySymtomHeader';
+import {PaddedContainer, Row} from '../components/Block';
+import {RootStackParamList} from '../../App';
 import {RouteProp} from '@react-navigation/native';
-import {PaddedContainer, Row} from './components/Block';
-import {useReportState} from './hooks/useReportState';
-import {useHistoricalDataForSymptom} from './hooks/useHistoricalDataForSymptom';
-import {SafeGraph} from './SafeGraph';
+import {useReportState} from '../hooks/useReportState';
+import {useHistoricalDataForSymptom} from '../hooks/useHistoricalDataForSymptom';
+import {SafeGraph} from '../SafeGraph';
 
 type Props = {
-  route: RouteProp<RootStackParamList, 'RunnyNose'>;
+  route: RouteProp<RootStackParamList, 'Diarrhoea'>;
 };
 
-export const RunnyNoseInputScreen: FC<Props> = ({route}) => {
+export const DiarrhoeaInputScreen: FC<Props> = ({route}) => {
   const {currentReportDate} = route.params;
   const {setValues, values, onSave} = useReportState(
     currentReportDate,
-    'runny_nose',
+    'diarrhoea',
   );
 
-  const data = useHistoricalDataForSymptom('runny_nose');
+  const data = useHistoricalDataForSymptom('diarrhoea');
 
   return (
     <Background
       header={
         <NavigationHeader
-          center={<TrackMySymptomHeader symptomName="runny nose" />}
+          center={<TrackMySymptomHeader symptomName="diarrhoea" />}
           showBackButton
         />
       }>
       <PaddedContainer>
         <Row>
-          <Icon style={styles.emojiStyle} source={Icons.Sneezing} />
+          <Icon style={styles.emojiStyle} source={Icons.Toilet} />
           <SafeGraph data={data} />
         </Row>
         <SelectionGroup
-          title="do you have a runny nose?"
-          initialOption={(option: Option) =>
-            option.dataValue === values?.presense
-          }
+          title="do you have diarrhoea?"
+          selectedDataValue={values?.presense}
           onOptionSelected={option => {
             setValues({
-              presense:
-                option?.dataValue !== null ? option?.dataValue : undefined,
+              presense: option?.dataValue,
+              frequency: option?.dataValue ? values?.frequency : undefined,
             });
           }}
           options={[
@@ -59,17 +57,13 @@ export const RunnyNoseInputScreen: FC<Props> = ({route}) => {
           ]}
         />
         <Divider />
-        <SelectionGroup
+        <SelectionGroup<'not_often' | 'often' | 'very_often'>
           title="frequency"
-          initialOption={(option: Option) =>
-            option.dataValue === values?.frequency
-          }
+          selectedDataValue={values?.frequency}
           onOptionSelected={option => {
             setValues({
-              frequency: option?.dataValue as
-                | 'not_often'
-                | 'often'
-                | 'very_often',
+              presense: option ? true : undefined,
+              frequency: option?.dataValue,
             });
           }}
           options={[

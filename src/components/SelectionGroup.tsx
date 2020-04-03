@@ -6,37 +6,25 @@ import {Space} from './Block';
 import {Colors} from '../lib/colors';
 import {fontName} from '../lib/vars';
 
-export interface Option {
+export interface Option<T> {
   title: string;
   color?: string;
-  dataValue: any;
+  dataValue: T;
 }
 
-type InitialOptionSelector = (option: Option) => boolean;
-
-interface Props {
+interface Props<T> {
   title: string;
-  options: Option[];
-  initialOption?: number | InitialOptionSelector;
-  onOptionSelected: (option: Option | null, index: number) => void;
+  options: Option<T>[];
+  selectedDataValue?: T;
+  onOptionSelected: (option: Option<T> | null, index: number) => void;
 }
 
-export const SelectionGroup: FC<Props> = ({
+export function SelectionGroup<T>({
   title,
   options,
-  initialOption,
+  selectedDataValue,
   onOptionSelected,
-}) => {
-  let initOption = null;
-  if (initialOption && typeof initialOption !== 'number') {
-    const foundIndex = options.findIndex(option => initialOption(option));
-    if (foundIndex !== -1) {
-      initOption = foundIndex;
-    }
-  }
-
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(initOption);
-
+}: Props<T>) {
   return (
     <View>
       <Text style={styles.title}>{title}</Text>
@@ -47,16 +35,14 @@ export const SelectionGroup: FC<Props> = ({
             <View style={styles.horizontal} key={index}>
               <SelectableButton
                 onPress={() => {
-                  if (selectedIndex === index) {
-                    setSelectedIndex(null);
+                  if (options[index].dataValue === selectedDataValue) {
                     onOptionSelected(null, -1);
                   } else {
-                    setSelectedIndex(index);
                     onOptionSelected(options[index], index);
                   }
                 }}
                 title={header}
-                selected={index === selectedIndex}
+                selected={options[index].dataValue === selectedDataValue}
                 lineColor={color}
               />
               <Space />
@@ -66,7 +52,7 @@ export const SelectionGroup: FC<Props> = ({
       </ScrollView>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   title: {

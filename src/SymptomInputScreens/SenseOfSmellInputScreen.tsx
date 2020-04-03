@@ -1,20 +1,20 @@
 import React, {FC} from 'react';
-import {Background} from './components/Background';
+import {Background} from '../components/Background';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {Icon, Icons} from './lib/icons';
-import {NavigationHeader} from './NavigationHeader';
+import {Icon, Icons} from '../lib/icons';
+import {NavigationHeader} from '../NavigationHeader';
 import {StyleSheet, View} from 'react-native';
-import {Colors} from './lib/colors';
-import {fontName} from './lib/vars';
-import {DoneButton} from './components/DoneButton';
-import {SelectionGroup, Option} from './components/SelectionGroup';
-import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
-import {RootStackParamList} from '../App';
+import {Colors} from '../lib/colors';
+import {fontName} from '../lib/vars';
+import {DoneButton} from '../components/DoneButton';
+import {SelectionGroup, Option} from '../components/SelectionGroup';
+import {TrackMySymptomHeader} from '../components/TrackMySymtomHeader';
+import {RootStackParamList} from '../../App';
 import {RouteProp} from '@react-navigation/native';
-import {useReportState} from './hooks/useReportState';
-import {PaddedContainer, Row} from './components/Block';
-import {useHistoricalDataForSymptom} from './hooks/useHistoricalDataForSymptom';
-import {SafeGraph} from './SafeGraph';
+import {useReportState} from '../hooks/useReportState';
+import {PaddedContainer, Row} from '../components/Block';
+import {useHistoricalDataForSymptom} from '../hooks/useHistoricalDataForSymptom';
+import {SafeGraph} from '../SafeGraph';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'SenseOfSmell'>;
@@ -43,17 +43,12 @@ export const SenseOfSmellInputScreen: FC<Props> = ({route}) => {
           <Icon style={styles.emojiStyle} source={Icons.Nose} />
           <SafeGraph data={data} />
         </Row>
-        <SelectionGroup
+        <SelectionGroup<'normal' | 'less_than_usual' | 'can_not_smell_anything'>
           title="have you lost your sense of smell?"
-          initialOption={(option: Option) =>
-            option.dataValue === values?.description
-          }
+          selectedDataValue={values?.description}
           onOptionSelected={option => {
             setValues({
-              description: option?.dataValue as
-                | 'normal'
-                | 'less_than_usual'
-                | 'can_not_smell_anything',
+              description: option?.dataValue,
             });
           }}
           options={[

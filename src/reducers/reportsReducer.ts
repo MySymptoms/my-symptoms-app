@@ -81,10 +81,13 @@ export const reportsReducer = (
           updated_at: formatISO(action.now),
           symptoms: {
             ...symptoms,
-            [action.symptomKey]: {
-              symptom: action.symptomKey,
-              values: action.symptom,
-            },
+            [action.symptomKey]:
+              action.symptom === null
+                ? null
+                : {
+                    symptom: action.symptomKey,
+                    values: action.symptom,
+                  },
             no_symptoms: null,
           },
         },
@@ -138,7 +141,7 @@ export const requestUpdateSymptomInReport = <
   date: string;
   now: Date;
   symptomKey: TKey;
-  symptom: Partial<SymptomsRecord[TKey]['values']>;
+  symptom: Partial<SymptomsRecord[TKey]['values']> | null;
 }): ThunkAction<any, RootState, undefined, AnyAction> => (
   dispatch,
   getState,
@@ -207,14 +210,14 @@ interface UpdateSymptomAction<TKey extends keyof SymptomsRecord> {
   uuid: string;
   now: Date;
   symptomKey: TKey;
-  symptom: Partial<SymptomsRecord[TKey]['values']>;
+  symptom: Partial<SymptomsRecord[TKey]['values']> | null;
 }
 
 export const updateSymptomInReport = <TKey extends keyof SymptomsRecord>(
   uuid: string,
   now: Date,
   symptomKey: TKey,
-  symptom: Partial<SymptomsRecord[TKey]['values']>,
+  symptom: Partial<SymptomsRecord[TKey]['values']> | null,
 ): UpdateSymptomAction<TKey> => {
   return {
     type: UPDATE_SYMPTOM,

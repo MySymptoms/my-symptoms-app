@@ -1,20 +1,20 @@
 import React, {FC} from 'react';
-import {Background} from './components/Background';
-import {Icon, Icons} from './lib/icons';
+import {Background} from '../components/Background';
+import {Icon, Icons} from '../lib/icons';
 import {StyleSheet, View} from 'react-native';
-import {Colors} from './lib/colors';
-import {fontName} from './lib/vars';
-import {DoneButton} from './components/DoneButton';
-import {SelectionGroup, Option} from './components/SelectionGroup';
-import {NavigationHeader} from './NavigationHeader';
-import {Divider} from './components/Divider';
-import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
-import {PaddedContainer, Row} from './components/Block';
-import {useReportState} from './hooks/useReportState';
-import {RootStackParamList} from 'App';
+import {Colors} from '../lib/colors';
+import {fontName} from '../lib/vars';
+import {DoneButton} from '../components/DoneButton';
+import {SelectionGroup, Option} from '../components/SelectionGroup';
+import {NavigationHeader} from '../NavigationHeader';
+import {Divider} from '../components/Divider';
+import {TrackMySymptomHeader} from '../components/TrackMySymtomHeader';
+import {PaddedContainer, Row} from '../components/Block';
+import {useReportState} from '../hooks/useReportState';
+import {RootStackParamList} from '../../App';
 import {RouteProp} from '@react-navigation/native';
-import {useHistoricalDataForSymptom} from './hooks/useHistoricalDataForSymptom';
-import {SafeGraph} from './SafeGraph';
+import {useHistoricalDataForSymptom} from '../hooks/useHistoricalDataForSymptom';
+import {SafeGraph} from '../SafeGraph';
 
 type Props = {
   route: RouteProp<RootStackParamList, 'AchesAndPain'>;
@@ -44,11 +44,12 @@ export const AchesAndPainInputScreen: FC<Props> = ({route}) => {
         </Row>
         <SelectionGroup
           title="Do you have body ache?"
-          initialOption={(option: Option) =>
-            option.dataValue === values?.have_ache
-          }
+          selectedDataValue={values?.have_ache}
           onOptionSelected={option => {
-            setValues({have_ache: option?.dataValue});
+            setValues({
+              have_ache: option?.dataValue,
+              frequency: option?.dataValue ? values?.frequency : undefined,
+            });
           }}
           options={[
             {title: 'yes', color: '#FF7A7A', dataValue: true},
@@ -56,17 +57,13 @@ export const AchesAndPainInputScreen: FC<Props> = ({route}) => {
           ]}
         />
         <Divider />
-        <SelectionGroup
+        <SelectionGroup<'not_often' | 'on-going' | 'persistent'>
           title="frequency"
-          initialOption={(option: Option) =>
-            option.dataValue === values?.frequency
-          }
+          selectedDataValue={values?.frequency}
           onOptionSelected={option => {
             setValues({
-              frequency: option?.dataValue as
-                | 'not_often'
-                | 'on-going'
-                | 'persistent',
+              have_ache: option ? true : undefined,
+              frequency: option?.dataValue,
             });
           }}
           options={[

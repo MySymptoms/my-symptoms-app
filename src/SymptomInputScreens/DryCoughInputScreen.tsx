@@ -1,22 +1,22 @@
 import React, {FC} from 'react';
-import {Background} from './components/Background';
+import {Background} from '../components/Background';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {Icon, Icons} from './lib/icons';
-import {NavigationHeader} from './NavigationHeader';
+import {Icon, Icons} from '../lib/icons';
+import {NavigationHeader} from '../NavigationHeader';
 import {StyleSheet, View} from 'react-native';
-import {Colors} from './lib/colors';
-import {fontName} from './lib/vars';
-import {DoneButton} from './components/DoneButton';
-import {SelectionGroup} from './components/SelectionGroup';
-import {Divider} from './components/Divider';
-import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
-import {useReportState} from './hooks/useReportState';
-import {RootStackParamList} from '../App';
+import {Colors} from '../lib/colors';
+import {fontName} from '../lib/vars';
+import {DoneButton} from '../components/DoneButton';
+import {SelectionGroup} from '../components/SelectionGroup';
+import {Divider} from '../components/Divider';
+import {TrackMySymptomHeader} from '../components/TrackMySymtomHeader';
+import {useReportState} from '../hooks/useReportState';
+import {RootStackParamList} from '../../App';
 import {RouteProp} from '@react-navigation/native';
-import {PaddedContainer, Row} from './components/Block';
-import {useHistoricalDataForSymptom} from './hooks/useHistoricalDataForSymptom';
-import {SafeGraph} from './SafeGraph';
-import {Option} from './components/SelectionGroup';
+import {PaddedContainer, Row} from '../components/Block';
+import {useHistoricalDataForSymptom} from '../hooks/useHistoricalDataForSymptom';
+import {SafeGraph} from '../SafeGraph';
+import {Option} from '../components/SelectionGroup';
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList, 'DryCough'>;
@@ -46,16 +46,14 @@ export const DryCoughInputScreen: FC<Props> = ({route}) => {
           <SafeGraph data={data} />
         </Row>
       </PaddedContainer>
-      <SelectionGroup
+      <SelectionGroup<
+        'none' | 'every_minute' | 'few_times_an_hour' | 'few_times_a_day'
+      >
         title="cough frequency"
-        initialOption={(option: Option) => option.title === values?.frequency}
+        selectedDataValue={values?.frequency}
         onOptionSelected={option =>
           setValues({
-            frequency: option?.dataValue as
-              | 'none'
-              | 'every_minute'
-              | 'few_times_an_hour'
-              | 'few_times_a_day',
+            frequency: option?.dataValue,
           })
         }
         options={[
@@ -66,16 +64,12 @@ export const DryCoughInputScreen: FC<Props> = ({route}) => {
         ]}
       />
       <Divider />
-      <SelectionGroup
+      <SelectionGroup<'none' | 'bearable' | 'harsh' | 'physical_discomfort'>
         title="intensity"
-        initialOption={(option: Option) => option.title === values?.intensity}
+        selectedDataValue={values?.intensity}
         onOptionSelected={option =>
           setValues({
-            intensity: option?.dataValue as
-              | 'none'
-              | 'bearable'
-              | 'harsh'
-              | 'physical_discomfort',
+            intensity: option?.dataValue,
           })
         }
         options={[
@@ -94,12 +88,10 @@ export const DryCoughInputScreen: FC<Props> = ({route}) => {
         ]}
       />
       <Divider />
-      <SelectionGroup
+      <SelectionGroup<'daytime' | 'nighttime'>
         title="disruption"
-        initialOption={(option: Option) => option.title === values?.disruption}
-        onOptionSelected={option =>
-          setValues({disruption: option?.dataValue as 'daytime' | 'nighttime'})
-        }
+        selectedDataValue={values?.disruption}
+        onOptionSelected={option => setValues({disruption: option?.dataValue})}
         options={[
           {title: 'daytime', dataValue: 'daytime'},
           {title: 'nighttime', dataValue: 'nighttime'},

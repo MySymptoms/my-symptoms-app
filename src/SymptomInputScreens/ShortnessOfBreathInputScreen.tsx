@@ -1,21 +1,21 @@
 import React, {FC} from 'react';
-import {Background} from './components/Background';
+import {Background} from '../components/Background';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {Icon, Icons} from './lib/icons';
-import {PaddedContainer, Row, Space} from './components/Block';
+import {Icon, Icons} from '../lib/icons';
+import {PaddedContainer, Row, Space} from '../components/Block';
 import {StyleSheet, View} from 'react-native';
-import {Colors} from './lib/colors';
-import {fontName} from './lib/vars';
-import {DoneButton} from './components/DoneButton';
-import {SelectionGroup, Option} from './components/SelectionGroup';
-import {NavigationHeader} from './NavigationHeader';
-import {Divider} from './components/Divider';
-import {useReportState} from './hooks/useReportState';
+import {Colors} from '../lib/colors';
+import {fontName} from '../lib/vars';
+import {DoneButton} from '../components/DoneButton';
+import {SelectionGroup, Option} from '../components/SelectionGroup';
+import {NavigationHeader} from '../NavigationHeader';
+import {Divider} from '../components/Divider';
+import {useReportState} from '../hooks/useReportState';
 import {RouteProp} from '@react-navigation/native';
-import {RootStackParamList} from '../App';
-import {TrackMySymptomHeader} from './components/TrackMySymtomHeader';
-import {useHistoricalDataForSymptom} from './hooks/useHistoricalDataForSymptom';
-import {SafeGraph} from './SafeGraph';
+import {RootStackParamList} from '../../App';
+import {TrackMySymptomHeader} from '../components/TrackMySymtomHeader';
+import {useHistoricalDataForSymptom} from '../hooks/useHistoricalDataForSymptom';
+import {SafeGraph} from '../SafeGraph';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'ShortnessOfBreath'>;
@@ -44,18 +44,17 @@ export const ShortnessOfBreathInputScreen: FC<Props> = ({route}) => {
           <Icon style={styles.emojiStyle} source={Icons.Yawn} />
           <SafeGraph data={data} />
         </Row>
-        <SelectionGroup
+        <SelectionGroup<
+          | 'breathe_normally'
+          | 'shortness_of_breath'
+          | 'tightness_in_my_chest'
+          | 'cannot_get_enough_air'
+        >
           title="Describe the feeling"
-          initialOption={(option: Option) =>
-            option.dataValue === values?.feeling
-          }
+          selectedDataValue={values?.feeling}
           onOptionSelected={option =>
             setValues({
-              feeling: option?.dataValue as
-                | 'breathe_normally'
-                | 'shortness_of_breath'
-                | 'tightness_in_my_chest'
-                | 'cannot_get_enough_air',
+              feeling: option?.dataValue,
             })
           }
           options={[
@@ -82,28 +81,23 @@ export const ShortnessOfBreathInputScreen: FC<Props> = ({route}) => {
           ]}
         />
         <Divider />
-        <SelectionGroup
+        <SelectionGroup<'fainting'>
           title="do you also feel"
-          initialOption={(option: Option) =>
-            option.dataValue === values?.do_you_also_feel
-          }
+          selectedDataValue={values?.do_you_also_feel}
           onOptionSelected={option =>
-            setValues({do_you_also_feel: option?.dataValue as 'fainting'})
+            setValues({do_you_also_feel: option?.dataValue})
           }
           options={[{title: 'fainting', dataValue: 'fainting'}]}
         />
         <Divider />
-        <SelectionGroup
+        <SelectionGroup<
+          'comes_suddenly' | 'is_persistent' | 'interferes_with_daily_activity'
+        >
           title="frequency"
-          initialOption={(option: Option) =>
-            option.dataValue === values?.frequency
-          }
+          selectedDataValue={values?.frequency}
           onOptionSelected={option => {
             setValues({
-              frequency: option?.dataValue as
-                | 'comes_suddenly'
-                | 'is_persistent'
-                | 'interferes_with_daily_activity',
+              frequency: option?.dataValue,
             });
           }}
           options={[

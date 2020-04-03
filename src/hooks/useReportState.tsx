@@ -7,7 +7,7 @@ import {
 } from '../reducers/reportsReducer';
 import {SymptomsRecord} from '../reducers/symptoms';
 import {RootState} from '../reducers/rootReducer';
-
+import _ from 'lodash';
 export function useReportState<TKey extends keyof SymptomsRecord>(
   currentReportDate: string,
   key: TKey,
@@ -29,12 +29,19 @@ export function useReportState<TKey extends keyof SymptomsRecord>(
     goBack: boolean = true,
   ) => {
     if (values) {
+      let filledValues = values;
+      for (const key in values) {
+        if (filledValues[key] === undefined) {
+          delete filledValues[key];
+        }
+      }
+
       dispatch(
         requestUpdateSymptomInReport<TKey>({
           date: currentReportDate,
           now: new Date(),
           symptomKey: key,
-          symptom: values,
+          symptom: _.isEmpty(filledValues) ? null : filledValues,
         }),
       );
     }
