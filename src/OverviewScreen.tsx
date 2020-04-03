@@ -1,7 +1,7 @@
 import React, {FC, useEffect, useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import styled from 'styled-components/native';
-import {Space} from './components/Block';
+import {Space, HalfSpace} from './components/Block';
 import {fontName} from './lib/vars';
 import {HorizontalStatusCalendar} from './HorizontalStatusCalendar';
 import {Icon, Icons} from './lib/icons';
@@ -27,8 +27,13 @@ import Dialog, {
   DialogContent,
   DialogFooter,
   DialogButton,
+  SlideAnimation,
 } from 'react-native-popup-dialog';
 import _ from 'lodash';
+import {
+  SelectableButton,
+  selectableButtonStyles,
+} from './components/SelectableButton';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -205,6 +210,11 @@ const NoSymptomsTodayButton: FC<NoSymptomsTodayButtonProps> = ({
   return (
     <>
       <Dialog
+        dialogAnimation={
+          new SlideAnimation({
+            slideFrom: 'bottom',
+          })
+        }
         dialogStyle={styles.dialogStyle}
         dialogTitle={
           <Text style={styles.dialogTitleStyle}>Remove symptoms?</Text>
@@ -217,33 +227,39 @@ const NoSymptomsTodayButton: FC<NoSymptomsTodayButtonProps> = ({
           <Text style={styles.dialogContent}>
             This will clear your reported symptoms for this day. Are you sure?
           </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginTop: 30,
+            }}>
+            <DialogButton
+              style={selectableButtonStyles.buttonContainer}
+              textStyle={{color: 'white'}}
+              text="CANCEL"
+              onPress={() => {
+                setDialogVisible(false);
+              }}
+            />
+            <HalfSpace />
+            <DialogButton
+              style={selectableButtonStyles.buttonContainer}
+              text="OK"
+              textStyle={{color: 'white'}}
+              onPress={() => {
+                dipatch(
+                  requestUpdateSymptomInReport({
+                    date: currentDate,
+                    now: new Date(),
+                    symptomKey: 'no_symptoms',
+                    symptom: {checked: true},
+                  }),
+                );
+                setDialogVisible(false);
+              }}
+            />
+          </View>
         </DialogContent>
-        <DialogFooter style={styles.dialogFooter}>
-          <DialogButton
-            textStyle={styles.dialogButtonText}
-            style={styles.dialogButton}
-            text="CANCEL"
-            onPress={() => {
-              setDialogVisible(false);
-            }}
-          />
-          <DialogButton
-            textStyle={styles.dialogButtonText}
-            style={styles.dialogButton}
-            text="OK"
-            onPress={() => {
-              dipatch(
-                requestUpdateSymptomInReport({
-                  date: currentDate,
-                  now: new Date(),
-                  symptomKey: 'no_symptoms',
-                  symptom: {checked: true},
-                }),
-              );
-              setDialogVisible(false);
-            }}
-          />
-        </DialogFooter>
       </Dialog>
       <TouchableOpacity
         onPress={() => {
@@ -332,14 +348,14 @@ const styles = StyleSheet.create({
     margin: 20,
   },
   dialogTitleStyle: {
-    color: Colors.sectionHeader,
+    color: '#ffffff',
     fontFamily: fontName,
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
   },
   dialogContent: {
-    color: Colors.sectionHeader,
+    color: '#ffffff',
   },
   dialogButton: {
     borderWidth: 3,

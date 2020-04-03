@@ -1,32 +1,44 @@
 import React, {FC} from 'react';
 import styled from 'styled-components/native';
 import RadialGradient from 'react-native-radial-gradient';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {ViewProps, View, StyleSheet, ViewStyle} from 'react-native';
+import {TouchableOpacity, StyleSheet, View} from 'react-native';
+import {ViewProps, ViewStyle, TextStyle} from 'react-native';
 import {fontName} from '../lib/vars';
 import {Colors} from '../lib/colors';
 
 interface Props {
   style?: ViewProps;
   onPress: () => void;
-  selected: boolean;
+  selected?: boolean;
   title: string;
   lineColor?: string;
+  textStyle?: TextStyle;
 }
 
 export const SelectableButton: FC<Props> = ({
   style,
   onPress,
-  selected,
+  selected = false,
   title,
   lineColor,
+  textStyle,
 }) => {
   return (
     <TouchableOpacity style={style} onPress={onPress}>
-      <Container selected={selected}>
-        <TitleText selected={selected}>{title}</TitleText>
+      <View
+        style={[
+          selectableButtonStyles.buttonContainer,
+          {
+            backgroundColor: selected
+              ? Colors.buttonBackgroundActive
+              : Colors.buttonBackground,
+          },
+        ]}>
+        <TitleText style={textStyle} selected={selected}>
+          {title}
+        </TitleText>
         {lineColor && <Line color={lineColor} selected={selected} />}
-      </Container>
+      </View>
     </TouchableOpacity>
   );
 };
@@ -96,3 +108,18 @@ const Container = styled.View<ContainerProps>`
   background: ${props =>
     props.selected ? Colors.buttonBackgroundActive : Colors.buttonBackground};
 `;
+
+export const selectableButtonStyles = StyleSheet.create({
+  buttonContainer: {
+    minWidth: 100,
+    height: 54,
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'hidden',
+    borderWidth: 3,
+    borderRadius: 100,
+    borderColor: 'black',
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
+});
