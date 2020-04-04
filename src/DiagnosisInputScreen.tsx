@@ -69,7 +69,7 @@ export const DiagnosisInputScreen: FC<Props> = ({navigation}) => {
           <PaddedContainer>
             <Row>
               <Icon source={Icons.Map} style={styles.emojiStyle} />
-              <BoxText>Which country did you get tested in?</BoxText>
+              <BoxText>{t('Which country did you get tested in?')}</BoxText>
             </Row>
           </PaddedContainer>
           <HalfSpace />
@@ -85,6 +85,10 @@ export const DiagnosisInputScreen: FC<Props> = ({navigation}) => {
                 color: 'white',
                 fontSize: 20,
               },
+            }}
+            placeholder={{
+              label: t('Select country').toUpperCase(),
+              value: null,
             }}
             onValueChange={value => console.log(value)}
             items={[
