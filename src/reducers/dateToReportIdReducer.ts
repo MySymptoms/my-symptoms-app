@@ -37,3 +37,6 @@ export const dateToReportIdReducer = (
 
 export const selectDateToReportId = (state: RootState) =>
   Object.keys(state.dateToReportId);
+
+export const selectDateToReportIdByDate = (state: RootState, date: string) =>
+  state.dateToReportId[date];

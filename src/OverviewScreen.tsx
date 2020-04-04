@@ -61,7 +61,6 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
         />
       }>
       <HorizontalStatusCalendar
-        style={{marginBottom: 30}}
         onChange={setCurrentDate}
         value={currentDate}
       />

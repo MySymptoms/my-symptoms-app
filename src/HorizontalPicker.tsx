@@ -1,15 +1,15 @@
 // https://twitter.com/jevakallio/status/941258932529614848
 
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import styled from 'styled-components/native';
-import Carousel, { CarouselStatic } from 'react-native-snap-carousel';
+import Carousel, {CarouselStatic} from 'react-native-snap-carousel';
 import {TouchableOpacity} from 'react-native';
 
 const Container = styled.View`
   height: 40px;
 `;
 
-const ItemWrapper = styled(TouchableOpacity)<{ width: number }>`
+const ItemWrapper = styled(TouchableOpacity)<{width: number}>`
   background-color: transparent;
   width: ${p => p.width}px;
   height: ${p => p.width}px;
@@ -28,7 +28,7 @@ type Props<T> = {
   visibleItemCount: number;
 };
 
-export default class HorizontalPicker<T> extends Component<Props<T>> {
+export default class HorizontalPicker<T> extends PureComponent<Props<T>> {
   carouselRef: CarouselStatic<T> | null = null;
 
   static defaultProps = {
@@ -64,6 +64,10 @@ export default class HorizontalPicker<T> extends Component<Props<T>> {
     );
   };
 
+  getItemLayout = (data: T, index: number) => {
+    return {length: this.props.itemWidth * index, offset: index, index};
+  };
+
   render() {
     const {items, initialItem, itemWidth, visibleItemCount} = this.props;
     return (
@@ -76,7 +80,8 @@ export default class HorizontalPicker<T> extends Component<Props<T>> {
           enableMomentum={true}
           activeSlideOffset={10}
           data={items}
-          getItemLayout={(data, index) => ({length: itemWidth * index, offset: index, index})}
+          // @ts-ignore
+          getItemLayout={this.getItemLayout}
           initialScrollIndex={items.indexOf(initialItem)}
           firstItem={items.indexOf(initialItem)}
           renderItem={this.renderItem}

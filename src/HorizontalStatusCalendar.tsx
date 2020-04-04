@@ -1,25 +1,17 @@
-import React, {FC} from 'react';
+import React, { FC, useCallback } from 'react';
 import styled from 'styled-components/native';
-import {fontName} from './lib/vars';
-import {Colors} from './lib/colors';
-import {
-  addDays,
-  eachDayOfInterval,
-  endOfDay,
-  isAfter,
-  isToday,
-  parseISO,
-  startOfYear,
-} from 'date-fns';
-import { enGB, sv } from 'date-fns/locale'
-import {ViewStyle} from 'react-native';
-import {format} from 'date-fns/esm';
-import {formatDate} from './lib/util';
-import {useSelector} from 'react-redux';
-import {selectDateToReportId} from './reducers/dateToReportIdReducer';
-import _ from 'lodash';
+import { fontName } from './lib/vars';
+import { Colors } from './lib/colors';
+import { addDays, eachDayOfInterval, endOfDay, isAfter, isToday, parseISO, subDays, } from 'date-fns';
+import { enGB, sv } from 'date-fns/locale';
+import { ViewStyle } from 'react-native';
+import { format } from 'date-fns/esm';
+import { formatDate } from './lib/util';
 import HorizontalPicker from './HorizontalPicker';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { selectDateToReportIdByDate } from './reducers/dateToReportIdReducer';
+import { RootState } from './reducers/rootReducer';
 
 interface DayEntry {
   date: Date;
@@ -38,79 +30,78 @@ const getDateFnsLocale = (i18nLocale: string) => {
   } else {
     return enGB;
   }
-}
+};
 
-const padDays = 10;
-
-export const HorizontalStatusCalendar: FC<Props> = ({
-  style,
-  value,
-  onChange,
-}) => {
-  const daysWithReports = _.sortBy(
-    useSelector(selectDateToReportId),
-    _.identity,
+const CalendarItem = React.memo(function CalendarItem({item}: {item: string}) {
+  const hasReport = !!useSelector(
+    useCallback((state: RootState) => selectDateToReportIdByDate(state, item), [
+      item,
+    ]),
   );
-  const firstDateStr = _.first(daysWithReports) || formatDate(new Date());
-
-  const dateSpan = eachDayOfInterval({
-    start: startOfYear(parseISO(firstDateStr)),
-    end: addDays(new Date(), padDays),
-  });
-
-  const data: DayEntry[] = dateSpan.map(date => {
-    return {
-      date,
-      hasData: daysWithReports.includes(formatDate(date)),
-    };
-  });
-  const dateValue = parseISO(value);
-
-  const { i18n } = useTranslation()
-
-  
+  const date = parseISO(item);
+  const dayOfMonth = date.getDate();
 
   return (
-    <HorizontalView {...style}>
-      <MonthText>{format(dateValue, 'MMMM', { locale: getDateFnsLocale(i18n.language) })}</MonthText>
-      <HorizontalPicker
-        items={data}
-        itemWidth={50}
-        visibleItemCount={20}
-        firstIndex={0}
-        lastIndex={data.findIndex(item =>
-          isAfter(item.date, endOfDay(new Date())),
-        )}
-        initialItem={data.find(item => value === formatDate(item.date))}
-        onItemSelected={item => {
-          if (item && !isAfter(item.date, endOfDay(new Date()))) {
-            onChange(formatDate(item.date));
-          }
-        }}
-        renderItem={item => {
-          const date = item.date.getDate();
-
-          return (
-            <VerticalCenterAlignedView>
-              {isAfter(item.date, endOfDay(new Date())) ? (
-                <FutureDateText>{date}</FutureDateText>
-              ) : (
-                <SelectedDateText>{date}</SelectedDateText>
-              )}
-              {isToday(item.date) ? (
-                <UnderScore />
-              ) : (
-                <StatusDot
-                  color={item.hasData ? Colors.statusOn : Colors.statusOff}
-                />
-              )}
-            </VerticalCenterAlignedView>
-          );
-        }}
-      />
-    </HorizontalView>
+    <VerticalCenterAlignedView>
+      {isAfter(date, endOfDay(new Date())) ? (
+        <FutureDateText>{dayOfMonth}</FutureDateText>
+      ) : (
+        <SelectedDateText>{dayOfMonth}</SelectedDateText>
+      )}
+      {isToday(date) ? (
+        <UnderScore />
+      ) : (
+        <StatusDot color={hasReport ? Colors.statusOn : Colors.statusOff} />
+      )}
+    </VerticalCenterAlignedView>
   );
-};
+});
+
+const dateSpan = eachDayOfInterval({
+  start: subDays(new Date(), 30),
+  end: addDays(new Date(), 10),
+}).map(formatDate);
+
+const renderItem = (item: string | undefined) => (
+  <>{item && <CalendarItem item={item} />}</>
+);
+
+export const HorizontalStatusCalendar: FC<Props> = React.memo(
+  ({style, value, onChange}) => {
+    const dateValue = parseISO(value);
+
+    const {i18n} = useTranslation();
+
+    const onItemSelected = useCallback(
+      item => {
+        if (item && !isAfter(parseISO(item), endOfDay(new Date()))) {
+          onChange(formatDate(parseISO(item)));
+        }
+      },
+      [onChange],
+    );
+
+    return (
+      <HorizontalView>
+        <MonthText>
+          {format(dateValue, 'MMMM', {locale: getDateFnsLocale(i18n.language)})}
+        </MonthText>
+        <HorizontalPicker
+          items={dateSpan}
+          itemWidth={50}
+          visibleItemCount={10}
+          firstIndex={0}
+          lastIndex={dateSpan.findIndex(item =>
+            isAfter(parseISO(item), endOfDay(new Date())),
+          )}
+          initialItem={value}
+          onItemSelected={onItemSelected}
+          renderItem={renderItem}
+        />
+      </HorizontalView>
+    );
+  },
+);
 
 interface StatusDotProps {
   color: string;
@@ -149,6 +140,7 @@ const StatusDot = styled.View<StatusDotProps>`
 
 const HorizontalView = styled.View`
   align-items: center;
+  margin-bottom: 30px;
 `;
 
 const VerticalCenterAlignedView = styled.View`
@@ -156,6 +148,7 @@ const VerticalCenterAlignedView = styled.View`
   padding-right: 5px;
   padding-left: 5px;
   height: 45px;
+  width: 50px;
 `;
 
 const MonthText = styled.Text`
