@@ -198,13 +198,13 @@ interface NoSymptomsTodayButtonProps {
 const NoSymptomsTodayButton: FC<NoSymptomsTodayButtonProps> = ({
   currentDate,
 }) => {
-  const dipatch = useDispatch();
+  const dispatch = useDispatch();
   const [dialogVisible, setDialogVisible] = useState(false);
   const report = useSelector(selectReport(currentDate));
 
   const noSymptoms = !!report?.symptoms.no_symptoms?.values.checked;
 
-  const {t} = useTranslation()
+  const {t} = useTranslation();
 
   return (
     <>
@@ -246,7 +246,7 @@ const NoSymptomsTodayButton: FC<NoSymptomsTodayButtonProps> = ({
               text="OK"
               textStyle={{color: 'white'}}
               onPress={() => {
-                dipatch(
+                dispatch(
                   requestUpdateSymptomInReport({
                     date: currentDate,
                     now: new Date(),
@@ -265,7 +265,7 @@ const NoSymptomsTodayButton: FC<NoSymptomsTodayButtonProps> = ({
           if (!noSymptoms) {
             setDialogVisible(true);
           } else {
-            dipatch(
+            dispatch(
               requestUpdateSymptomInReport({
                 date: currentDate,
                 now: new Date(),
@@ -284,7 +284,7 @@ const NoSymptomsTodayButton: FC<NoSymptomsTodayButtonProps> = ({
           )}
           <Icon source={Icons.Flex} />
           <Space />
-          <Text style={styles.emojiButtonText}>{t("No symptoms today")}</Text>
+          <Text style={styles.emojiButtonText}>{t('No symptoms today')}</Text>
         </NoSymtoms>
       </TouchableOpacity>
     </>

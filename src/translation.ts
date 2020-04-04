@@ -1,7 +1,4 @@
-import i18n, {
-  LanguageDetectorAsyncModule,
-  LanguageDetectorModule,
-} from 'i18next';
+import i18n, {LanguageDetectorAsyncModule} from 'i18next';
 import {initReactI18next} from 'react-i18next';
 import {NativeModules, Platform} from 'react-native';
 
@@ -17,9 +14,7 @@ const languageDetector: LanguageDetectorAsyncModule = {
           NativeModules.SettingsManager.settings.AppleLanguages[0] //iOS 13
         : NativeModules.I18nManager.localeIdentifier;
 
-    const decidedLang = deviceLanguage || 'en';
-
-    console.log('Loading locale:', decidedLang);
+    const decidedLang = (deviceLanguage || 'en').substr(0, 2);
     callback(decidedLang);
   },
   init: () => {},
