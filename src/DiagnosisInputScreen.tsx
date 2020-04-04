@@ -28,7 +28,7 @@ export const DiagnosisInputScreen: FC<Props> = ({navigation}) => {
     <Background
       header={
         <NavigationHeader
-          title={<Icon source={Icons.Corona} />}
+          center={<Icon source={Icons.Corona} />}
           showBackButton
         />
       }>
