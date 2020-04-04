@@ -15,12 +15,15 @@ import {RouteProp} from '@react-navigation/native';
 import {useReportState} from '../hooks/useReportState';
 import {useHistoricalDataForSymptom} from '../hooks/useHistoricalDataForSymptom';
 import {SafeGraph} from '../SafeGraph';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   route: RouteProp<RootStackParamList, 'Diarrhoea'>;
 };
 
 export const DiarrhoeaInputScreen: FC<Props> = ({route}) => {
+  const {t} = useTranslation();
+
   const {currentReportDate} = route.params;
   const {setValues, values, onSave} = useReportState(
     currentReportDate,
@@ -33,7 +36,7 @@ export const DiarrhoeaInputScreen: FC<Props> = ({route}) => {
     <Background
       header={
         <NavigationHeader
-          center={<TrackMySymptomHeader symptomName="diarrhoea" />}
+          center={<TrackMySymptomHeader symptomName={t("Diarrhoea")} />}
           showBackButton
         />
       }>
@@ -43,7 +46,7 @@ export const DiarrhoeaInputScreen: FC<Props> = ({route}) => {
           <SafeGraph data={data} />
         </Row>
         <SelectionGroup
-          title="do you have diarrhoea?"
+          title={t("do you have diarrhoea?")}
           selectedDataValue={values?.presense}
           onOptionSelected={option => {
             setValues({
@@ -52,13 +55,13 @@ export const DiarrhoeaInputScreen: FC<Props> = ({route}) => {
             });
           }}
           options={[
-            {title: 'yes', color: Colors.stepFiveColor, dataValue: true},
-            {title: 'no', color: Colors.stepOneColor, dataValue: false},
+            {title: t('yes'), color: Colors.stepFiveColor, dataValue: true},
+            {title: t('no'), color: Colors.stepOneColor, dataValue: false},
           ]}
         />
         <Divider />
         <SelectionGroup<'not_often' | 'often' | 'very_often'>
-          title="frequency"
+          title={t("frequency")}
           selectedDataValue={values?.frequency}
           onOptionSelected={option => {
             setValues({
@@ -67,9 +70,9 @@ export const DiarrhoeaInputScreen: FC<Props> = ({route}) => {
             });
           }}
           options={[
-            {title: 'not often', dataValue: 'not_often'},
-            {title: 'often', dataValue: 'often'},
-            {title: 'very often', dataValue: 'very_often'},
+            {title: t('not often'), dataValue: 'not_often'},
+            {title: t('often'), dataValue: 'often'},
+            {title: t('very often'), dataValue: 'very_often'},
           ]}
         />
         <View style={styles.center}>

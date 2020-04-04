@@ -15,6 +15,8 @@ import {TrackMySymptomHeader} from '../components/TrackMySymtomHeader';
 import {PaddedContainer, Row} from '../components/Block';
 import {useHistoricalDataForSymptom} from '../hooks/useHistoricalDataForSymptom';
 import {SafeGraph} from '../SafeGraph';
+import { useTranslation } from 'react-i18next';
+
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList, 'SenseOfTaste'>;
@@ -22,6 +24,7 @@ interface Props {
 }
 
 export const SenseOfTasteInputScreen: FC<Props> = ({route}) => {
+  const {t} = useTranslation();
   const {currentReportDate} = route.params;
 
   const {onSave, values, setValues} = useReportState(
@@ -35,7 +38,7 @@ export const SenseOfTasteInputScreen: FC<Props> = ({route}) => {
     <Background
       header={
         <NavigationHeader
-          center={<TrackMySymptomHeader symptomName="sense of taste" />}
+          center={<TrackMySymptomHeader symptomName={t("Sense of taste")} />}
           showBackButton
         />
       }>
@@ -45,7 +48,7 @@ export const SenseOfTasteInputScreen: FC<Props> = ({route}) => {
           <SafeGraph data={data} />
         </Row>
         <SelectionGroup<'normal' | 'less_than_usual' | 'can_not_taste_anything'>
-          title="How's your sense of taste?"
+          title={t("How's your sense of taste?")}
           selectedDataValue={values?.description}
           onOptionSelected={option =>
             setValues({
@@ -53,14 +56,14 @@ export const SenseOfTasteInputScreen: FC<Props> = ({route}) => {
             })
           }
           options={[
-            {title: 'normal', color: Colors.stepOneColor, dataValue: 'normal'},
+            {title: t('normal'), color: Colors.stepOneColor, dataValue: 'normal'},
             {
-              title: 'Food tastes less than usual',
+              title: t('Food tastes less than usual'),
               color: Colors.stepThreeColor,
               dataValue: 'less_than_usual',
             },
             {
-              title: "Can't taste anything",
+              title: t("Can't taste anything"),
               color: Colors.stepFiveColor,
               dataValue: 'can_not_taste_anything',
             },

@@ -16,6 +16,7 @@ import {RootStackParamList} from '../../App';
 import {TrackMySymptomHeader} from '../components/TrackMySymtomHeader';
 import {useHistoricalDataForSymptom} from '../hooks/useHistoricalDataForSymptom';
 import {SafeGraph} from '../SafeGraph';
+import {useTranslation} from 'react-i18next';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'ShortnessOfBreath'>;
@@ -23,6 +24,7 @@ type Props = {
 };
 
 export const ShortnessOfBreathInputScreen: FC<Props> = ({route}) => {
+  const {t} = useTranslation();
   const {currentReportDate} = route.params;
   const {setValues, values, onSave} = useReportState(
     currentReportDate,
@@ -35,7 +37,7 @@ export const ShortnessOfBreathInputScreen: FC<Props> = ({route}) => {
     <Background
       header={
         <NavigationHeader
-          center={<TrackMySymptomHeader symptomName="shortness of breath" />}
+          center={<TrackMySymptomHeader symptomName={t("Shortness of breath")} />}
           showBackButton
         />
       }>
@@ -50,7 +52,7 @@ export const ShortnessOfBreathInputScreen: FC<Props> = ({route}) => {
           | 'tightness_in_my_chest'
           | 'cannot_get_enough_air'
         >
-          title="Describe the feeling"
+          title={t("Describe the feeling")}
           selectedDataValue={values?.feeling}
           onOptionSelected={option =>
             setValues({
@@ -59,22 +61,22 @@ export const ShortnessOfBreathInputScreen: FC<Props> = ({route}) => {
           }
           options={[
             {
-              title: 'breathe normally',
+              title: t('breathe normally'),
               color: '#8cf081',
               dataValue: 'breathe_normally',
             },
             {
-              title: 'Short of breath',
+              title: t('Short of breath'),
               color: '#FFBC5C',
               dataValue: 'shortness_of_breath',
             },
             {
-              title: 'tightness in my chest',
+              title: t('tightness in my chest'),
               color: '#FF7A7A',
               dataValue: 'tightness_in_my_chest',
             },
             {
-              title: 'cannot get enough air',
+              title: t('cannot get enough air'),
               color: '#FF7A7A',
               dataValue: 'cannot_get_enough_air',
             },
@@ -82,18 +84,18 @@ export const ShortnessOfBreathInputScreen: FC<Props> = ({route}) => {
         />
         <Divider />
         <SelectionGroup<'fainting'>
-          title="do you also feel"
+          title={t("do you also feel")}
           selectedDataValue={values?.do_you_also_feel}
           onOptionSelected={option =>
             setValues({do_you_also_feel: option?.dataValue})
           }
-          options={[{title: 'fainting', dataValue: 'fainting'}]}
+          options={[{title: t('fainting'), dataValue: 'fainting'}]}
         />
         <Divider />
         <SelectionGroup<
           'comes_suddenly' | 'is_persistent' | 'interferes_with_daily_activity'
         >
-          title="frequency"
+          title={t("frequency")}
           selectedDataValue={values?.frequency}
           onOptionSelected={option => {
             setValues({
@@ -101,10 +103,10 @@ export const ShortnessOfBreathInputScreen: FC<Props> = ({route}) => {
             });
           }}
           options={[
-            {title: 'comes suddenly', dataValue: 'comes_suddenly'},
-            {title: 'is persistent', dataValue: 'is_persistent'},
+            {title: t('comes suddenly'), dataValue: 'comes_suddenly'},
+            {title: t('is persistent'), dataValue: 'is_persistent'},
             {
-              title: 'interferes with daily activity',
+              title: t('interferes with daily activity'),
               dataValue: 'interferes_with_daily_activity',
             },
           ]}

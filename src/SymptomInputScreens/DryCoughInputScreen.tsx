@@ -17,6 +17,7 @@ import {PaddedContainer, Row} from '../components/Block';
 import {useHistoricalDataForSymptom} from '../hooks/useHistoricalDataForSymptom';
 import {SafeGraph} from '../SafeGraph';
 import {Option} from '../components/SelectionGroup';
+import {useTranslation} from 'react-i18next';
 
 interface Props {
   navigation: StackNavigationProp<RootStackParamList, 'DryCough'>;
@@ -24,6 +25,7 @@ interface Props {
 }
 
 export const DryCoughInputScreen: FC<Props> = ({route}) => {
+  const {t} = useTranslation();
   const {currentReportDate} = route.params;
   const {setValues, values, onSave} = useReportState(
     currentReportDate,
@@ -36,7 +38,7 @@ export const DryCoughInputScreen: FC<Props> = ({route}) => {
     <Background
       header={
         <NavigationHeader
-          center={<TrackMySymptomHeader symptomName="dry cough" />}
+          center={<TrackMySymptomHeader symptomName={t("Dry Cough")} />}
           showBackButton
         />
       }>
@@ -49,7 +51,7 @@ export const DryCoughInputScreen: FC<Props> = ({route}) => {
       <SelectionGroup<
         'none' | 'every_minute' | 'few_times_an_hour' | 'few_times_a_day'
       >
-        title="cough frequency"
+        title={t("cough frequency")}
         selectedDataValue={values?.frequency}
         onOptionSelected={option =>
           setValues({
@@ -57,15 +59,15 @@ export const DryCoughInputScreen: FC<Props> = ({route}) => {
           })
         }
         options={[
-          {title: 'none', dataValue: 'none'},
-          {title: 'every minute', dataValue: 'every_minute'},
-          {title: 'few times an hour', dataValue: 'few_times_an_hour'},
-          {title: 'few times a day', dataValue: 'few_times_a_day'},
+          {title: t('none'), dataValue: 'none'},
+          {title: t('every minute'), dataValue: 'every_minute'},
+          {title: t('few times an hour'), dataValue: 'few_times_an_hour'},
+          {title: t('few times a day'), dataValue: 'few_times_a_day'},
         ]}
       />
       <Divider />
       <SelectionGroup<'none' | 'bearable' | 'harsh' | 'physical_discomfort'>
-        title="intensity"
+        title={t("intensity")}
         selectedDataValue={values?.intensity}
         onOptionSelected={option =>
           setValues({
@@ -73,15 +75,15 @@ export const DryCoughInputScreen: FC<Props> = ({route}) => {
           })
         }
         options={[
-          {title: 'none', color: Colors.stepOneColor, dataValue: 'none'},
+          {title: t('none'), color: Colors.stepOneColor, dataValue: 'none'},
           {
-            title: 'bearable',
+            title: t('bearable'),
             color: Colors.stepTwoColor,
             dataValue: 'bearable',
           },
-          {title: 'harsh', color: Colors.stepFourColor, dataValue: 'harsh'},
+          {title: t('harsh'), color: Colors.stepFourColor, dataValue: 'harsh'},
           {
-            title: 'physical discomfort',
+            title: t('physical discomfort'),
             color: Colors.stepFiveColor,
             dataValue: 'physical_discomfort',
           },
@@ -89,12 +91,12 @@ export const DryCoughInputScreen: FC<Props> = ({route}) => {
       />
       <Divider />
       <SelectionGroup<'daytime' | 'nighttime'>
-        title="disruption"
+        title={t("disruption")}
         selectedDataValue={values?.disruption}
         onOptionSelected={option => setValues({disruption: option?.dataValue})}
         options={[
-          {title: 'daytime', dataValue: 'daytime'},
-          {title: 'nighttime', dataValue: 'nighttime'},
+          {title: t('daytime'), dataValue: 'daytime'},
+          {title: t('nighttime'), dataValue: 'nighttime'},
         ]}
       />
       <PaddedContainer>

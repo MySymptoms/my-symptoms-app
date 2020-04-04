@@ -15,6 +15,7 @@ import {RouteProp} from '@react-navigation/native';
 import {PaddedContainer, Row} from '../components/Block';
 import {useHistoricalDataForSymptom} from '../hooks/useHistoricalDataForSymptom';
 import {SafeGraph} from '../SafeGraph';
+import {useTranslation} from 'react-i18next';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Tiredness'>;
@@ -22,6 +23,7 @@ type Props = {
 };
 
 export const TirednessInputScreen: FC<Props> = ({route}) => {
+  const {t} = useTranslation();
   const {currentReportDate} = route.params;
   const {setValues, values, onSave} = useReportState(
     currentReportDate,
@@ -34,7 +36,7 @@ export const TirednessInputScreen: FC<Props> = ({route}) => {
     <Background
       header={
         <NavigationHeader
-          center={<TrackMySymptomHeader symptomName="tiredness" />}
+          center={<TrackMySymptomHeader symptomName={t("Tiredness")} />}
           showBackButton
         />
       }>
@@ -50,7 +52,7 @@ export const TirednessInputScreen: FC<Props> = ({route}) => {
           | 'can_get_to_the_bathroom'
           | 'cannot_get_out_of_bed'
         >
-          title="are you tired?"
+          title={t("are you tired?")}
           selectedDataValue={values?.description}
           onOptionSelected={option =>
             setValues({
@@ -59,27 +61,27 @@ export const TirednessInputScreen: FC<Props> = ({route}) => {
           }
           options={[
             {
-              title: 'As usual',
+              title: t('As usual'),
               color: Colors.stepOneColor,
               dataValue: 'as_usual',
             },
             {
-              title: 'Tired, but not bedridden',
+              title: t('Tired, but not bedridden'),
               color: Colors.stepTwoColor,
               dataValue: 'tired_but_not_bedridden',
             },
             {
-              title: 'Mostly bedridden',
+              title: t('Mostly bedridden'),
               color: Colors.stepThreeColor,
               dataValue: 'mostly_bedridden',
             },
             {
-              title: 'Can get to the bathroom',
+              title: t('Can get to the bathroom'),
               color: Colors.stepFourColor,
               dataValue: 'can_get_to_the_bathroom',
             },
             {
-              title: 'Cannot get out of bed',
+              title: t('Cannot get out of bed'),
               color: Colors.stepFiveColor,
               dataValue: 'cannot_get_out_of_bed',
             },

@@ -68,13 +68,13 @@ export const FancyGradientChart: React.FC<FancyGradientChartProps> = ({
   data,
   getColor = getColorForScaledValue,
   maxY = 5,
-  minY = 0
+  minY = 0,
 }) => {
   return (
     <VictoryChart
       scale={{x: 'time'}}
-      minDomain={{y: minY }}
-      maxDomain={{y: maxY }}
+      minDomain={{y: minY}}
+      maxDomain={{y: maxY}}
       width={350}
       height={150}
       theme={theme}>

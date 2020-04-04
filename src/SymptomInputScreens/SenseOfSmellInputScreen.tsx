@@ -15,6 +15,7 @@ import {useReportState} from '../hooks/useReportState';
 import {PaddedContainer, Row} from '../components/Block';
 import {useHistoricalDataForSymptom} from '../hooks/useHistoricalDataForSymptom';
 import {SafeGraph} from '../SafeGraph';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'SenseOfSmell'>;
@@ -30,11 +31,13 @@ export const SenseOfSmellInputScreen: FC<Props> = ({route}) => {
 
   const data = useHistoricalDataForSymptom('sense_of_smell');
 
+  const {t} = useTranslation()
+
   return (
     <Background
       header={
         <NavigationHeader
-          center={<TrackMySymptomHeader symptomName="sense of smell" />}
+          center={<TrackMySymptomHeader symptomName={t("Sense of smell")} />}
           showBackButton
         />
       }>
@@ -44,7 +47,7 @@ export const SenseOfSmellInputScreen: FC<Props> = ({route}) => {
           <SafeGraph data={data} />
         </Row>
         <SelectionGroup<'normal' | 'less_than_usual' | 'can_not_smell_anything'>
-          title="have you lost your sense of smell?"
+          title={t("have you lost your sense of smell?")}
           selectedDataValue={values?.description}
           onOptionSelected={option => {
             setValues({
@@ -54,12 +57,12 @@ export const SenseOfSmellInputScreen: FC<Props> = ({route}) => {
           options={[
             {title: 'normal', color: Colors.stepOneColor, dataValue: 'normal'},
             {
-              title: 'Things smell less',
+              title: t('Things smell less'),
               color: Colors.stepThreeColor,
               dataValue: 'less_than_usual',
             },
             {
-              title: "Can't smell anything",
+              title: t("Can't smell anything"),
               color: Colors.stepFiveColor,
               dataValue: 'can_not_smell_anything',
             },

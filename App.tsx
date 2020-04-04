@@ -8,7 +8,8 @@
  * @format
  */
 
-import React from 'react';
+import './src/translation';
+import React, {Suspense} from 'react';
 import {StatusBar, View} from 'react-native';
 import {applyMiddleware, compose, createStore} from 'redux';
 import thunk from 'redux-thunk';
@@ -103,51 +104,65 @@ const App = () => {
       }}>
       <Provider store={store}>
         <StatusBar barStyle="light-content" />
-        <NavigationContainer>
-          <Stack.Navigator
-            headerMode="none"
-            initialRouteName={birthYear === null ? 'Onboarding' : 'Overview'}>
-            <Stack.Screen name={'Onboarding'} component={OnboardingScreen} />
-            <Stack.Screen name={'Overview'} component={OverviewScreen} />
-            <Stack.Screen name={'Fever'} component={FeverInputScreen} />
-            <Stack.Screen name={'DryCough'} component={DryCoughInputScreen} />
-            <Stack.Screen name={'Tiredness'} component={TirednessInputScreen} />
-            <Stack.Screen
-              name={'ShortnessOfBreath'}
-              component={ShortnessOfBreathInputScreen}
-            />
-            <Stack.Screen
-              name={'AchesAndPain'}
-              component={AchesAndPainInputScreen}
-            />
-            <Stack.Screen
-              name={'SoreThroat'}
-              component={SoreThroatInputScreen}
-            />
-            <Stack.Screen name={'Diarrhoea'} component={DiarrhoeaInputScreen} />
-            <Stack.Screen name={'Nausea'} component={NauseaInputScreen} />
-            <Stack.Screen name={'RunnyNose'} component={RunnyNoseInputScreen} />
-            <Stack.Screen
-              name={'SenseOfTaste'}
-              component={SenseOfTasteInputScreen}
-            />
-            <Stack.Screen
-              name={'SenseOfSmell'}
-              component={SenseOfSmellInputScreen}
-            />
-            <Stack.Screen name={'Summary'} component={SummaryPage} />
-            <Stack.Screen name={'ReportList'} component={ReportList} />
-            <Stack.Screen
-              name={'DetailedReport'}
-              component={DetailedReportScreen}
-            />
-            <Stack.Screen
-              name={'AdditionalData'}
-              component={AdditionalDataInputScreen}
-            />
-            <Stack.Screen name={'Diagnosis'} component={DiagnosisInputScreen} />
-          </Stack.Navigator>
-        </NavigationContainer>
+        <Suspense fallback={null}>
+          <NavigationContainer>
+            <Stack.Navigator
+              headerMode="none"
+              initialRouteName={birthYear === null ? 'Onboarding' : 'Overview'}>
+              <Stack.Screen name={'Onboarding'} component={OnboardingScreen} />
+              <Stack.Screen name={'Overview'} component={OverviewScreen} />
+              <Stack.Screen name={'Fever'} component={FeverInputScreen} />
+              <Stack.Screen name={'DryCough'} component={DryCoughInputScreen} />
+              <Stack.Screen
+                name={'Tiredness'}
+                component={TirednessInputScreen}
+              />
+              <Stack.Screen
+                name={'ShortnessOfBreath'}
+                component={ShortnessOfBreathInputScreen}
+              />
+              <Stack.Screen
+                name={'AchesAndPain'}
+                component={AchesAndPainInputScreen}
+              />
+              <Stack.Screen
+                name={'SoreThroat'}
+                component={SoreThroatInputScreen}
+              />
+              <Stack.Screen
+                name={'Diarrhoea'}
+                component={DiarrhoeaInputScreen}
+              />
+              <Stack.Screen name={'Nausea'} component={NauseaInputScreen} />
+              <Stack.Screen
+                name={'RunnyNose'}
+                component={RunnyNoseInputScreen}
+              />
+              <Stack.Screen
+                name={'SenseOfTaste'}
+                component={SenseOfTasteInputScreen}
+              />
+              <Stack.Screen
+                name={'SenseOfSmell'}
+                component={SenseOfSmellInputScreen}
+              />
+              <Stack.Screen name={'Summary'} component={SummaryPage} />
+              <Stack.Screen name={'ReportList'} component={ReportList} />
+              <Stack.Screen
+                name={'DetailedReport'}
+                component={DetailedReportScreen}
+              />
+              <Stack.Screen
+                name={'AdditionalData'}
+                component={AdditionalDataInputScreen}
+              />
+              <Stack.Screen
+                name={'Diagnosis'}
+                component={DiagnosisInputScreen}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </Suspense>
       </Provider>
     </View>
   );

@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {fontName} from '../lib/vars';
 import {Divider} from './Divider';
+import {HalfPaddedContainer} from './Block';
 
 interface Props {
   icon: ImageSourcePropType;
@@ -27,22 +28,24 @@ export const BoxInput: FC<Props> = ({
   expandingBottomComponent,
 }) => {
   return (
-    <BlackBox>
-      <Row style={styles.outerRow}>
-        <Row>
-          <Icon source={icon} style={styles.emojiStyle} />
-          <BoxText>{text}</BoxText>
-        </Row>
+    <HalfPaddedContainer>
+      <BlackBox>
+        <Row style={styles.outerRow}>
+          <Row>
+            <Icon source={icon} style={styles.emojiStyle} />
+            <BoxText>{text}</BoxText>
+          </Row>
 
-        {rightComponent}
-      </Row>
-      {showExpandingBottomComponent && (
-        <View>
-          <Divider />
-          {expandingBottomComponent}
-        </View>
-      )}
-    </BlackBox>
+          {rightComponent}
+        </Row>
+        {showExpandingBottomComponent && (
+          <View>
+            <Divider />
+            {expandingBottomComponent}
+          </View>
+        )}
+      </BlackBox>
+    </HalfPaddedContainer>
   );
 };
 
@@ -59,8 +62,6 @@ const BlackBox = styled.View`
   border: 1px solid #000000;
   border-radius: 10px;
   padding: 20px;
-  width: 96%;
-  margin: auto;
 `;
 
 const Row = styled.View`

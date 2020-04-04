@@ -44,6 +44,10 @@ export const PaddedContainer = styled.View`
   padding: 0 15px;
 `;
 
+export const HalfPaddedContainer = styled.View`
+  padding: 0 7px;
+`;
+
 export const Row = styled.View`
   flex-direction: row;
 `;

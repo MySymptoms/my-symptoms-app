@@ -17,6 +17,7 @@ import {useHistoricalDataForSymptom} from './hooks/useHistoricalDataForSymptom';
 import _ from 'lodash';
 import {useTemperatureConvertedToUserPreference} from './hooks/useTemperatureConvertedToUserPreference';
 import {CrossIcon} from './components/CrossIcon';
+import {useTranslation} from 'react-i18next';
 
 const Row = styled.View`
   flex-direction: row;
@@ -74,6 +75,7 @@ const SummaryViewColumn: React.FC = ({children}) => (
 );
 
 export const SummaryPage = () => {
+  const {t} = useTranslation();
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const user = useSelector(selectUser);
@@ -101,7 +103,7 @@ export const SummaryPage = () => {
       <View style={{paddingHorizontal: 15}}>
         <Row>
           <SummaryViewColumn>
-            <MyText style={{fontSize: 36}}>Age</MyText>
+            <MyText style={{fontSize: 36}}>{t('Age')}</MyText>
             <MyText style={{fontSize: 60, color: '#fff'}}>
               {user.birthYear != null
                 ? new Date().getUTCFullYear() - user.birthYear
@@ -110,7 +112,7 @@ export const SummaryPage = () => {
           </SummaryViewColumn>
           <Space />
           <SummaryViewColumn>
-            <MyText>Travelled</MyText>
+            <MyText>{t('Travelled')}</MyText>
             <BlackBox
               style={{borderRadius: 50, padding: 10, backgroundColor: '#000'}}>
               {user.recentTravels === true ? (
@@ -123,7 +125,7 @@ export const SummaryPage = () => {
         </Row>
         <Space />
         <RowWithContentRight
-          leftText={'Fever'}
+          leftText={t('Fever')}
           right={
             <BlackBox
               style={{
@@ -142,7 +144,7 @@ export const SummaryPage = () => {
         <Space />
         <View>
           <RowWithContentRight
-            leftText={'Medical Conditions'}
+            leftText={t('Medical Conditions')}
             right={
               <BlackBox
                 style={{

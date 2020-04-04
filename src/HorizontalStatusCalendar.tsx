@@ -10,6 +10,7 @@ import {
   isToday,
   parseISO,
 } from 'date-fns';
+import { enGB, sv } from 'date-fns/locale'
 import {ViewStyle} from 'react-native';
 import {format} from 'date-fns/esm';
 import {formatDate} from './lib/util';
@@ -17,6 +18,7 @@ import {useSelector} from 'react-redux';
 import {selectDateToReportId} from './reducers/dateToReportIdReducer';
 import _ from 'lodash';
 import HorizontalPicker from './HorizontalPicker';
+import { useTranslation } from 'react-i18next';
 
 interface DayEntry {
   date: Date;
@@ -27,6 +29,14 @@ interface Props {
   style?: ViewStyle;
   onChange: (date: string) => void;
   value: string;
+}
+
+const getDateFnsLocale = (i18nLocale: string) => {
+  if (i18nLocale === 'sv') {
+    return sv;
+  } else {
+    return enGB;
+  }
 }
 
 const padDays = 10;
@@ -55,9 +65,13 @@ export const HorizontalStatusCalendar: FC<Props> = ({
   });
   const dateValue = parseISO(value);
 
+  const { i18n } = useTranslation()
+
+  
+
   return (
     <HorizontalView {...style}>
-      <MonthText>{format(dateValue, 'MMMM')}</MonthText>
+      <MonthText>{format(dateValue, 'MMMM', { locale: getDateFnsLocale(i18n.language) })}</MonthText>
       <HorizontalPicker
         items={data}
         itemWidth={50}

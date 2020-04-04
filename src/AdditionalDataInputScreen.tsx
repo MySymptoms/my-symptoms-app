@@ -22,6 +22,9 @@ import _ from 'lodash';
 import {BirthYearInput} from './components/BirthYearInput';
 import {BeenTravellingInput} from './components/BeenTravellingInput';
 import {PreExistingAilmentsInput} from './components/PreExistingAilmentsinput';
+import {useTranslation} from 'react-i18next';
+import {useSelector} from 'react-redux';
+import {selectShareData} from './reducers/userReducer';
 
 type Props = {
   navigation: StackNavigationProp<{}>;
@@ -50,8 +53,10 @@ const BoxText = styled.Text`
 `;
 
 export const AdditionalDataInputScreen: FC<Props> = ({navigation}) => {
+  const {t} = useTranslation();
   const [hasTraveled, setHasTraveled] = useState(true);
   const [hasCondition, setHasCondition] = useState(false);
+  const shareData = useSelector(selectShareData);
 
   return (
     <Background
@@ -68,7 +73,9 @@ export const AdditionalDataInputScreen: FC<Props> = ({navigation}) => {
           <Button onPress={() => navigation.navigate('Diagnosis')}>
             <Row>
               <Icon source={Icons.Corona} style={styles.emojiStyle} />
-              <ButtonText>I have been diagnosed with Covid-19</ButtonText>
+              <ButtonText>
+                {t('I have been diagnosed with Covid-19')}
+              </ButtonText>
             </Row>
           </Button>
           <Space />
@@ -78,23 +85,23 @@ export const AdditionalDataInputScreen: FC<Props> = ({navigation}) => {
             style={styles.map}
           />
           <ShareText>
-            If you are interested, you can help us compile a gloabal map that
-            illustrates what symptoms actually lead to Covid-19 💛
+            {shareData
+              ? t('your data is being shared paragraph')
+              : t('would you like to share data paragraph')}
           </ShareText>
           <Space />
           <ShareDataButton />
           <Space />
           <Row>
-            <View style={styles.peopleSharedBorder}>
-              <Text style={styles.peopleShared}>2234</Text>
-            </View>
-            <Text style={styles.text}>
-              {' '}
-              have shared their data anonymously so far
+            <Text style={styles.numberPeopleShared}>2 234</Text>
+            <Text style={styles.peopleShared}>
+              {` ${t('from')}`} 🇸🇪 {t('shared their data anonymously so far')}
             </Text>
           </Row>
         </View>
-        <Space/>
+        <Space />
+        <Space />
+        <Space />
       </PaddedContainer>
     </Background>
   );
@@ -112,12 +119,18 @@ const Button = styled.TouchableOpacity`
 
 const ButtonText = styled.Text`
   color: white;
+  font-family: ${fontName};
+  font-weight: 700;
+  font-size: 16px;
 `;
 const ShareText = styled.Text`
+  padding: 0 20px;
   color: white;
-  width: 90%;
-  line-height: 21px;
-  letter-spacing: 1px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  font-family: ${fontName};
 `;
 
 const ShareButton = styled(Button)`
@@ -156,12 +169,14 @@ const styles = StyleSheet.create({
   text: {
     color: 'white',
   },
-  peopleShared: {
+  numberPeopleShared: {
     color: 'white',
     fontWeight: '700',
+    fontFamily: fontName,
+    textDecorationLine: 'underline',
   },
-  peopleSharedBorder: {
-    borderBottomWidth: 2,
-    borderBottomColor: 'white',
+  peopleShared: {
+    color: 'white',
+    fontFamily: fontName,
   },
 });

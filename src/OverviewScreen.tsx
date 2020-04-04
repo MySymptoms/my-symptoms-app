@@ -1,12 +1,12 @@
 import React, {FC, useEffect, useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import styled from 'styled-components/native';
-import {Space, HalfSpace} from './components/Block';
+import {HalfSpace, Space} from './components/Block';
 import {fontName} from './lib/vars';
 import {HorizontalStatusCalendar} from './HorizontalStatusCalendar';
 import {Icon, Icons} from './lib/icons';
 import {Colors} from './lib/colors';
-import {useSelector, useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {RootStackParamList} from '../App';
 import {Background} from './components/Background';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -16,24 +16,19 @@ import {formatDate} from './lib/util';
 import {OverviewSymptomButton} from './components/OverviewSymptomButton';
 import {RootState} from './reducers/rootReducer';
 import {
-  selectReport,
   requestUpdateSymptomInReport,
+  selectReport,
 } from './reducers/reportsReducer';
 import {useGeoLocation} from './hooks/useGeoLocation';
 import {getColorForReportAndSymptom} from './lib/symptomToColor';
-import {useReportState} from './hooks/useReportState';
 import {HeartBeatIcon} from './components/HeartBeatIcon';
 import Dialog, {
-  DialogContent,
-  DialogFooter,
   DialogButton,
+  DialogContent,
   SlideAnimation,
 } from 'react-native-popup-dialog';
-import _ from 'lodash';
-import {
-  SelectableButton,
-  selectableButtonStyles,
-} from './components/SelectableButton';
+import {selectableButtonStyles} from './components/SelectableButton';
+import {useTranslation} from 'react-i18next';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList>;
@@ -52,13 +47,15 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
     });
   }, [requestPermission]);
 
+  const {t} = useTranslation();
+
   return (
     <Background
       header={
         <NavigationHeader
           left={<SummaryViewIcon />}
           onPressLeft={() => navigation.navigate('Summary')}
-          title={'TRACK MY SYMPTOMS'}
+          title={t('TRACK MY SYMPTOMS')}
           right={<UserEmojiContainer>{emoji}</UserEmojiContainer>}
           onPressRight={() => navigation.navigate('AdditionalData')}
         />
@@ -75,7 +72,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
             onPress={() =>
               navigation.navigate('Fever', {currentReportDate: currentDate})
             }
-            text={'Fever'}
+            text={t('Fever')}
             icon={Icons.FaceWithThermometer}
           />
           <Space />
@@ -84,7 +81,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
             onPress={() =>
               navigation.navigate('DryCough', {currentReportDate: currentDate})
             }
-            text={'Dry Cough'}
+            text={t('Dry Cough')}
             icon={Icons.Mask}
           />
           <Space />
@@ -93,7 +90,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
             onPress={() =>
               navigation.navigate('Tiredness', {currentReportDate: currentDate})
             }
-            text={'Tiredness'}
+            text={t('Tiredness')}
             icon={Icons.Bed}
           />
         </View>
@@ -106,7 +103,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
                 currentReportDate: currentDate,
               })
             }
-            text={'Shortness of breath'}
+            text={t('Shortness of breath')}
             icon={Icons.Yawn}
           />
           <Space />
@@ -117,7 +114,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
                 currentReportDate: currentDate,
               })
             }
-            text={'Aches & Pains'}
+            text={t('Aches & Pains')}
             icon={Icons.Sweat}
           />
           <Space />
@@ -128,7 +125,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
                 currentReportDate: currentDate,
               })
             }
-            text={'Sore Throat'}
+            text={t('Sore Throat')}
             icon={Icons.Weary}
           />
         </View>
@@ -139,7 +136,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
             onPress={() =>
               navigation.navigate('Diarrhoea', {currentReportDate: currentDate})
             }
-            text={'Diarrhoea'}
+            text={t('Diarrhoea')}
             icon={Icons.Toilet}
           />
           <Space />
@@ -148,7 +145,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
             onPress={() =>
               navigation.navigate('Nausea', {currentReportDate: currentDate})
             }
-            text={'Nausea'}
+            text={t('Nausea')}
             icon={Icons.Nauseated}
           />
           <Space />
@@ -157,7 +154,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
             onPress={() =>
               navigation.navigate('RunnyNose', {currentReportDate: currentDate})
             }
-            text={'Runny Nose'}
+            text={t('Runny Nose')}
             icon={Icons.Sneezing}
           />
         </View>
@@ -170,7 +167,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
                 currentReportDate: currentDate,
               })
             }
-            text={'Sense of taste'}
+            text={t('Sense of taste')}
             icon={Icons.Food}
           />
           <Space />
@@ -181,7 +178,7 @@ export const OverviewScreen: FC<Props> = ({navigation}) => {
                 currentReportDate: currentDate,
               })
             }
-            text={'Sense of smell'}
+            text={t('Sense of smell')}
             icon={Icons.Nose}
           />
           <Space />
@@ -206,6 +203,8 @@ const NoSymptomsTodayButton: FC<NoSymptomsTodayButtonProps> = ({
   const report = useSelector(selectReport(currentDate));
 
   const noSymptoms = !!report?.symptoms.no_symptoms?.values.checked;
+
+  const {t} = useTranslation()
 
   return (
     <>
@@ -285,7 +284,7 @@ const NoSymptomsTodayButton: FC<NoSymptomsTodayButtonProps> = ({
           )}
           <Icon source={Icons.Flex} />
           <Space />
-          <Text style={styles.emojiButtonText}>No symptoms today</Text>
+          <Text style={styles.emojiButtonText}>{t("No symptoms today")}</Text>
         </NoSymtoms>
       </TouchableOpacity>
     </>

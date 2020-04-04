@@ -15,12 +15,14 @@ import {RouteProp} from '@react-navigation/native';
 import {useReportState} from '../hooks/useReportState';
 import {useHistoricalDataForSymptom} from '../hooks/useHistoricalDataForSymptom';
 import {SafeGraph} from '../SafeGraph';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   route: RouteProp<RootStackParamList, 'SoreThroat'>;
 };
 
 export const SoreThroatInputScreen: FC<Props> = ({route}) => {
+  const {t} = useTranslation();
   const {currentReportDate} = route.params;
   const {setValues, values, onSave} = useReportState(
     currentReportDate,
@@ -33,7 +35,7 @@ export const SoreThroatInputScreen: FC<Props> = ({route}) => {
     <Background
       header={
         <NavigationHeader
-          center={<TrackMySymptomHeader symptomName="sore throat" />}
+          center={<TrackMySymptomHeader symptomName={t("Sore Throat")} />}
           showBackButton
         />
       }>
@@ -45,7 +47,7 @@ export const SoreThroatInputScreen: FC<Props> = ({route}) => {
         <SelectionGroup<
           'normal' | 'easy_to_gulp' | 'scratchy' | 'difficult_to_swallow'
         >
-          title="describe the feeling"
+          title={t("Describe the feeling")}
           selectedDataValue={values?.feeling}
           onOptionSelected={option => {
             setValues({
@@ -54,22 +56,22 @@ export const SoreThroatInputScreen: FC<Props> = ({route}) => {
           }}
           options={[
             {
-              title: 'normal',
+              title: t('normal'),
               color: Colors.stepOneColor,
               dataValue: 'normal',
             },
             {
-              title: 'easy to gulp',
+              title: t('easy to gulp'),
               color: Colors.stepTwoColor,
               dataValue: 'easy_to_gulp',
             },
             {
-              title: 'scratchy',
+              title: t('scratchy'),
               color: Colors.stepFourColor,
               dataValue: 'scratchy',
             },
             {
-              title: 'difficult to swallow',
+              title: t('difficult to swallow'),
               color: Colors.stepFiveColor,
               dataValue: 'difficult_to_swallow',
             },
@@ -77,14 +79,14 @@ export const SoreThroatInputScreen: FC<Props> = ({route}) => {
         />
         <Divider />
         <SelectionGroup<'not_inflamed' | 'inflamed'>
-          title="how does the back throat look?"
+          title={t("how does the back throat look?")}
           selectedDataValue={values?.throat_color}
           onOptionSelected={option => {
             setValues({throat_color: option?.dataValue});
           }}
           options={[
-            {title: 'not inflamed', dataValue: 'not_inflamed'},
-            {title: 'inflamed & red', dataValue: 'inflamed'},
+            {title: t('not inflamed'), dataValue: 'not_inflamed'},
+            {title: t('inflamed & red'), dataValue: 'inflamed'},
           ]}
         />
         <View style={styles.center}>

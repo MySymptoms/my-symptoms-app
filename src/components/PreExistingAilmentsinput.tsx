@@ -9,34 +9,28 @@ import {
   setPreExistingAilments,
 } from '../reducers/userReducer';
 import _ from 'lodash';
+import { useTranslation } from 'react-i18next';
 
 export const PreExistingAilmentsInput = () => {
+  const {t} = useTranslation();
   const dispatch = useDispatch();
   const storedPreExistingAilments = useSelector(selectPreExistingAilment);
 
   const [hasCondition, setHasCondition] = useState(!!storedPreExistingAilments);
   const [conditions, setConditions] = useState(storedPreExistingAilments);
-  // const debouncedDispatch = _.debounce(
-  //   () => dispatch(setPreExistingAilments(conditions)),
-  //   1000,
-  // );
 
   useEffect(() => {
     dispatch(setPreExistingAilments(conditions));
-    // debouncedDispatch();
-    // return () => {
-    //   debouncedDispatch.cancel();
-    // };
   }, [conditions]);
 
   return (
     <BoxInput
       icon={Icons.Pill}
-      text="Do you have any pre-existing medical conditions?"
+      text={t("Do you have any pre-existing medical conditions?")}
       rightComponent={
         <SegmentedControl
-          firstOption="YES"
-          secondOption="NO"
+          firstOption={t("yes")}
+          secondOption={t("no")}
           selectedIndex={hasCondition ? 0 : 1}
           onTabPress={index => {
             if (index === 1) {

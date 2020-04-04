@@ -9,8 +9,10 @@ import {BirthYearInput} from './components/BirthYearInput';
 import {BeenTravellingInput} from './components/BeenTravellingInput';
 import {PreExistingAilmentsInput} from './components/PreExistingAilmentsinput';
 import {View} from 'react-native';
+import {useTranslation} from 'react-i18next';
 
 export const OnboardingScreen = () => {
+  const {t} = useTranslation();
   const navigation = useNavigation();
 
   return (
@@ -29,7 +31,7 @@ export const OnboardingScreen = () => {
           alignItems: 'center',
         }}>
         <DoneButton
-          text="submit"
+          text={t("submit")}
           onPress={() => {
             navigation.navigate('Overview');
           }}

@@ -15,12 +15,15 @@ import {RootStackParamList} from '../../App';
 import {RouteProp} from '@react-navigation/native';
 import {useHistoricalDataForSymptom} from '../hooks/useHistoricalDataForSymptom';
 import {SafeGraph} from '../SafeGraph';
+import {useTranslation} from 'react-i18next';
+
 
 type Props = {
   route: RouteProp<RootStackParamList, 'AchesAndPain'>;
 };
 
 export const AchesAndPainInputScreen: FC<Props> = ({route}) => {
+  const {t} = useTranslation();
   const {currentReportDate} = route.params;
   const {setValues, values, onSave} = useReportState(
     currentReportDate,
@@ -33,7 +36,7 @@ export const AchesAndPainInputScreen: FC<Props> = ({route}) => {
     <Background
       header={
         <NavigationHeader
-          center={<TrackMySymptomHeader symptomName="aches & pain" />}
+          center={<TrackMySymptomHeader symptomName={t("Aches & Pains")} />}
           showBackButton
         />
       }>
@@ -43,7 +46,7 @@ export const AchesAndPainInputScreen: FC<Props> = ({route}) => {
           <SafeGraph data={data} />
         </Row>
         <SelectionGroup
-          title="Do you have body ache?"
+          title={t("Do you have body ache?")}
           selectedDataValue={values?.have_ache}
           onOptionSelected={option => {
             setValues({
@@ -52,13 +55,13 @@ export const AchesAndPainInputScreen: FC<Props> = ({route}) => {
             });
           }}
           options={[
-            {title: 'yes', color: '#FF7A7A', dataValue: true},
-            {title: 'no', color: '#8cf081', dataValue: false},
+            {title: t('yes'), color: '#FF7A7A', dataValue: true},
+            {title: t('no'), color: '#8cf081', dataValue: false},
           ]}
         />
         <Divider />
         <SelectionGroup<'not_often' | 'on-going' | 'persistent'>
-          title="frequency"
+          title={t("frequency")}
           selectedDataValue={values?.frequency}
           onOptionSelected={option => {
             setValues({
@@ -67,9 +70,9 @@ export const AchesAndPainInputScreen: FC<Props> = ({route}) => {
             });
           }}
           options={[
-            {title: 'not often', dataValue: 'not_often'},
-            {title: 'on-going', dataValue: 'on-going'},
-            {title: 'persistent', dataValue: 'persistent'},
+            {title: t('not often'), dataValue: 'not_often'},
+            {title: t('on-going'), dataValue: 'on-going'},
+            {title: t('persistent'), dataValue: 'persistent'},
           ]}
         />
         <View style={styles.center}>

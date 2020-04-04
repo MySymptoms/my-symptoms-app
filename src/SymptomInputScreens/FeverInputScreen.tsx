@@ -25,6 +25,8 @@ import {
 import {getColorForTemperature} from '../lib/symptomToColor';
 import {setTemperatureUnit, TemperatureUnit} from '../reducers/userReducer';
 import {SafeGraph} from '../SafeGraph';
+import {useTranslation} from 'react-i18next';
+
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Fever'>;
@@ -34,6 +36,7 @@ type Props = {
 const temperatureUnits: TemperatureUnit[] = ['celsius', 'fahrenheit'];
 
 export const FeverInputScreen: FC<Props> = ({route}) => {
+  const {t} = useTranslation();
   const isEditing = useRef(false);
   const {currentReportDate} = route.params;
   const {setValues, values, onSave} = useReportState(
@@ -58,7 +61,7 @@ export const FeverInputScreen: FC<Props> = ({route}) => {
     <Background
       header={
         <NavigationHeader
-          center={<TrackMySymptomHeader symptomName="fever" />}
+          center={<TrackMySymptomHeader symptomName={t("Fever")} />}
           showBackButton
         />
       }>

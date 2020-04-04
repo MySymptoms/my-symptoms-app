@@ -15,12 +15,14 @@ import {RouteProp} from '@react-navigation/native';
 import {useReportState} from '../hooks/useReportState';
 import {useHistoricalDataForSymptom} from '../hooks/useHistoricalDataForSymptom';
 import {SafeGraph} from '../SafeGraph';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   route: RouteProp<RootStackParamList, 'Nausea'>;
 };
 
 export const NauseaInputScreen: FC<Props> = ({route}) => {
+  const {t} = useTranslation();
   const {currentReportDate} = route.params;
   const {setValues, values, onSave} = useReportState(
     currentReportDate,
@@ -33,7 +35,7 @@ export const NauseaInputScreen: FC<Props> = ({route}) => {
     <Background
       header={
         <NavigationHeader
-          center={<TrackMySymptomHeader symptomName="nausea" />}
+          center={<TrackMySymptomHeader symptomName={t("Nausea")} />}
           showBackButton
         />
       }>
@@ -43,7 +45,7 @@ export const NauseaInputScreen: FC<Props> = ({route}) => {
           <SafeGraph data={data} />
         </View>
         <SelectionGroup
-          title="do you have nausea?"
+          title={t("do you have nausea?")}
           selectedDataValue={values?.presense}
           onOptionSelected={option => {
             setValues({
@@ -59,7 +61,7 @@ export const NauseaInputScreen: FC<Props> = ({route}) => {
         />
         <Divider />
         <SelectionGroup<'not_often' | 'often' | 'very_often'>
-          title="frequency"
+          title={t("frequency")}
           selectedDataValue={values?.frequency}
           onOptionSelected={option => {
             setValues({
@@ -68,9 +70,9 @@ export const NauseaInputScreen: FC<Props> = ({route}) => {
             });
           }}
           options={[
-            {title: 'not often', dataValue: 'not_often'},
-            {title: 'often', dataValue: 'often'},
-            {title: 'very often', dataValue: 'very_often'},
+            {title: t('not often'), dataValue: 'not_often'},
+            {title: t('often'), dataValue: 'often'},
+            {title: t('very often'), dataValue: 'very_often'},
           ]}
         />
         <View style={styles.center}>

@@ -6,19 +6,22 @@ import {useDispatch, useSelector} from 'react-redux';
 import {selectBirthYear, setBirthYear} from '../reducers/userReducer';
 import {getYear} from 'date-fns';
 import {fontName} from '../lib/vars';
+import { useTranslation } from 'react-i18next';
+
 
 const currentYear = getYear(new Date());
 
 export const BirthYearInput = () => {
+  const {t} =  useTranslation();
   const dispatch = useDispatch();
   const birthYear = useSelector(selectBirthYear)?.toString();
 
-  const [year, setYear] = useState(birthYear?.toString() || '1990');
+  const [year, setYear] = useState(birthYear || '1990');
 
   return (
     <BoxInput
       icon={Icons.Baby}
-      text="What year were you born?"
+      text={t("What year were you born?")}
       rightComponent={
         <TextInput
           value={year}

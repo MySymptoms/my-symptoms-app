@@ -5,13 +5,15 @@ import {UserEmojiField} from './UserEmojiField';
 import {fontName} from '../lib/vars';
 import {selectUserEmoji} from '../reducers/userReducer';
 import {useSelector} from 'react-redux';
+import {useTranslation} from 'react-i18next';
 
 export const HelloUserHeader: FC = () => {
+  const {t} = useTranslation();
   const emoji = useSelector(selectUserEmoji);
 
   return (
     <Container>
-      <MyText>HELLO ANONYMOUS </MyText>
+      <MyText>{t('HELLO ANONYMOUS')} </MyText>
       <HalfSpace />
       <UserEmojiField emoji={emoji} />
     </Container>
