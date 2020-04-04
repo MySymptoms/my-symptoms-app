@@ -77,6 +77,7 @@ export default class HorizontalPicker<T> extends Component<Props<T>> {
           activeSlideOffset={10}
           data={items}
           getItemLayout={(data, index) => ({length: itemWidth * index, offset: index, index})}
+          initialScrollIndex={items.indexOf(initialItem)}
           firstItem={items.indexOf(initialItem)}
           renderItem={this.renderItem}
           onSnapToItem={this.onSnapToItem}
