@@ -46,7 +46,7 @@
     "react-native-screens": "^2.4.0",
     "react-native-segmented-control-tab": "^3.4.1",
     "react-native-smooth-picker": "^0.2.4",
-    "react-native-snap-carousel": "latest",
+    "react-native-snap-carousel": "^3.9.0",
     "react-native-svg": "^12.0.3",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
