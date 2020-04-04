@@ -14,8 +14,8 @@ import {
 } from './components/Block';
 import {SelectionGroup} from './components/SelectionGroup';
 import {ShareDataButton} from './components/ShareDataButton';
-import {Picker} from '@react-native-community/picker';
 import {useTranslation} from 'react-i18next';
+import RNPickerSelect from 'react-native-picker-select';
 
 type Props = {
   navigation: StackNavigationProp<{}>;
@@ -69,15 +69,32 @@ export const DiagnosisInputScreen: FC<Props> = ({navigation}) => {
           <PaddedContainer>
             <Row>
               <Icon source={Icons.Map} style={styles.emojiStyle} />
-              <BoxText>Which country are you in at the moment?</BoxText>
+              <BoxText>Which country did you get tested in?</BoxText>
             </Row>
           </PaddedContainer>
-          <Picker itemStyle={{color: 'white'}}>
-            <Picker.Item label={'Sweden'} value={'sv'} />
-            <Picker.Item label={'United States'} value={'us'} />
-            <Picker.Item label={'United Kingdom'} value={'gb'} />
-            <Picker.Item label={'Narnia'} value={'n/a'} />
-          </Picker>
+          <HalfSpace />
+          <Space />
+          <RNPickerSelect
+            style={{
+              ...pickerSelectStyles,
+              iconContainer: {
+                top: 20,
+                right: 50,
+              },
+              placeholder: {
+                color: 'white',
+                fontSize: 20,
+              },
+            }}
+            onValueChange={value => console.log(value)}
+            items={[
+              {label: 'Sweden', value: 'sweden'},
+              {label: 'United States', value: 'united States'},
+              {label: 'Narnia', value: 'narnia'},
+            ]}
+            Icon={SelectIcon}
+          />
+          <Space />
           <HalfSpace />
         </BrownBox>
       </HalfPaddedContainer>
@@ -90,6 +107,23 @@ export const DiagnosisInputScreen: FC<Props> = ({navigation}) => {
     </Background>
   );
 };
+
+const SelectIcon = () => (
+  <View
+    style={{
+      backgroundColor: 'transparent',
+      borderTopWidth: 10,
+      borderTopColor: 'gray',
+      borderRightWidth: 10,
+      borderRightColor: 'transparent',
+      borderLeftWidth: 10,
+      borderLeftColor: 'transparent',
+      width: 0,
+      height: 0,
+    }}
+  />
+);
+
 const TitleText = styled.Text`
   color: #b2b2b2;
   font-size: 18px;
@@ -128,5 +162,34 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'white',
+  },
+});
+
+const basePickerStyles = {
+  marginLeft: '5%',
+  width: '90%',
+  fontSize: 20,
+  textAlign: 'center',
+  backgroundColor: '#372525',
+  paddingVertical: 12,
+  paddingHorizontal: 10,
+  borderWidth: 2,
+  borderColor: '#1A0000',
+  borderRadius: 25,
+  color: 'white',
+  paddingRight: 60, // to ensure the text is never behind the icon
+  paddingLeft: 20,
+};
+
+const pickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+    ...basePickerStyles,
+  },
+  inputAndroid: {
+    ...basePickerStyles,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    borderWidth: 1,
+    borderColor: '#1A0000',
   },
 });
