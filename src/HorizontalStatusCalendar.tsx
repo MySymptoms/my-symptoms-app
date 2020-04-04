@@ -9,6 +9,7 @@ import {
   isAfter,
   isToday,
   parseISO,
+  startOfYear,
 } from 'date-fns';
 import { enGB, sv } from 'date-fns/locale'
 import {ViewStyle} from 'react-native';
@@ -53,7 +54,7 @@ export const HorizontalStatusCalendar: FC<Props> = ({
   const firstDateStr = _.first(daysWithReports) || formatDate(new Date());
 
   const dateSpan = eachDayOfInterval({
-    start: addDays(parseISO(firstDateStr), -padDays),
+    start: startOfYear(parseISO(firstDateStr)),
     end: addDays(new Date(), padDays),
   });
 
