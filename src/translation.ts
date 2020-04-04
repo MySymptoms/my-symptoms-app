@@ -124,9 +124,14 @@ const resources = {
         'shared their data anonymously so far.',
       'start sharing data': 'Start sharing data',
       'stop sharing data': 'Stop sharing data',
+      'Remove symptoms?': 'Remove symptoms?',
+      'This will clear your reported symptoms for this day. Are you sure?':
+        'This will clear your reported symptoms for this day. Are you sure?',
+      cancel: 'cancel',
+      OK: 'OK',
     },
   },
-  sv: {
+  sv_SE: {
     translation: {
       tracking: 'följer',
       'TRACK MY SYMPTOMS': 'FÖLJ MINA SYMPTOM',
@@ -225,6 +230,11 @@ const resources = {
       'shared their data anonymously so far': 'delat sin data hittills.',
       'start sharing data': 'Dela din data',
       'stop sharing data': 'Sluta dela din data',
+      'Remove symptoms?': 'Ta bort symptom?',
+      'This will clear your reported symptoms for this day. Are you sure?':
+        'Detta kommer rensa dina rapporterade symptom för denna dagen. Är du säker?',
+      CANCEL: 'AVBRYT',
+      OK: 'OK',
     },
   },
 };

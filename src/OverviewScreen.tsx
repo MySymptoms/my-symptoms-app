@@ -216,7 +216,7 @@ const NoSymptomsTodayButton: FC<NoSymptomsTodayButtonProps> = ({
         }
         dialogStyle={styles.dialogStyle}
         dialogTitle={
-          <Text style={styles.dialogTitleStyle}>Remove symptoms?</Text>
+          <Text style={styles.dialogTitleStyle}>{t('Remove symptoms?')}</Text>
         }
         visible={dialogVisible}
         onTouchOutside={() => {
@@ -224,7 +224,9 @@ const NoSymptomsTodayButton: FC<NoSymptomsTodayButtonProps> = ({
         }}>
         <DialogContent>
           <Text style={styles.dialogContent}>
-            This will clear your reported symptoms for this day. Are you sure?
+            {t(
+              'This will clear your reported symptoms for this day. Are you sure?',
+            )}
           </Text>
           <View
             style={{
@@ -235,7 +237,7 @@ const NoSymptomsTodayButton: FC<NoSymptomsTodayButtonProps> = ({
             <DialogButton
               style={selectableButtonStyles.buttonContainer}
               textStyle={{color: 'white'}}
-              text="CANCEL"
+              text={t('CANCEL')}
               onPress={() => {
                 setDialogVisible(false);
               }}
@@ -243,7 +245,7 @@ const NoSymptomsTodayButton: FC<NoSymptomsTodayButtonProps> = ({
             <HalfSpace />
             <DialogButton
               style={selectableButtonStyles.buttonContainer}
-              text="OK"
+              text={t('OK')}
               textStyle={{color: 'white'}}
               onPress={() => {
                 dispatch(
