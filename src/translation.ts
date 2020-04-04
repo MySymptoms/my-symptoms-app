@@ -17,7 +17,10 @@ const languageDetector: LanguageDetectorAsyncModule = {
           NativeModules.SettingsManager.settings.AppleLanguages[0] //iOS 13
         : NativeModules.I18nManager.localeIdentifier;
 
-    callback(deviceLanguage || 'en');
+    const decidedLang = deviceLanguage || 'en';
+
+    console.log('Loading locale:', decidedLang);
+    callback(decidedLang);
   },
   init: () => {},
   cacheUserLanguage: () => {},
