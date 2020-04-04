@@ -8,7 +8,7 @@
  * @format
  */
 
-import './src/translation';
+import './src/translations/translation';
 import React, {Suspense} from 'react';
 import {StatusBar, View} from 'react-native';
 import {applyMiddleware, compose, createStore} from 'redux';
