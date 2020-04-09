@@ -1,4 +1,5 @@
 import React, {useState, useCallback, useRef} from 'react';
+import {interpolateNumber} from 'd3-interpolate';
 import {Dimensions, Text, StyleSheet, View, TextInput} from 'react-native';
 import Animated, {
   add,
@@ -36,17 +37,37 @@ const strokeWidth = 50;
 const radius = (size - strokeWidth) / 2;
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
-interface Props {}
+interface Props {
+  initialValue?: number;
+  range?: {
+    start: number;
+    end: number;
+  };
+  size?: number;
+  radius?: number;
+  onRelease?: (value: number) => void;
+  dialStrokeWidth?: number;
+}
 
-export default ({}: Props) => {
+const toRadScale = interpolateNumber(0, 2 * Math.PI);
+export default ({
+  initialValue = 0,
+  range: {start, end} = {start: 0, end: 1},
+  size = width - 32,
+  radius = (size - 50) / 2,
+  onRelease = () => {},
+  dialStrokeWidth = 50,
+}: Props) => {
+  const initialRotationRad = toRadScale((initialValue - start) / (end - start));
+
   const x = new Value(0);
   const y = new Value(0);
   const translationX = new Value(radius);
   const translationY = new Value(-radius / 2);
   const translateX = translationX;
   const translateY = translationY;
-  const rotate = new Value(0);
-  const rotateEnd = new Value(0);
+  const rotate = new Value(initialRotationRad);
+  const rotateEnd = new Value(initialRotationRad);
   const rotateBegin = new Value(0);
   const angle = new Value(0);
   const prevAngle = new Value(0);
@@ -81,7 +102,7 @@ export default ({}: Props) => {
   return (
     <View style={styles.wholeScreen}>
       <TextInput
-        value="0.0"
+        value={initialValue?.toFixed(1) ?? '0.0'}
         style={{
           position: 'absolute',
           color: 'white',
