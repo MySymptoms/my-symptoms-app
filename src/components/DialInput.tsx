@@ -100,7 +100,7 @@ export default ({
   ]);
 
   return (
-    <View style={styles.wholeScreen}>
+    <Container {...{size}}>
       <TextInput
         value={initialValue?.toFixed(1) ?? '0.0'}
         style={{
@@ -113,224 +113,228 @@ export default ({
         }}
         ref={text}
       />
-      <View style={styles.container}>
-        <Svg width={size} height={size} style={StyleSheet.absoluteFillObject}>
-          <Defs>
-            <LinearGradient id="grad" x1="0" y1="0" x2="100%" y2="0">
-              <Stop offset="0" stopColor="#eda338" />
-              <Stop offset="1" stopColor="#f5d346" />
-            </LinearGradient>
-          </Defs>
-          <AnimatedCircle
-            stroke="url(#grad)"
-            r={radius}
-            cy={size / 2}
-            cx={size / 2}
-            {...{strokeWidth}}
-          />
-        </Svg>
-        <Animated.Code>
-          {() => {
-            console.log('animated code');
+      <Svg width={size} height={size} style={{position: 'absolute'}}>
+        <Defs>
+          <LinearGradient id="grad" x1="0" y1="0" x2="100%" y2="0">
+            <Stop offset="0" stopColor="#eda338" />
+            <Stop offset="1" stopColor="#f5d346" />
+          </LinearGradient>
+        </Defs>
+        <AnimatedCircle
+          stroke="url(#grad)"
+          r={radius}
+          cy={size / 2}
+          cx={size / 2}
+          {...{strokeWidth}}
+        />
+      </Svg>
+      <Animated.Code>
+        {() => {
+          console.log('animated code');
 
-            return block([
-              set(prevAngle, angle),
-              set(
-                angle,
-                modulo(
-                  multiply(
-                    atan2(
-                      multiply(sub(translateY, sub(radius, y)), -1),
-                      sub(translateX, sub(radius, x)),
-                    ),
-                    -1,
+          return block([
+            set(prevAngle, angle),
+            set(
+              angle,
+              modulo(
+                multiply(
+                  atan2(
+                    multiply(sub(translateY, sub(radius, y)), -1),
+                    sub(translateX, sub(radius, x)),
                   ),
-                  2 * Math.PI,
+                  -1,
                 ),
+                2 * Math.PI,
               ),
-              cond(
-                eq(state, State.BEGAN),
-                set(rotateBegin, debug('start', angle)),
-              ),
-              cond(
-                eq(state, State.ACTIVE),
-                block([
-                  call(
-                    [
-                      interpolate(
-                        modulo(
-                          add(
-                            rotateEnd,
-                            sub(debug('angle', angle), rotateBegin),
-                          ),
-                          2 * Math.PI,
-                        ),
-                        {
-                          inputRange: [0, 2 * Math.PI],
-                          outputRange: [36, 45],
-                        },
+            ),
+            cond(
+              eq(state, State.BEGAN),
+              set(rotateBegin, debug('start', angle)),
+            ),
+            cond(
+              eq(state, State.ACTIVE),
+              block([
+                call(
+                  [
+                    interpolate(
+                      modulo(
+                        add(rotateEnd, sub(debug('angle', angle), rotateBegin)),
+                        2 * Math.PI,
                       ),
-                    ],
-                    callback,
-                  ),
-                  set(rotate, add(rotateEnd, sub(angle, rotateBegin))),
-                ]),
-              ),
-              cond(
-                eq(state, State.END),
+                      {
+                        inputRange: [0, 2 * Math.PI],
+                        outputRange: [start, end],
+                      },
+                    ),
+                  ],
+                  callback,
+                ),
+                set(rotate, add(rotateEnd, sub(angle, rotateBegin))),
+              ]),
+            ),
+            cond(
+              eq(state, State.END),
+              block([
                 set(
                   rotateEnd,
                   debug('end', add(rotateEnd, sub(angle, rotateBegin))),
                 ),
-              ),
-            ]);
-          }}
-        </Animated.Code>
-        <PanGestureHandler
-          onHandlerStateChange={onGestureEvent}
-          {...{onGestureEvent}}>
-          <Animated.View>
-            <Animated.View
-              style={{
-                transform: [{rotate}],
-              }}>
-              <Svg style={StyleSheet.absoluteFillObject}>
-                <AnimatedCircle
-                  fill="white"
-                  cy={size / 2}
-                  cx={size / 2}
-                  r={10}
-                />
+                call(
+                  [
+                    interpolate(
+                      modulo(
+                        add(rotateEnd, sub(debug('angle', angle), rotateBegin)),
+                        2 * Math.PI,
+                      ),
+                      {
+                        inputRange: [0, 2 * Math.PI],
+                        outputRange: [start, end],
+                      },
+                    ),
+                  ],
+                  ([v]) => onRelease(v),
+                ),
+              ]),
+            ),
+          ]);
+        }}
+      </Animated.Code>
+      <PanGestureHandler
+        onHandlerStateChange={onGestureEvent}
+        {...{onGestureEvent}}>
+        <Animated.View>
+          <Animated.View
+            style={{
+              transform: [{rotate}],
+            }}>
+            <Svg style={StyleSheet.absoluteFillObject}>
+              <AnimatedCircle fill="white" cy={size / 2} cx={size / 2} r={10} />
+              <Path
+                fill={'white'}
+                stroke={'red'}
+                d={`M${size / 2} ${size / 2} L${size} ${size / 2}`}
+              />
+            </Svg>
+            <Svg width={size} height={size} viewBox="-100 -100 190 190">
+              <Defs>
+                <Circle cx={0} cy={87} r={2.2} id="prefix__b" fill="white" />
                 <Path
-                  fill={'white'}
-                  stroke={'red'}
-                  d={`M${size / 2} ${size / 2} L${size} ${size / 2}`}
+                  id="prefix__a"
+                  stroke="white"
+                  strokeWidth={3.8}
+                  d="M0 95V78"
                 />
-              </Svg>
-              <Svg width={size} height={size} viewBox="-100 -100 190 190">
-                <Defs>
-                  <Circle cx={0} cy={87} r={2.2} id="prefix__b" fill="white" />
-                  <Path
-                    id="prefix__a"
-                    stroke="white"
-                    strokeWidth={3.8}
-                    d="M0 95V78"
-                  />
-                </Defs>
-                <G id="prefix__c" transform="translate(-5 -5)">
-                  <Use xlinkHref="#prefix__a" width="100%" height="100%" />
-                  <Use
-                    xlinkHref="#prefix__b"
-                    transform="rotate(6)"
-                    width="100%"
-                    height="100%"
-                  />
-                  <Use
-                    xlinkHref="#prefix__b"
-                    transform="rotate(12)"
-                    width="100%"
-                    height="100%"
-                  />
-                  <Use
-                    xlinkHref="#prefix__b"
-                    transform="rotate(18)"
-                    width="100%"
-                    height="100%"
-                  />
-                  <Use
-                    xlinkHref="#prefix__b"
-                    transform="rotate(24)"
-                    width="100%"
-                    height="100%"
-                  />
-                </G>
+              </Defs>
+              <G id="prefix__c" transform="translate(-5 -5)">
+                <Use xlinkHref="#prefix__a" width="100%" height="100%" />
                 <Use
-                  xlinkHref="#prefix__c"
-                  transform="rotate(30 -5 -5)"
+                  xlinkHref="#prefix__b"
+                  transform="rotate(6)"
                   width="100%"
                   height="100%"
                 />
                 <Use
-                  xlinkHref="#prefix__c"
-                  transform="rotate(60 -5 -5)"
+                  xlinkHref="#prefix__b"
+                  transform="rotate(12)"
                   width="100%"
                   height="100%"
                 />
                 <Use
-                  xlinkHref="#prefix__c"
-                  transform="rotate(90 -5 -5)"
+                  xlinkHref="#prefix__b"
+                  transform="rotate(18)"
                   width="100%"
                   height="100%"
                 />
                 <Use
-                  xlinkHref="#prefix__c"
-                  transform="rotate(120 -5 -5)"
+                  xlinkHref="#prefix__b"
+                  transform="rotate(24)"
                   width="100%"
                   height="100%"
                 />
-                <Use
-                  xlinkHref="#prefix__c"
-                  transform="rotate(150 -5 -5)"
-                  width="100%"
-                  height="100%"
-                />
-                <Use
-                  xlinkHref="#prefix__c"
-                  transform="rotate(180 -5 -5)"
-                  width="100%"
-                  height="100%"
-                />
-                <Use
-                  xlinkHref="#prefix__c"
-                  transform="rotate(-150 -5 -5)"
-                  width="100%"
-                  height="100%"
-                />
-                <Use
-                  xlinkHref="#prefix__c"
-                  transform="rotate(-120 -5 -5)"
-                  width="100%"
-                  height="100%"
-                />
-                <Use
-                  xlinkHref="#prefix__c"
-                  transform="rotate(-90 -5 -5)"
-                  width="100%"
-                  height="100%"
-                />
-                <Use
-                  xlinkHref="#prefix__c"
-                  transform="rotate(-60 -5 -5)"
-                  width="100%"
-                  height="100%"
-                />
-                <Use
-                  xlinkHref="#prefix__c"
-                  transform="rotate(-30 -5 -5)"
-                  width="100%"
-                  height="100%"
-                />
-              </Svg>
-            </Animated.View>
+              </G>
+              <Use
+                xlinkHref="#prefix__c"
+                transform="rotate(30 -5 -5)"
+                width="100%"
+                height="100%"
+              />
+              <Use
+                xlinkHref="#prefix__c"
+                transform="rotate(60 -5 -5)"
+                width="100%"
+                height="100%"
+              />
+              <Use
+                xlinkHref="#prefix__c"
+                transform="rotate(90 -5 -5)"
+                width="100%"
+                height="100%"
+              />
+              <Use
+                xlinkHref="#prefix__c"
+                transform="rotate(120 -5 -5)"
+                width="100%"
+                height="100%"
+              />
+              <Use
+                xlinkHref="#prefix__c"
+                transform="rotate(150 -5 -5)"
+                width="100%"
+                height="100%"
+              />
+              <Use
+                xlinkHref="#prefix__c"
+                transform="rotate(180 -5 -5)"
+                width="100%"
+                height="100%"
+              />
+              <Use
+                xlinkHref="#prefix__c"
+                transform="rotate(-150 -5 -5)"
+                width="100%"
+                height="100%"
+              />
+              <Use
+                xlinkHref="#prefix__c"
+                transform="rotate(-120 -5 -5)"
+                width="100%"
+                height="100%"
+              />
+              <Use
+                xlinkHref="#prefix__c"
+                transform="rotate(-90 -5 -5)"
+                width="100%"
+                height="100%"
+              />
+              <Use
+                xlinkHref="#prefix__c"
+                transform="rotate(-60 -5 -5)"
+                width="100%"
+                height="100%"
+              />
+              <Use
+                xlinkHref="#prefix__c"
+                transform="rotate(-30 -5 -5)"
+                width="100%"
+                height="100%"
+              />
+            </Svg>
           </Animated.View>
-        </PanGestureHandler>
-      </View>
-    </View>
+        </Animated.View>
+      </PanGestureHandler>
+    </Container>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    height: size,
-    width: size,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  wholeScreen: {
-    height: Dimensions.get('window').height,
-    width: Dimensions.get('window').width,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'black',
-  },
-});
+import styled from 'styled-components/native';
+
+interface ContainerProps {
+  size: number;
+}
+
+const Container = styled.View<ContainerProps>`
+  height: ${p => p.size}px;
+  width: ${p => p.size}px;
+  align-items: center;
+  justify-content: center;
+`;
