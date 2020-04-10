@@ -1,9 +1,7 @@
 import {RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import React, {FC, useRef, useState} from 'react';
+import React, {FC, useCallback, useRef} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {TextInput} from 'react-native-gesture-handler';
-import RadialGradient from 'react-native-radial-gradient';
 import {useDispatch} from 'react-redux';
 import {RootStackParamList} from '../../App';
 import {Background} from '../components/Background';
@@ -26,7 +24,8 @@ import {getColorForTemperature} from '../lib/symptomToColor';
 import {setTemperatureUnit, TemperatureUnit} from '../reducers/userReducer';
 import {SafeGraph} from '../SafeGraph';
 import {useTranslation} from 'react-i18next';
-
+import {DialInput} from '../components/DialInput';
+import {TextInput} from 'react-native-gesture-handler';
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Fever'>;
@@ -34,6 +33,8 @@ type Props = {
 };
 
 const temperatureUnits: TemperatureUnit[] = ['celsius', 'fahrenheit'];
+
+const range = {start: 34, end: 45};
 
 export const FeverInputScreen: FC<Props> = ({route}) => {
   const {t} = useTranslation();
@@ -51,8 +52,6 @@ export const FeverInputScreen: FC<Props> = ({route}) => {
     convertedTemperature,
   } = useTemperatureConvertedToUserPreference(temperatureInCelsius);
 
-  const [textValue, setTextValue] = useState(String(convertedTemperature));
-
   const dispatch = useDispatch();
 
   const data = useHistoricalDataForSymptom('fever');
@@ -61,7 +60,7 @@ export const FeverInputScreen: FC<Props> = ({route}) => {
     <Background
       header={
         <NavigationHeader
-          center={<TrackMySymptomHeader symptomName={t("Fever")} />}
+          center={<TrackMySymptomHeader symptomName={t('Fever')} />}
           showBackButton
         />
       }>
@@ -87,21 +86,19 @@ export const FeverInputScreen: FC<Props> = ({route}) => {
                 ];
               if (isEditing.current) {
                 if (nextUnit === 'fahrenheit') {
-                  setTextValue(
-                    convertToFahrenheit(parseFloat(textValue)).toString(10),
-                  );
+                  setValues({
+                    degrees: convertToFahrenheit(convertedTemperature),
+                  });
                 } else {
-                  setTextValue(
-                    convertToCelsius(parseFloat(textValue)).toString(10),
-                  );
+                  setValues({degrees: convertToCelsius(convertedTemperature)});
                 }
               } else {
                 if (nextUnit === 'fahrenheit') {
-                  setTextValue(
-                    convertToFahrenheit(temperatureInCelsius).toString(10),
-                  );
+                  setValues({
+                    degrees: convertToFahrenheit(temperatureInCelsius),
+                  });
                 } else {
-                  setTextValue(String(temperatureInCelsius));
+                  setValues({degrees: temperatureInCelsius});
                 }
               }
               dispatch(setTemperatureUnit(nextUnit));
@@ -109,32 +106,21 @@ export const FeverInputScreen: FC<Props> = ({route}) => {
           />
         </View>
         <View style={styles.center}>
-          <RadialGradient
-            style={styles.tempInputContainer}
-            colors={['rgba(32, 32, 32, 0.77)', 'rgba(21, 21, 21, 0)']}
-            stops={[0.01, 1]}
-            center={[80, 80]}
-            radius={200}>
-            <TextInput
-              style={styles.tempInputText}
-              value={textValue}
-              onChangeText={v => setTextValue(v)}
-              keyboardType={'numeric'}
-              maxLength={6}
-              onFocus={() => (isEditing.current = true)}
-              onEndEditing={() => {
-                isEditing.current = false;
-              }}
-            />
-          </RadialGradient>
+          <DialInput
+            initialValue={convertedTemperature}
+            onRelease={useCallback(v => setValues({degrees: v}), [setValues])}
+            range={range}
+            size={200}
+            dialStrokeWidth={20}
+          />
           <Space />
           <DoneButton
             onPress={() => {
               onSave({
                 degrees:
                   temperatureUnit === 'fahrenheit'
-                    ? convertToCelsius(parseFloat(textValue))
-                    : parseFloat(textValue),
+                    ? convertToCelsius(convertedTemperature)
+                    : convertedTemperature,
               });
             }}
           />

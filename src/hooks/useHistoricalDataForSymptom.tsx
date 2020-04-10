@@ -1,18 +1,22 @@
-import {useSelector} from 'react-redux';
 import {RootState} from '../reducers/rootReducer';
-import {sortBy} from 'lodash';
+import {SymptomsRecord} from '../reducers/symptoms';
+import {createDataPoint, getGraphDate} from '../DetailedReportScreen';
+import {GraphDataPoint} from '../FancyGradientChart';
+import {Report} from '../reducers/reportsReducer';
 import {getNumberForReportAndSymptom} from '../lib/symptomToNumber';
 import {isDefined} from '../lib/util';
-import {Report} from '../reducers/reportsReducer';
-import {SymptomsRecord} from '../reducers/symptoms';
-import {createDataPoint} from '../DetailedReportScreen';
+import {useSelector} from 'react-redux';
 import {parseISO} from 'date-fns';
-import {GraphDataPoint} from '../FancyGradientChart';
+import {sortBy} from 'lodash';
 
 export const useHistoricalDataForSymptom = <T extends keyof SymptomsRecord>(
   key: T,
-): GraphDataPoint[] =>
-  useSelector((state: RootState) => {
+): GraphDataPoint[] => useSelector(selectHistoricalDataForSymptom(key));
+
+export function selectHistoricalDataForSymptom<T extends keyof SymptomsRecord>(
+  key: T,
+) {
+  return (state: RootState) => {
     const reports = Object.values(state.reports);
 
     const transformSymptom = (report: Report) => {
@@ -34,4 +38,5 @@ export const useHistoricalDataForSymptom = <T extends keyof SymptomsRecord>(
     const symptomsPerDay = reports.map(transformSymptom).filter(isDefined);
 
     return sortBy(symptomsPerDay, 'date');
-  });
+  };
+}

@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
-import {useState} from 'react';
+import {useState, useCallback} from 'react';
 import {
   requestUpdateSymptomInReport,
   selectReport,
@@ -57,9 +57,12 @@ export function useReportState<TKey extends keyof SymptomsRecord>(
     SymptomsRecord[TKey]['values']
   > | null>(reportValues ?? null);
 
-  const setValuesMerge = (vals: Partial<SymptomsRecord[TKey]['values']>) => {
-    setValues(v => (v ? {...v, ...vals} : vals));
-  };
+  const setValuesMerge = useCallback(
+    (vals: Partial<SymptomsRecord[TKey]['values']>) => {
+      setValues(v => (v ? {...v, ...vals} : vals));
+    },
+    [],
+  );
 
   return {values, setValues: setValuesMerge, onSave};
 }

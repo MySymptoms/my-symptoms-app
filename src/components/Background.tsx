@@ -15,7 +15,7 @@ export const Background: FC<{style?: ViewStyle; header?: React.ReactNode}> = ({
     locations={[0, 0.1502]}
     style={[styles.linearGradient, style]}>
     {header && <View style={styles.header}>{header}</View>}
-    <ScrollView contentInset={styles.scrollView}>{children}</ScrollView>
+    <View contentInset={styles.scrollView}>{children}</View>
   </LinearGradient>
 );
 
